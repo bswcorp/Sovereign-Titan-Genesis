@@ -1,44 +1,58 @@
-# 🏛️ Sovereign Titan Genesis (STG)
-> *The Big Tent Ecosystem for Educational Sovereignty, Financial Tech, and Defense Hardware.*
+# 🏛️ SOVEREIGN TITAN GENESIS (STG)
+> **"Infrastruktur Kedaulatan Digital Melawan Ancaman Kuantum."**
+
+[![License: MIT](https://img.shields.io)](https://opensource.org)
+[![Network: LightLink](https://img.shields.io)](https://lightlink.io/)
+[![Dev: Andi Muhammad Harpianto](https://img.shields.io)](https://github.com/bswcorp)
 
 ## 📋 Overview
-Sovereign Titan Genesis (STG) adalah ekosistem teknologi terintegrasi yang dikelola di bawah naungan **Yayasan Sovereign Titan Genesis**. Proyek ini bertujuan untuk menyatukan tiga pilar utama kemandirian digital:
-1. **Homeschooling Core:** Kurikulum pendidikan mandiri berbasis digital.
-2. **Qstate Engine:** Infrastruktur operasional dan manajemen aset digital.
-3. **H2K Defense:** Integrasi perangkat keras untuk perlindungan perimeter dan privasi data.
+**Sovereign Titan Genesis (STG)** adalah ekosistem teknologi terintegrasi yang dikelola di bawah naungan **Yayasan Sovereign Titan Genesis**. Kami membangun benteng pertahanan digital yang menyatukan pendidikan mandiri, teknologi finansial, dan perangkat keras pertahanan.
+
+### Tiga Pilar Kemandirian:
+1.  **🎓 Homeschooling Core:** Kurikulum pendidikan mandiri berbasis digital untuk mencetak generasi berdaulat.
+2.  **⚙️ Qstate Engine:** Infrastruktur manajemen aset digital $QSTATE dengan suplai maksimal 1.000 Triliun.
+3.  **🛡️ H2K Defense:** Integrasi hardware untuk perlindungan perimeter dan privasi data absolut.
 
 ---
+
 ## 🌍 Sovereign Titan Global Vision
-Sovereign Titan Genesis mengoperasikan sistem **Dual-Node Heart** yang ditempatkan secara strategis di **Singapore** dan **Swiss Alps**.
+Sovereign Titan Genesis mengoperasikan sistem **Dual-Node Heart** yang ditempatkan secara strategis di **Singapore** (Pusat Konektivitas Asia) dan **Swiss Alps** (Benteng Privasi Data Global).
 
-### 🏛️ Pillars of QSTATE:
-1. **Human-to-Kinetic (H2K):** Minting koin melalui detak jantung manusia asli.
-2. **Aksara Logic:** Enkripsi berbasis linguistik Nusantara untuk keamanan era Q-Day.
-3. **Quorum-State:** Protokol konsensus global yang anti-bot (Phone Farm Proof).
+### 🏛️ Pilar Teknis QSTATE:
+*   **Human-to-Kinetic (H2K):** Sistem *Minting* koin unik yang divalidasi melalui biometric/detak jantung manusia asli (Proof-of-Humanity).
+*   **Aksara Logic:** Enkripsi berbasis linguistik Nusantara yang dirancang untuk tetap aman di era pasca-kuantum (Q-Day Ready).
+*   **Quorum-State:** Protokol konsensus global yang kebal terhadap manipulasi bot (*Phone Farm Proof*).
 
-[Read Global Compliance & Strategy Documentation](./docs/README.md)
+---
 
+## 🏗️ Architecture (Modular Submodules)
+Proyek ini dikelola menggunakan **Git Submodules** untuk memastikan setiap departemen memiliki keamanan dan skalabilitas mandiri:
 
-## 🏗️ Architecture
-Proyek ini menggunakan struktur **Git Submodules** untuk menjaga modularitas setiap unit:
-- `/knowledge`: Kurikulum Homeschooling.
-- `/operation`: Mesin operasional Qstate.
-- `/defense`: Driver dan integrasi hardware H2K.
-- `/search`: Mesin pencari mandiri Titan Search.
+| Path | Unit | Deskripsi |
+| :--- | :--- | :--- |
+| `/knowledge` | **Homeschooling** | Database kurikulum, jurnal riset, dan modul edukasi mandiri. |
+| `/operation` | **Qstate Engine** | Inti operasional perbankan digital dan manajemen *Smart Contract*. |
+| `/defense` | **H2K Defense** | Driver hardware ESP32-S3, skrip kolektor, dan integrasi sensor. |
+| `/search` | **Titan Search** | Mesin pencari mandiri yang tidak melacak data pengguna. |
+| `/finance` | **Tokenomics** | Dokumen rincian distribusi 1.000T koin $QSTATE. |
 
-# 🏛️ SOVEREIGN-TITAN-GENESIS
-Infrastruktur Perbankan Digital Berdaulat - Dibuat oleh Andi Muhammad Harpianto.
+---
 
-## Fitur Utama
-- **Interplanetary Bank Terminal:** Antarmuka web3 siap pakai.
-- **Titan Hardware Bridge:** Koneksi langsung ESP32 ke blockchain.
-- **Gasless Infrastructure:** Transaksi tanpa biaya melalui LightLink.
-- 
+## 🚀 Fitur Utama & Quick Start
+*   **Interplanetary Bank Terminal:** Antarmuka Web3 untuk memindahkan koin ke Hot Wallet (0xD9a1E28224d6d047Eef8712dC97d11A9032b948e).
+*   **Titan Hardware Bridge:** Koneksi langsung sensor hardware ke Blockchain melalui Python.
+*   **Gasless Infrastructure:** Transaksi tanpa biaya melalui jaringan LightLink & TorusChain.
 
-## 🚀 Getting Started
-Untuk mensinkronkan seluruh ekosistem di mesin lokal Anda:
-1. Clone repo utama: `git clone [URL_REPO_STG]`
-2. Jalankan script sinkronisasi:
-   ```bash
-   chmod +x titan-sync.sh
-   ./titan-sync.sh
+### Cara Sinkronisasi:
+1.  **Clone Repo Utama:**
+    `git clone https://github.com/bswcorp/Sovereign-Titan-Genesis.git`
+2.  **Update Submodules:**
+    `git submodule update --init --recursive`
+3.  **Jalankan Mesin:**
+    `chmod +x titan-sync.sh && ./titan-sync.sh`
+
+---
+
+## ⚖️ Governance & Compliance
+Sovereign Titan Genesis beroperasi dengan prinsip kedaulatan penuh (Self-Sovereignty). Seluruh aset diatur melalui kontrak pintar yang telah diverifikasi.
+[Baca Dokumentasi Global Compliance](./docs/README.md)
