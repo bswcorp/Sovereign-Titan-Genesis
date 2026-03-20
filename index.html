@@ -1,7 +1,72 @@
-const balance = await contract.balanceOf(accounts[0]);
-// Jangan dibagi dulu, kita lihat angka aslinya
-console.log("Data Mentah dari Blockchain:", balance.toString()); 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>QUORUM-STATE | Global Sovereign Terminal</title>
+    <script src="https://cdnjs.cloudflare.com" type="module"></script>
+    <style>
+        :root { --gold: #D4AF37; --cyan: #00f2ff; --bg: #050505; }
+        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; text-align: center; padding: 50px; }
+        .terminal { border: 2px solid var(--gold); padding: 30px; display: inline-block; box-shadow: 0 0 20px var(--gold); background: #000; border-radius: 10px; }
+        .status-verified { color: #4ade80; font-weight: bold; border: 1px solid #4ade80; padding: 5px; display: inline-block; margin-top: 10px; }
+        .btn { background: var(--cyan); color: black; border: none; padding: 15px 30px; font-weight: bold; cursor: pointer; margin-top: 20px; border-radius: 5px; text-transform: uppercase; }
+        .data-display { margin-top: 20px; color: var(--gold); font-size: 1.2rem; }
+    </style>
+</head>
+<body>
 
-const qstate = ethers.formatUnits(balance, 18);
-const aksa = parseFloat(qstate) * 100000000;
-userBalance.innerText = "Saldo: " + aksa.toLocaleString('id-ID') + " AKSA";
+    <div class="terminal">
+        <h1 style="letter-spacing: 5px;">SOVEREIGN TITAN GENESIS</h1>
+        <p>ARCHITECT: ANDI MUHAMMAD HARPIANTO</p>
+        
+        <div class="status-verified">✓ CONTRACT SOURCE CODE VERIFIED</div>
+        
+        <div class="data-display">
+            <div>TOTAL SUPPLY: 1,000,000,000,000 $QSTATE</div>
+            <div id="userBalance" style="font-size: 2rem; margin-top: 10px; color: #fff;">Hubungkan Wallet...</div>
+        </div>
+
+        <button id="connectBtn" class="btn">IDENTIFIKASI JANTUNG (WALLET)</button>
+        <p id="walletAddr" style="font-size: 0.8rem; color: #666; margin-top: 10px;"></p>
+    </div>
+
+    <script type="module">
+        import { ethers } from "https://cdnjs.cloudflare.com";
+
+        // MASUKKAN ALAMAT KONTRAK TERBARU HASIL DEPLOY DI SINI
+        const contractAddress = "0x70a64d8216e91077B2C36695596482Be068640c1"; 
+        
+        const abi = ["function balanceOf(address) view returns (uint256)"];
+
+        const connectBtn = document.getElementById('connectBtn');
+        const userBalance = document.getElementById('userBalance');
+
+        connectBtn.onclick = async () => {
+            if (window.ethereum) {
+                try {
+                    const provider = new ethers.BrowserProvider(window.ethereum);
+                    const accounts = await provider.send("eth_requestAccounts", []);
+                    const contract = new ethers.Contract(contractAddress, abi, provider);
+                    
+                    const balance = await contract.balanceOf(accounts[0]);
+                    
+                    // Logika Konversi ke AKSA
+                    const qstate = ethers.formatUnits(balance, 18);
+                    const aksa = parseFloat(qstate) * 100000000;
+
+                    document.getElementById('walletAddr').innerText = "Connected: " + accounts[0];
+                    userBalance.innerText = "Saldo: " + aksa.toLocaleString('id-ID') + " AKSA";
+                    connectBtn.innerText = "JANTUNG TERHUBUNG";
+                    
+                    console.log("Data Mentah:", balance.toString());
+                } catch (err) {
+                    console.error("Gagal koneksi:", err);
+                    alert("Gagal membaca blockchain. Cek MetaMask!");
+                }
+            } else {
+                alert("Pasang MetaMask/SafePal dulu, Bos!");
+            }
+        };
+    </script>
+</body>
+</html>
