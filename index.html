@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -5,66 +6,105 @@
     <title>QUORUM-STATE | Global Sovereign Terminal</title>
     <script src="https://cdnjs.cloudflare.com" type="module"></script>
     <style>
-        :root { --gold: #D4AF37; --cyan: #00f2ff; --bg: #050505; }
-        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; text-align: center; padding: 50px; }
-        .terminal { border: 2px solid var(--gold); padding: 30px; display: inline-block; box-shadow: 0 0 20px var(--gold); background: #000; border-radius: 10px; }
-        .status-verified { color: #4ade80; font-weight: bold; border: 1px solid #4ade80; padding: 5px; display: inline-block; margin-top: 10px; }
-        .btn { background: var(--cyan); color: black; border: none; padding: 15px 30px; font-weight: bold; cursor: pointer; margin-top: 20px; border-radius: 5px; text-transform: uppercase; }
-        .data-display { margin-top: 20px; color: var(--gold); font-size: 1.2rem; }
+        :root { --gold: #D4AF37; --cyan: #00f2ff; --bg: #050505; --heart: #ff0000; }
+        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; text-align: center; padding: 20px; }
+        
+        /* EFEK PULSE JANTUNG */
+        .terminal { 
+            border: 2px solid var(--gold); padding: 30px; display: inline-block; 
+            background: #000; border-radius: 15px; position: relative;
+            animation: heartPulse 1.5s infinite; /* Efek Denyut */
+        }
+        @keyframes heartPulse {
+            0% { box-shadow: 0 0 10px var(--gold); }
+            50% { box-shadow: 0 0 30px var(--heart); border-color: var(--heart); }
+            100% { box-shadow: 0 0 10px var(--gold); }
+        }
+
+        .btn { background: var(--cyan); color: black; border: none; padding: 12px 20px; font-weight: bold; cursor: pointer; border-radius: 5px; width: 100%; margin-top: 10px; }
+        .input-box { width: 100%; padding: 10px; margin: 10px 0; background: #111; color: var(--cyan); border: 1px solid var(--gold); box-sizing: border-box; }
+        .data-display { margin: 20px 0; color: var(--gold); font-size: 1.1rem; border-top: 1px solid #333; padding-top: 10px; }
     </style>
 </head>
 <body>
 
     <div class="terminal">
-        <h1 style="letter-spacing: 5px;">SOVEREIGN TITAN GENESIS</h1>
-        <p>ARCHITECT: ANDI MUHAMMAD HARPIANTO</p>
-        
-        <div class="status-verified">✓ CONTRACT SOURCE CODE VERIFIED</div>
+        <h1 style="margin:0;">QUORUM-STATE</h1>
+        <p style="font-size: 0.7rem; color: #888;">ARCHITECT: ANDI MUHAMMAD HARPIANTO</p>
         
         <div class="data-display">
-            <div>TOTAL SUPPLY: 1,000,000,000,000 $QSTATE</div>
-            <div id="userBalance" style="font-size: 2rem; margin-top: 10px; color: #fff;">Hubungkan Wallet...</div>
+            <div id="userBalance" style="font-size: 1.5rem; color: #fff;">HUBUNGKAN JANTUNG...</div>
+            <div id="qstateBalance" style="font-size: 0.8rem; opacity: 0.7;">0 $QSTATE</div>
         </div>
 
-        <button id="connectBtn" class="btn">IDENTIFIKASI JANTUNG (WALLET)</button>
-        <p id="walletAddr" style="font-size: 0.8rem; color: #666; margin-top: 10px;"></p>
+        <button id="connectBtn" class="btn">IDENTIFIKASI WALLET</button>
+        <p id="walletAddr" style="font-size: 0.6rem; color: #555;"></p>
+
+        <!-- FITUR TRANSAKSI -->
+        <div id="transferSection" style="display:none; border-top: 1px solid #333; margin-top: 20px; padding-top: 10px;">
+            <p style="font-size: 0.8rem; color: var(--gold);">MENU TRANSFER AKSA</p>
+            <input type="text" id="toAddress" class="input-box" placeholder="Alamat Penerima (0x...)">
+            <input type="number" id="amountAksa" class="input-box" placeholder="Jumlah AKSA">
+            <button id="transferBtn" class="btn" style="background: var(--gold);">KIRIM SEKARANG</button>
+        </div>
     </div>
 
     <script type="module">
         import { ethers } from "https://cdnjs.cloudflare.com";
 
-        // MASUKKAN ALAMAT KONTRAK TERBARU HASIL DEPLOY DI SINI
         const contractAddress = "0x70a64d8216e91077B2C36695596482Be068640c1"; 
-        
-        const abi = ["function balanceOf(address) view returns (uint256)"];
+        const abi = [
+            "function balanceOf(address) view returns (uint256)",
+            "function transfer(address to, uint256 amount) returns (bool)"
+        ];
+
+        let signer;
+        let contract;
 
         const connectBtn = document.getElementById('connectBtn');
         const userBalance = document.getElementById('userBalance');
+        const transferSection = document.getElementById('transferSection');
 
         connectBtn.onclick = async () => {
             if (window.ethereum) {
-                try {
-                    const provider = new ethers.BrowserProvider(window.ethereum);
-                    const accounts = await provider.send("eth_requestAccounts", []);
-                    const contract = new ethers.Contract(contractAddress, abi, provider);
-                    
-                    const balance = await contract.balanceOf(accounts[0]);
-                    
-                    // Logika Konversi ke AKSA
-                    const qstate = ethers.formatUnits(balance, 18);
-                    const aksa = parseFloat(qstate) * 100000000;
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const accounts = await provider.send("eth_requestAccounts", []);
+                signer = await provider.getSigner();
+                contract = new ethers.Contract(contractAddress, abi, signer);
+                
+                updateBalance(accounts[0]);
+                transferSection.style.display = "block";
+                document.getElementById('walletAddr').innerText = accounts[0];
+            }
+        };
 
-                    document.getElementById('walletAddr').innerText = "Connected: " + accounts[0];
-                    userBalance.innerText = "Saldo: " + aksa.toLocaleString('id-ID') + " AKSA";
-                    connectBtn.innerText = "JANTUNG TERHUBUNG";
-                    
-                    console.log("Data Mentah:", balance.toString());
-                } catch (err) {
-                    console.error("Gagal koneksi:", err);
-                    alert("Gagal membaca blockchain. Cek MetaMask!");
-                }
-            } else {
-                alert("Pasang MetaMask/SafePal dulu, Bos!");
+        async function updateBalance(addr) {
+            const balance = await contract.balanceOf(addr);
+            const qstate = ethers.formatUnits(balance, 18);
+            const aksa = parseFloat(qstate) * 100000000;
+            userBalance.innerText = aksa.toLocaleString('id-ID') + " AKSA";
+            document.getElementById('qstateBalance').innerText = qstate + " $QSTATE";
+        }
+
+        document.getElementById('transferBtn').onclick = async () => {
+            const to = document.getElementById('toAddress').value;
+            const amountAksa = document.getElementById('amountAksa').value;
+            
+            if(!to || !amountAksa) return alert("Data Kosong!");
+
+            try {
+                // Konversi Aksa kembali ke unit Blockchain (Desimal 18)
+                const amountQState = (parseFloat(amountAksa) / 100000000).toString();
+                const txAmount = ethers.parseUnits(amountQState, 18);
+
+                alert("Menyiapkan Transfer Aksa...");
+                const tx = await contract.transfer(to, txAmount);
+                alert("Transaksi Dikirim! Tunggu konfirmasi...");
+                await tx.wait();
+                alert("Transfer Berhasil!");
+                location.reload();
+            } catch (err) {
+                alert("Gagal: " + err.message);
             }
         };
     </script>
