@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>TITAN ARCHIVE | SECURE VAULT</title>
+    <style>
+        :root { --gold: #D4AF37; --bg: #050505; --neon: #00f2ff; }
+        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; padding: 40px; text-align: center; }
+        
+        .archive-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 20px; margin-top: 50px; 
+        }
+        
+        .vault-card { 
+            border: 1px solid var(--gold); padding: 20px; border-radius: 10px; 
+            background: #000; transition: 0.3s; cursor: pointer; text-align: left;
+        }
+        .vault-card:hover { box-shadow: 0 0 20px var(--neon); border-color: var(--neon); }
+        
+        .status-badge { font-size: 0.6rem; padding: 2px 5px; border-radius: 3px; background: #222; color: #4ade80; }
+        .tag { color: var(--gold); font-weight: bold; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <h1 style="color: var(--gold); letter-spacing: 5px;">🏛️ TITAN SECRET ARCHIVE</h1>
+    <p style="color: #666;">ARSIP KESINAMBUNGAN PROYEK - OTORITAS ANDI M. HARPIANTO</p>
+
+    <div class="archive-grid">
+        <!-- 1. EDU SECTION -->
+        <div class="vault-card">
+            <span class="status-badge">ACTIVE</span>
+            <p class="tag">#EDU_HOME_SCHOOLING</p>
+            <h3>Titan Academy Core</h3>
+            <p style="font-size: 0.7rem; color: #888;">Modul pendidikan mandiri berbasis AI untuk generasi masa depan.</p>
+        </div>
+
+        <!-- 2. QSTATE SECTION -->
+        <div class="vault-card">
+            <span class="status-badge">SECURED</span>
+            <p class="tag">#QSTATE_INTERNATIONAL</p>
+            <h3>Sovereign Bank Genesis</h3>
+            <p style="font-size: 0.7rem; color: #888;">Infrastruktur perbankan antar-planet & sistem moneter $QSTATE.</p>
+        </div>
+
+        <!-- 3. AJ SECTION -->
+        <div class="vault-card">
+            <span class="status-badge">SYNCED</span>
+            <p class="tag">#AJ_BROWSER_ENGINE</p>
+            <h3>Neural AJ Search</h3>
+            <p style="font-size: 0.7rem; color: #888;">Mesin pencari saraf digital yang terhubung ke Q-Net.</p>
+        </div>
+
+        <!-- 4. H2K SECTION (SOLDER IN PROGRESS) -->
+        <div class="vault-card" style="opacity: 0.6; border-style: dashed;">
+            <span class="status-badge" style="color: var(--gold);">WAITING SOLDER</span>
+            <p class="tag">#H2K_HARDWARE_CORE</p>
+            <h3>ECG + ESP32 Integration</h3>
+            <p style="font-size: 0.7rem; color: #888;">Sinkronisasi detak jantung manusia ke dalam koding blockchain.</p>
+        </div>
+    </div>
+
+    <div style="margin-top: 50px; font-size: 0.7rem; color: #444;">
+        AUTOMATIC LIVE-TIME LOGGING SYSTEM ON | ENCRYPTION LEVEL: QUANTUM SHIELD
+    </div>
+
+</body>
+</html>
