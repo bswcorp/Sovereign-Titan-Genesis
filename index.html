@@ -61,7 +61,78 @@
 </div>
         
         <button class="btn" id="connectBtn">IDENTIFIKASI WALLET (Cek 1T)</button>
+        <!-- TITAN RESILIENCE DASHBOARD -->
+<div id="resilienceDashboard" style="margin-top: 50px; padding: 30px; border: 2px solid var(--neon); border-radius: 20px; background: rgba(0,0,0,0.9); max-width: 900px; margin-left: auto; margin-right: auto; box-shadow: 0 0 50px rgba(0,242,255,0.2);">
+    
+    <h2 style="color: var(--neon); letter-spacing: 5px;">📊 TITAN RESILIENCE & MARKET PREDICTION</h2>
+    <p style="font-size: 0.8rem; color: #888;">OTORITAS SIMULASI: ANDI MUHAMMAD HARPIANTO</p>
 
+    <!-- BAGIAN 1: INDEKS KETAHANAN (TITAN INDEX) -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
+        <div style="background: #111; padding: 20px; border: 1px solid var(--gold); border-radius: 10px;">
+            <div style="font-size: 0.7rem; color: var(--gold);">TITAN RESILIENCE INDEX (TRI)</div>
+            <div id="triValue" style="font-size: 2.5rem; color: #4ade80; font-weight: bold;">98.2</div>
+            <div style="font-size: 0.6rem; color: #666;">Status: HIGH IMMUNITY (Safe from Global Crisis)</div>
+        </div>
+        
+        <div style="background: #111; padding: 20px; border: 1px solid var(--neon); border-radius: 10px;">
+            <div style="font-size: 0.7rem; color: var(--neon);">1 AKSA PREDICTION (IDR)</div>
+            <div id="aksaPrice" style="font-size: 2.5rem; color: #fff; font-weight: bold;">Rp 15.000</div>
+            <div style="font-size: 0.6rem; color: #666;">Basis: Internal Q-Net Services</div>
+        </div>
+    </div>
+
+    <!-- BAGIAN 2: SLIDER KRISIS GLOBAL (FAKTOR EKSTERNAL) -->
+    <div style="margin-top: 30px; text-align: left; padding: 20px; border: 1px dashed #444;">
+        <b style="color: #ff3e3e; font-size: 0.8rem;">🚨 GLOBAL RISK SIMULATOR (ADJUST FOR PREDICTION)</b>
+        <div style="margin-top: 15px;">
+            <label style="font-size: 0.7rem;">Konflik Global / Perang Cold-to-Hot:</label>
+            <input type="range" id="warSlider" min="0" max="100" value="10" style="width: 100%;">
+        </div>
+        <div style="margin-top: 15px;">
+            <label style="font-size: 0.7rem;">Devaluasi Mata Uang Fiat (Dollar/Rupiah):</label>
+            <input type="range" id="fiatSlider" min="0" max="100" value="20" style="width: 100%;">
+        </div>
+    </div>
+
+    <!-- BAGIAN 3: MANAJEMEN KONTRAK 5-10 TAHUN (INFRASTRUKTUR) -->
+    <div style="margin-top: 30px; border-top: 1px solid #333; padding-top: 20px;">
+        <h4 style="color: var(--gold);">🏗️ INFRASTRUCTURE LOCK-IN (5-10 YEARS CONTRACT)</h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; font-size: 0.6rem; text-align: left;">
+            <div style="border: 1px solid #333; padding: 10px;">🌐 DOMAIN (.INTL / .COM)<br><b style="color: #4ade80;">10 YEARS SECURED</b></div>
+            <div style="border: 1px solid #333; padding: 10px;">☁️ CLOUD GOVT & ENT<br><b style="color: var(--neon);">5 YEARS CONTRACT</b></div>
+            <div style="border: 1px solid #333; padding: 10px;">🏢 DATA CENTER SPACE<br><b style="color: var(--neon);">5 YEARS CONTRACT</b></div>
+        </div>
+        <p style="margin-top: 15px; font-size: 0.7rem; color: #888;">*Target Tahun ke-6: 100% Kemandirian Server & Data Center Internal.</p>
+    </div>
+</div>
+
+<script>
+    // LOGIKA PREDIKTIF SEDERHANA UNTUK DASHBOARD
+    const warSlider = document.getElementById('warSlider');
+    const fiatSlider = document.getElementById('fiatSlider');
+    const triValue = document.getElementById('triValue');
+    const aksaPrice = document.getElementById('aksaPrice');
+
+    function calculatePrediction() {
+        let war = parseInt(warSlider.value);
+        let fiat = parseInt(fiatSlider.value);
+        
+        // Prediksi: Jika Perang naik atau Fiat hancur, Nilai AKSA & Ketahanan TITAN naik!
+        let newTri = 90 + (war * 0.1) - (fiat * 0.05);
+        let newAksa = 15000 + (war * 200) + (fiat * 300);
+
+        triValue.innerText = newTri.toFixed(1);
+        aksaPrice.innerText = "Rp " + newAksa.toLocaleString('id-ID');
+        
+        // Warna Dinamis
+        triValue.style.color = newTri > 95 ? "#4ade80" : "#ff3e3e";
+    }
+
+    warSlider.oninput = calculatePrediction;
+    fiatSlider.oninput = calculatePrediction;
+</script>
+        
         <!-- PANEL TRANSAKSI OTOMATIS -->
         <div id="txPanel" style="display:none; margin-top: 20px; border-top: 1px dashed #444; padding-top: 15px;">
             <b style="color: var(--gold); font-size: 0.8rem;">PANEL TRANSFER CEPAT</b>
