@@ -26,6 +26,80 @@
         input { width: 100%; padding: 12px; margin: 10px 0; background: #111; color: var(--neon); border: 1px solid var(--gold); border-radius: 5px; box-sizing: border-box; }
         .status-tag { color: #4ade80; font-size: 0.8rem; letter-spacing: 2px; }
     </style>
+    <style>
+    /* EFEK LATAR BELAKANG PARTIKEL EMAS */
+    #goldParticles {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        z-index: -1;
+        background: radial-gradient(circle at center, #111 0%, #050505 100%);
+        overflow: hidden;
+    }
+
+    .particle {
+        position: absolute;
+        background: var(--gold);
+        border-radius: 50%;
+        opacity: 0.3;
+        animation: float 10s infinite linear;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(100vh) scale(0); opacity: 0; }
+        50% { opacity: 0.5; }
+        100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    /* EFEK KILAU BERLIAN PADA LOGO & TOMBOL */
+    .diamond-shine {
+        position: relative;
+        overflow: hidden;
+    }
+    .diamond-shine::after {
+        content: "";
+        position: absolute;
+        top: -50%; left: -50%;
+        width: 200%; height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.4), transparent);
+        transform: rotate(45deg);
+        animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+        0% { left: -100%; }
+        100% { left: 100%; }
+    }
+
+    /* GLOWING STATUS (KETIKA LAYANAN ON) */
+    .status-online {
+        color: #00f2ff;
+        text-shadow: 0 0 10px #00f2ff, 0 0 20px #00f2ff;
+        animation: blink 2s infinite;
+    }
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+</style>
+
+<!-- TAMBAHKAN INI DI DALAM TAG <body> PALING ATAS -->
+<div id="goldParticles"></div>
+
+<script>
+    // Membuat butiran emas melayang secara otomatis
+    const container = document.getElementById('goldParticles');
+    for (let i = 0; i < 50; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.width = Math.random() * 4 + 'px';
+        p.style.height = p.style.width;
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+        p.style.animationDelay = (Math.random() * 5) + 's';
+        container.appendChild(p);
+    }
+</script>
+    
 </head>
 <body>
 
