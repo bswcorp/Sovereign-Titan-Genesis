@@ -104,5 +104,60 @@
             }
         };
     </script>
+    <!-- 1. MARKET GOVERNANCE DASHBOARD (PENENTU HARGA AKSA) -->
+<div id="marketDashboard" style="margin-top: 30px; padding: 20px; border: 2px solid var(--neon); border-radius: 15px; background: rgba(0,0,0,0.8); text-align: left;">
+    <b style="color: var(--neon); font-size: 0.8rem; letter-spacing: 2px;">📊 MARKET GOVERNANCE (Ketetapan Otoritas)</b>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+        <div style="background: #111; padding: 10px; border-left: 3px solid var(--gold);">
+            <div style="font-size: 0.6rem; color: var(--gold);">TITAN RESILIENCE INDEX</div>
+            <div id="triValue" style="font-size: 1.5rem; font-weight: bold; color: #4ade80;">98.2</div>
+        </div>
+        <div style="background: #111; padding: 10px; border-left: 3px solid var(--neon);">
+            <div style="font-size: 0.6rem; color: var(--neon);">PREDIKSI 1 AKSA (IDR)</div>
+            <div id="aksaPrice" style="font-size: 1.5rem; font-weight: bold; color: #fff;">Rp 15.000</div>
+        </div>
+    </div>
+
+    <!-- SLIDER KRISIS (PENGARUH HARGA) -->
+    <div style="margin-top: 15px;">
+        <label style="font-size: 0.6rem; color: #888;">GLOBAL RISK SIMULATOR (ADJUST VALUE):</label>
+        <input type="range" id="riskSlider" min="0" max="100" value="10" style="width: 100%; accent-color: var(--neon);">
+    </div>
+</div>
+
+<!-- 2. INFRASTRUCTURE AUDIT LOG (CATATAN SEWA 5-10 TAHUN) -->
+<div id="auditLogBox" style="margin-top: 20px; padding: 15px; border: 1px solid #333; background: #000; border-radius: 10px; font-family: monospace; font-size: 0.65rem; text-align: left;">
+    <b style="color: var(--gold);">📑 INFRASTRUCTURE AUDIT LOG (5-10Y LOCK)</b>
+    <div style="margin-top: 10px; color: #666; line-height: 1.5;">
+        <div>[CONTRACT-01] <span style="color:#4ade80;">SECURED</span>: Domain .INTL (10 Years Expiry 2036)</div>
+        <div>[CONTRACT-02] <span style="color:var(--neon);">LOCKED</span>: Cloud Enterprise (5 Years Expiry 2031)</div>
+        <div>[CONTRACT-03] <span style="color:var(--neon);">LOCKED</span>: Data Center Space (5 Years Expiry 2031)</div>
+        <div id="liveAudit" style="color: #444; border-top: 1px solid #222; margin-top: 5px; padding-top: 5px;">
+            Scanning Node Infrastructure... <span style="color:var(--gold);">[OK]</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // LOGIKA HARGA & INDEX (Ketetapan Kapten)
+    const riskSlider = document.getElementById('riskSlider');
+    const triValue = document.getElementById('triValue');
+    const aksaPrice = document.getElementById('aksaPrice');
+
+    riskSlider.oninput = function() {
+        let risk = parseInt(this.value);
+        // Jika krisis global naik, kedaulatan Titan menguat!
+        let newTri = 90 + (risk * 0.1);
+        let newAksa = 15000 + (risk * 250); // Harga naik saat krisis
+
+        triValue.innerText = newTri.toFixed(1);
+        aksaPrice.innerText = "Rp " + newAksa.toLocaleString('id-ID');
+        
+        // Update Audit Log secara live
+        document.getElementById('liveAudit').innerText = "Global Issue Detected: Adjusting Resilience... [" + risk + "%]";
+    };
+</script>
+    
 </body>
 </html>
