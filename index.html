@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>TITAN PORTAL | ANDI MUHAMMAD HARPIANTO</title>
-    <script src="https://cdnjs.cloudflare.com" type="module"></script>
+    <!-- Perbaikan Link Library Ethers.js -->
+    <script src="https://cdnjs.cloudflare.com"></script>
     <style>
         :root { --gold: #D4AF37; --bg: #050505; --neon: #00f2ff; --red: #ff3e3e; }
-        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; text-align: center; padding: 20px; }
+        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; text-align: center; padding: 20px; overflow-x: hidden; }
         
-        /* FRAME EMAS BERDENYUT */
+        /* EFEK LATAR BELAKANG PARTIKEL EMAS */
+        #goldParticles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #111 0%, #050505 100%); overflow: hidden; }
+        .particle { position: absolute; background: var(--gold); border-radius: 50%; opacity: 0.3; animation: float 10s infinite linear; }
+        @keyframes float { 0% { transform: translateY(100vh) scale(0); opacity: 0; } 50% { opacity: 0.5; } 100% { transform: translateY(-10vh) scale(1.2); opacity: 0; } }
+
+        /* FRAME EMAS BERDENYUT JANTUNG */
         .vault-frame { 
             border: 4px solid var(--gold); padding: 40px; display: inline-block; 
-            background: #000; border-radius: 25px; box-shadow: 0 0 40px var(--gold); 
-            animation: heartBeat 1.5s infinite; max-width: 450px;
+            background: rgba(0,0,0,0.9); border-radius: 25px; box-shadow: 0 0 40px var(--gold); 
+            animation: heartBeat 1.5s infinite; max-width: 450px; position: relative;
         }
         @keyframes heartBeat {
             0% { transform: scale(1); box-shadow: 0 0 20px var(--gold); }
@@ -20,90 +26,27 @@
             100% { transform: scale(1); box-shadow: 0 0 20px var(--gold); }
         }
 
+        /* EFEK KILAU BERLIAN PADA TOMBOL */
+        .diamond-shine { position: relative; overflow: hidden; }
+        .diamond-shine::after {
+            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: rotate(45deg); animation: shine 3s infinite;
+        }
+        @keyframes shine { 0% { left: -100%; } 100% { left: 100%; } }
+
         .balance-display { font-size: 2.5rem; color: #fff; margin: 20px 0; text-shadow: 0 0 10px var(--neon); }
         .btn { background: var(--neon); color: #000; border: none; padding: 15px; width: 100%; font-weight: bold; cursor: pointer; border-radius: 10px; text-transform: uppercase; margin-top: 10px; }
         .btn-send { background: var(--gold); margin-top: 20px; }
         input { width: 100%; padding: 12px; margin: 10px 0; background: #111; color: var(--neon); border: 1px solid var(--gold); border-radius: 5px; box-sizing: border-box; }
         .status-tag { color: #4ade80; font-size: 0.8rem; letter-spacing: 2px; }
     </style>
-    <style>
-    /* EFEK LATAR BELAKANG PARTIKEL EMAS */
-    #goldParticles {
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        z-index: -1;
-        background: radial-gradient(circle at center, #111 0%, #050505 100%);
-        overflow: hidden;
-    }
-
-    .particle {
-        position: absolute;
-        background: var(--gold);
-        border-radius: 50%;
-        opacity: 0.3;
-        animation: float 10s infinite linear;
-    }
-
-    @keyframes float {
-        0% { transform: translateY(100vh) scale(0); opacity: 0; }
-        50% { opacity: 0.5; }
-        100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-    }
-
-    /* EFEK KILAU BERLIAN PADA LOGO & TOMBOL */
-    .diamond-shine {
-        position: relative;
-        overflow: hidden;
-    }
-    .diamond-shine::after {
-        content: "";
-        position: absolute;
-        top: -50%; left: -50%;
-        width: 200%; height: 200%;
-        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.4), transparent);
-        transform: rotate(45deg);
-        animation: shine 3s infinite;
-    }
-
-    @keyframes shine {
-        0% { left: -100%; }
-        100% { left: 100%; }
-    }
-
-    /* GLOWING STATUS (KETIKA LAYANAN ON) */
-    .status-online {
-        color: #00f2ff;
-        text-shadow: 0 0 10px #00f2ff, 0 0 20px #00f2ff;
-        animation: blink 2s infinite;
-    }
-    @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-    }
-</style>
-
-<!-- TAMBAHKAN INI DI DALAM TAG <body> PALING ATAS -->
-<div id="goldParticles"></div>
-
-<script>
-    // Membuat butiran emas melayang secara otomatis
-    const container = document.getElementById('goldParticles');
-    for (let i = 0; i < 50; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        p.style.width = Math.random() * 4 + 'px';
-        p.style.height = p.style.width;
-        p.style.left = Math.random() * 100 + 'vw';
-        p.style.animationDuration = (Math.random() * 5 + 5) + 's';
-        p.style.animationDelay = (Math.random() * 5) + 's';
-        container.appendChild(p);
-    }
-</script>
-    
 </head>
 <body>
 
-    <div class="vault-frame">
+    <div id="goldParticles"></div>
+
+    <div class="vault-frame diamond-shine">
         <h1 style="color: var(--gold); margin: 0; letter-spacing: 3px;">SOVEREIGN TITAN</h1>
         <p style="font-size: 0.8rem; opacity: 0.8;">ARCHITECT: ANDI MUHAMMAD HARPIANTO</p>
         
@@ -113,25 +56,34 @@
             <div style="color: var(--gold); font-size: 0.9rem;" id="qstateBalance">0.00 $QSTATE</div>
         </div>
 
-        <button class="btn" id="connectBtn">IDENTIFIKASI JANTUNG DIGITAL</button>
+        <button class="btn diamond-shine" id="connectBtn">IDENTIFIKASI JANTUNG DIGITAL</button>
 
-        <!-- PANEL TRANSAKSI (MUNCUL SETELAH KONEK) -->
         <div id="transferPanel" style="display:none; margin-top: 30px; border-top: 1px dashed #444; padding-top: 20px;">
             <p style="color: var(--gold); font-size: 0.9rem;">KIRIM AKSA (TRANSFER)</p>
             <input type="text" id="targetAddr" placeholder="Alamat Tujuan (0x...)">
             <input type="number" id="sendAmt" placeholder="Jumlah AKSA">
-            <button class="btn btn-send" id="sendBtn">EKSEKUSI TRANSFER</button>
+            <button class="btn btn-send diamond-shine" id="sendBtn">EKSEKUSI TRANSFER</button>
         </div>
         
         <p id="walletInfo" style="font-size: 0.7rem; color: #555; margin-top: 20px;"></p>
     </div>
 
-    <script type="module">
-        import { ethers } from "https://cdnjs.cloudflare.com";
+    <script>
+        // Efek Partikel Emas
+        const container = document.getElementById('goldParticles');
+        for (let i = 0; i < 50; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.width = Math.random() * 4 + 'px';
+            p.style.height = p.style.width;
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            p.style.animationDelay = (Math.random() * 5) + 's';
+            container.appendChild(p);
+        }
 
-        // GANTI ALAMAT INI DENGAN ALAMAT KONTRAK TERBARU DARI titan-deploy
+        // Logika Blockchain
         const contractAddress = "0x66B3b7232093888b68570463b23b2Fe8b8B75Db7"; 
-        
         const abi = [
             "function balanceOf(address) view returns (uint256)",
             "function transfer(address to, uint256 amount) returns (bool)"
@@ -147,114 +99,40 @@
                     signer = await provider.getSigner();
                     contract = new ethers.Contract(contractAddress, abi, signer);
                     
-                    // Ambil Saldo
                     const rawBal = await contract.balanceOf(accounts[0]);
                     const qstate = ethers.formatUnits(rawBal, 18);
                     const aksa = parseFloat(qstate) * 100000000;
 
-                    // Update Tampilan
                     document.getElementById('aksaBalance').innerText = aksa.toLocaleString('id-ID') + " AKSA";
                     document.getElementById('qstateBalance').innerText = parseFloat(qstate).toLocaleString('id-ID') + " $QSTATE";
                     document.getElementById('statusLog').innerText = "● JANTUNG TERHUBUNG";
-                    document.getElementById('statusLog').style.color = "#00f2ff";
+                    document.getElementById('statusLog').className = "status-tag status-online";
                     document.getElementById('transferPanel').style.display = "block";
                     document.getElementById('walletInfo').innerText = "Wallet: " + accounts[0];
                     document.getElementById('connectBtn').innerText = "AKSES DITERIMA";
                 } catch (err) {
-                    alert("Koneksi Gagal! Pastikan Ganache Menyala & MetaMask di Localhost 8545");
+                    alert("Gagal: Cek MetaMask Jaringan Pegasus!");
                 }
             } else {
-                alert("Pasang MetaMask dulu, Bosku!");
+                alert("Pasang MetaMask dulu!");
             }
         };
 
         document.getElementById('sendBtn').onclick = async () => {
             const to = document.getElementById('targetAddr').value;
             const aksaAmt = document.getElementById('sendAmt').value;
-            
-            if(!to || !aksaAmt) return alert("Lengkapi data transfer!");
-
+            if(!to || !aksaAmt) return alert("Lengkapi data!");
             try {
-                // Konversi Balik AKSA -> QSTATE -> WEI
                 const qstateAmt = (parseFloat(aksaAmt) / 100000000).toString();
                 const finalAmt = ethers.parseUnits(qstateAmt, 18);
-
-                document.getElementById('statusLog').innerText = "● MEMPROSES TRANSAKSI...";
                 const tx = await contract.transfer(to, finalAmt);
                 await tx.wait();
-                
-                alert("Transfer Berhasil! Kemenangan untuk Titan!");
+                alert("Transfer Berhasil!");
                 location.reload();
             } catch (err) {
-                alert("Transfer Gagal: " + err.message);
+                alert("Gagal: " + err.message);
             }
         };
     </script>
-    <div id="welcomeHeader" style="padding: 20px; border-bottom: 2px double var(--gold); margin-bottom: 30px;">
-    <h2 style="color: var(--gold); margin: 0; font-size: 1.8rem; text-shadow: 0 0 15px var(--gold);">
-        SELAMAT HARI KEMENANGAN 1447H
-    </h2>
-    <h3 style="color: var(--neon); margin: 10px 0 0 0; letter-spacing: 2px;">
-        SELAMAT DATANG DI ERA KEDAULATAN TITAN
-    </h3>
-    <p style="color: #fff; font-size: 0.9rem; line-height: 1.6; max-width: 600px; margin: 15px auto;">
-        "Kripto hanyalah tameng di barisan depan. Inti dari perjuangan kami adalah 
-        <b>Layanan Shield Quantum (IQaaS)</b>. Kami berangkat dari SaaS, membangun menuju IaaS, 
-        hingga memiliki infrastruktur mandiri, Data Center raksasa, dan teknologi masa depan 
-        yang memanusiakan manusia bersama AI+."
-    </p>
-    <div style="font-weight: bold; color: var(--gold); margin-top: 10px;">
-        ARCHITECT & FOUNDER: ANDI MUHAMMAD HARPIANTO
-    </div>
-</div>
-<!-- ROADMAP VISUAL TITAN GENESIS -->
-<div id="roadmapSection" style="margin-top: 50px; padding: 30px; border: 1px solid var(--gold); border-radius: 15px; background: rgba(20,20,20,0.8); max-width: 800px; margin-left: auto; margin-right: auto;">
-    <h2 style="color: var(--gold); letter-spacing: 3px; margin-bottom: 30px;">STRATEGIC ROADMAP: TITAN ASCENSION</h2>
-    
-    <div style="display: flex; flex-direction: column; gap: 20px; text-align: left;">
-        
-        <!-- FASE 1: SaaS (CURRENT) -->
-        <div style="border-left: 4px solid var(--neon); padding-left: 20px;">
-            <h4 style="color: var(--neon); margin: 0;">FASE 1: SaaS (Software as a Service) - SEKARANG</h4>
-            <p style="font-size: 0.85rem; color: #ccc;">
-                Membangun Portal Transaksi $QSTATE & Penambangan H2K (Heart to Key). 
-                Status: <b>LIVE & VERIFIED</b>. Fokus pada Layanan Cepat & Adaptif bagi pengguna awal.
-            </p>
-        </div>
-
-        <!-- FASE 2: PENDANAAN & EKSPANSI -->
-        <div style="border-left: 4px solid var(--gold); padding-left: 20px;">
-            <h4 style="color: var(--gold); margin: 0;">FASE 2: PEMODALAN & SKALABILITAS</h4>
-            <p style="font-size: 0.85rem; color: #ccc;">
-                Masuk ke Pasar Global. Kripto sebagai Tameng Finansial. 
-                Mengumpulkan Kapital untuk membiayai infrastruktur fisik mandiri.
-            </p>
-        </div>
-
-        <!-- FASE 3: IaaS (INFRASTRUCTURE) -->
-        <div style="border-left: 4px solid #ff3e3e; padding-left: 20px;">
-            <h4 style="color: #ff3e3e; margin: 0;">FASE 3: IaaS (Infrastructure as a Service)</h4>
-            <p style="font-size: 0.85rem; color: #ccc;">
-                Pengadaan <b>Server Raksasa & Data Center Mandiri</b>. 
-                Melepas ketergantungan pada pihak ketiga. Membangun "Rumah Sendiri".
-            </p>
-        </div>
-
-        <!-- FASE FINAL: IQaaS & AI+ -->
-        <div style="border-left: 4px solid #fff; padding-left: 20px; background: rgba(212, 175, 55, 0.1);">
-            <h4 style="color: #fff; margin: 0;">FASE FINAL: IQaaS (Intelligence Quantum as a Service)</h4>
-            <p style="font-size: 0.85rem; color: #ccc;">
-                Integrasi penuh <b>Human + AI+</b>. Industri Teknologi Mandiri berskala Global. 
-                Layanan Shield Quantum ON. Kedaulatan Umat Terwujud.
-            </p>
-        </div>
-
-    </div>
-
-    <div style="margin-top: 30px; font-size: 0.7rem; color: var(--gold); font-style: italic;">
-        "Ini bukan rencana, ini adalah KETETAPAN." - Andi Muhammad Harpianto
-    </div>
-</div>
-    
 </body>
 </html>
