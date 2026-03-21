@@ -39,7 +39,27 @@
             <div class="balance-display" id="aksaBalance">0 AKSA</div>
             <div style="color: var(--gold); font-size: 0.8rem;" id="qstateBalance">0 $QSTATE</div>
         </div>
+<!-- PANEL EKSPANSI GLOBAL -->
+<div style="margin-top: 30px; border-top: 2px double var(--gold); padding-top: 20px;">
+    <p style="color: var(--gold); font-size: 0.8rem; letter-spacing: 1px;">EXTERNAL ACCESS PORTAL</p>
+    
+    <div style="display: flex; gap: 10px; flex-direction: column;">
+        <!-- TOMBOL KE BANK SENTRAL -->
+        <a href="#" onclick="alert('Membuka Vault Bank Sentral...')" style="text-decoration: none;">
+            <button class="btn" style="background: #111; color: var(--gold); border: 1px solid var(--gold);">
+                🏛️ ENTER CENTRAL BANK VAULT
+            </button>
+        </a>
 
+        <!-- TOMBOL KE SITUS INTERNASIONAL (HALAMAN BERBEDA) -->
+        <a href="https://quorumstate.international/" target="_blank" style="text-decoration: none;">
+            <button class="btn diamond-shine" style="background: linear-gradient(45deg, #004e92, #000428); color: white; border: 1px solid var(--neon);">
+                🌐 GLOBAL INTERNATIONAL SITE
+            </button>
+        </a>
+    </div>
+</div>
+        
         <button class="btn" id="connectBtn">IDENTIFIKASI WALLET (Cek 1T)</button>
 
         <!-- PANEL TRANSAKSI OTOMATIS -->
