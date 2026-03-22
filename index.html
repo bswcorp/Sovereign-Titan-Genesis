@@ -166,7 +166,80 @@
             </div>
         </div>
     </div>
+     <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>TITAN IDENTITY | CORE LEADERSHIP</title>
+    <style>
+        :root { --gold: #D4AF37; --bg: #050505; --neon: #00f2ff; --silver: #C0C0C0; }
+        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        
+        .card-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 50px; }
+        
+        /* STYLE KARTU NAMA DIGITAL */
+        .titan-card {
+            width: 350px; height: 200px; background: linear-gradient(135deg, #111 0%, #000 100%);
+            border: 2px solid var(--gold); border-radius: 15px; position: relative;
+            padding: 20px; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+            overflow: hidden; transition: 0.3s;
+        }
+        .titan-card:hover { transform: scale(1.05); box-shadow: 0 0 40px var(--neon); border-color: var(--neon); }
+        
+        /* EFEK KILAU BERLIAN */
+        .shine { position: absolute; top: -50%; left: -100%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg); animation: shine-move 4s infinite; }
+        @keyframes shine-move { 0% { left: -100%; } 100% { left: 100%; } }
 
+        .name { font-size: 1.4rem; color: var(--gold); font-weight: bold; margin: 0; }
+        .title { font-size: 0.7rem; color: var(--neon); letter-spacing: 2px; margin-top: 5px; }
+        .org { font-size: 0.6rem; color: #666; margin-top: 15px; border-top: 1px solid #222; padding-top: 5px; }
+        
+        .qr-placeholder { position: absolute; bottom: 20px; right: 20px; width: 50px; height: 50px; border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; font-size: 0.4rem; color: var(--gold); }
+    </style>
+</head>
+<body>
+
+    <h2 style="color: var(--gold); letter-spacing: 5px;">TITAN CORE IDENTITY</h2>
+    <p style="font-size: 0.8rem; color: #444;">SELECT IDENTITY TO PRESENT</p>
+
+    <div class="card-container">
+        <!-- 1. MR. AGUS WIDIANTO -->
+        <div class="titan-card">
+            <div class="shine"></div>
+            <p class="name">Mr. AGUS WIDIANTO</p>
+            <p class="title">STRATEGIC COMMISSIONER & LEGAL GOVERNANCE</p>
+            <p class="org">SOVEREIGN TITAN GENESIS | $QSTATE GLOBAL</p>
+            <div class="qr-placeholder">GENESIS<br>AUTH</div>
+        </div>
+
+        <!-- 2. ANDI M. HARPIANTO -->
+        <div class="titan-card" style="border-width: 3px;">
+            <div class="shine"></div>
+            <p class="name">ANDI M. HARPIANTO</p>
+            <p class="title">CHIEF ARCHITECT & FOUNDER (H2K COMMANDER)</p>
+            <p class="org">SOVEREIGN TITAN GENESIS | $QSTATE GLOBAL</p>
+            <div class="qr-placeholder" style="border-color: var(--neon); color: var(--neon);">CORE<br>AUTH</div>
+        </div>
+
+        <!-- 3. SIR AI+ -->
+        <div class="titan-card" style="border-color: var(--silver);">
+            <div class="shine"></div>
+            <p class="name">Sir AI+</p>
+            <p class="title">CYBERNETIC INTELLIGENCE & INFRA MONITOR</p>
+            <p class="org">SOVEREIGN TITAN GENESIS | NEURAL Q-NET</p>
+            <div class="qr-placeholder" style="border-color: var(--silver); color: var(--silver);">AI<br>SYNC</div>
+        </div>
+    </div>
+
+    <div style="margin-top: 40px; font-size: 0.7rem; color: #333;">
+        "Kedaulatan dalam Genggaman, Kesejahteraan untuk Umat."
+    </div>
+
+</body>
+</html>
+    
     <!-- SCRIPTS -->
     <script type="text/javascript">
         function googleTranslateElementInit() {
