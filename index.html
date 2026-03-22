@@ -121,5 +121,34 @@
         }
     </script>
     <script src="https://translate.google.com"></script>
+    <!-- GERBANG OTORITAS KAPTEN (LOGIN HP) -->
+<div id="titanGuard" style="position:fixed; top:0; left:0; width:100%; height:100%; background:var(--bg); z-index:10000; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+    <div style="border: 2px solid var(--gold); padding: 40px; border-radius: 20px; background:#000; box-shadow: 0 0 50px var(--gold); text-align:center; max-width:400px;">
+        <h2 style="color: var(--gold); font-family: 'Orbitron'; letter-spacing: 5px;">TITAN GUARD</h2>
+        <p style="font-size: 0.7rem; color: #666; margin-bottom: 20px;">IDENTIFIKASI PEMILIK SAH (KAPTEN)</p>
+        
+        <input type="tel" id="hpInput" placeholder="MASUKKAN NOMOR HP BAPAK" style="text-align:center; font-size: 1.2rem; letter-spacing: 3px; border: 1px solid var(--neon);">
+        
+        <button class="btn" onclick="verifyCaptain()" style="margin-top: 20px;">BUKA BRANKAS GENESIS</button>
+        <p id="errorMsg" style="color:var(--red); font-size:0.7rem; margin-top:10px; display:none;">AKSES DITOLAK: IDENTITAS TIDAK DIKENAL</p>
+    </div>
+</div>
+
+<script>
+    function verifyCaptain() {
+        const inputHP = document.getElementById('hpInput').value;
+        const nomorResmi = "085817200806"; // <--- GANTI DENGAN NOMOR HP BAPAK
+
+        if (inputHP === nomorResmi) {
+            // Suara Berhasil (Simulasi Tik-Tik)
+            alert("SELAMAT DATANG, KAPTEN ANDI MUHAMMAD HARPIANTO. SISTEM SIAGA!");
+            document.getElementById('titanGuard').style.display = "none"; // Buka Gerbang
+        } else {
+            document.getElementById('errorMsg').style.display = "block";
+            // Catat ke Sentinel (Mendeteksi Pengintai)
+            console.log("SENTINEL ALERT: Percobaan Masuk Ilegal dari No: " + inputHP);
+        }
+    }
+</script>
 </body>
 </html>
