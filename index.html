@@ -80,7 +80,47 @@
             </div>
             <input type="range" id="riskSlider" min="0" max="100" value="10" style="width:100%; margin-top:10px;">
         </div>
+        <!-- TITAN EXPLORER (ETHERSCAN VERSI GENESIS) -->
+<div id="titanExplorer" style="margin-top: 30px; padding: 20px; border: 1px solid var(--gold); border-radius: 15px; background: rgba(0,0,0,0.9); text-align: left;">
+    <b style="color: var(--gold); font-size: 0.8rem; letter-spacing: 2px;">📡 TITAN BLOCK EXPLORER (Live Feed)</b>
+    
+    <div style="margin-top: 15px; font-size: 0.7rem; color: #666; font-family: monospace;">
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #222; padding-bottom: 5px;">
+            <span>BLOCK NUMBER</span>
+            <span>TRANSACTION HASH</span>
+            <span>STATUS</span>
+        </div>
+        <div id="explorerFeed" style="margin-top: 10px; max-height: 150px; overflow-y: auto;">
+            <!-- DATA TRANSAKSI AKAN MUNCUL DI SINI -->
+            <div style="color: #4ade80;">[BLOCK #1] Contract Deployment: 0xd914... [SUCCESS]</div>
+            <div style="color: var(--neon);">[BLOCK #2] Minting Genesis: 1,000,000,000,000 $QSTATE [COMPLETED]</div>
+        </div>
+    </div>
 
+    <!-- TOMBOL AUTO-SCAN GANACHE -->
+    <button class="btn" style="background: #111; color: var(--gold); border: 1px solid var(--gold); font-size: 0.7rem; margin-top: 15px;" onclick="syncExplorer()">
+        🔄 SYNC WITH GANACHE NETWORK
+    </button>
+</div>
+
+<script>
+    async function syncExplorer() {
+        if (window.ethereum) {
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const blockNum = await provider.getBlockNumber();
+            const feed = document.getElementById('explorerFeed');
+            
+            // Tambahkan Log Baru
+            const log = document.createElement('div');
+            log.style.color = "var(--neon)";
+            log.innerText = `[BLOCK #${blockNum}] System Scan: Network Synced @ ${new Date().toLocaleTimeString()}`;
+            feed.prepend(log);
+            
+            alert("Terhubung ke Jaringan Ganache (Local Core). Status: STABLE.");
+        }
+    }
+</script>
+ 
         <!-- AUDIT LOG -->
         <div id="auditLogBox">
             <b style="color: var(--gold);">📑 INFRASTRUCTURE AUDIT LOG (5-10Y)</b>
