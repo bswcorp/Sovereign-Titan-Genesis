@@ -48,7 +48,7 @@ class BlueEternalEngine:
 
 if __name__ == "__main__":
     # MASUKKAN TOKEN GITHUB HASIL PANDUAN DI BAWAH KE SINI:
-    MY_TOKEN = "ghp_xxxxxxxxxxxxxxx" # Ganti dengan token asli Anda
+    MY_TOKEN = "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" # Ganti dengan token asli Anda
     MY_REPO = "bswcorp/Sovereign-Titan-Genesis"
     
     be = BlueEternalEngine(github_token=MY_TOKEN, repo=MY_REPO)
