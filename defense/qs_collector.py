@@ -6,16 +6,15 @@ def start_engine():
     cursor.execute('CREATE TABLE IF NOT EXISTS aksa_vault (signature TEXT, amount INTEGER)')
     
     try:
-        # Port USB ESP32 Anda
         ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1) 
-        print(">>> Mendengarkan Detak Jantung Titan...")
+        print(">>> Mendengarkan Detak Jantung Titan (Sovereign Titan Genesis)...")
         while True:
             line = ser.readline().decode('utf-8', errors='ignore').strip()
             if "QS_MINTED_KEY:" in line:
                 sig = line.split(":")[1]
                 cursor.execute("INSERT INTO aksa_vault (signature, amount) VALUES (?, ?)", (sig, 1000))
                 conn.commit()
-                print(f"[MINTED] 1000 AKSA Tersimpan di Brankas.")
+                print(f"[MINTED] 1000 AKSA (Biru Protocol) Tersimpan.")
     except Exception as e: print(f"Error: {e}")
     finally: conn.close()
 
