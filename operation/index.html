@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>QUORUM-STATE | Central Bank</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #D4AF37; --cyan: #00f2ff; --bg: #050505; }
+        body { background: var(--bg); color: white; font-family: 'Rajdhani', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { border: 2px solid var(--gold); padding: 30px; background: #111; max-width: 450px; width: 100%; border-radius: 8px; box-shadow: 0 0 30px rgba(212,175,55,0.2); }
+        h1 { font-family: 'Orbitron'; color: var(--gold); text-align: center; margin-bottom: 25px; }
+        label { font-size: 0.8rem; color: var(--gold); display: block; margin-top: 10px; }
+        input { width: 100%; padding: 12px; margin: 5px 0; background: #000; color: var(--cyan); border: 1px solid #444; box-sizing: border-box; }
+        .btn { width: 100%; padding: 15px; font-weight: bold; cursor: pointer; margin-top: 15px; font-family: 'Orbitron'; border: none; }
+        .btn-connect { background: var(--gold); color: #000; }
+        .btn-send { background: var(--cyan); color: #000; }
+        #status { margin-top: 15px; color: #00ff00; font-size: 0.8rem; border-left: 2px solid var(--cyan); padding-left: 10px; display: none; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>QUORUM-STATE</h1>
+        <label>ALAMAT KONTRAK ($QSTATE):</label>
+        <input type="text" id="contractAddr" placeholder="Paste alamat kontrak dari Remix">
+        <label>HOT WALLET TUJUAN:</label>
+        <input type="text" id="toAddr" value="0xD9a1E28224d6d047Eef8712dC97d11A9032b948e" readonly>
+        <button onclick="connectWallet()" class="btn btn-connect">1. HUBUNGKAN METAMASK</button>
+        <button onclick="transferKoin()" class="btn btn-send">2. PINDAHKAN KOIN</button>
+        <div id="status"></div>
+    </div>
+
+    <script type="module">
+        import { ethers } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js";
+        let signer;
+
+        window.connectWallet = async () => {
+            if (!window.ethereum) return alert("MetaMask tidak ditemukan!");
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            signer = await provider.getSigner();
+            document.getElementById("status").style.display = "block";
+            document.getElementById("status").innerText = "STATUS: Dompet Berhasil Terhubung.";
+        };
+
+        window.transferKoin = async () => {
+            if (!signer) return alert("Hubungkan dompet dulu!");
+            const contract = document.getElementById("contractAddr").value;
+            if (!contract.startsWith("0x")) return alert("Masukkan alamat kontrak yang benar!");
+            
+            try {
+                const abi = ["function transfer(address to, uint256 amount) public returns (bool)"];
+                const token = new ethers.Contract(contract, abi, signer);
+                const tx = await token.transfer(document.getElementById("toAddr").value, ethers.parseUnits("1000", 18));
+                document.getElementById("status").innerText = "STATUS: Transaksi Terkirim. Hash: " + tx.hash;
+                await tx.wait();
+                document.getElementById("status").innerText = "STATUS: Sukses! Koin Terkirim ke Hot Wallet.";
+            } catch (e) {
+                document.getElementById("status").innerText = "ERROR: " + (e.reason || e.message);
+            }
+        };
+    </script>
+</body>
+</html>
