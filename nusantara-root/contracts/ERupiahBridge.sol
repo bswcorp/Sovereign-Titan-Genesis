@@ -49,3 +49,18 @@ contract HybridBridge is Ownable {
         aksaToken = QStateToken(_newAddress);
     }
 }
+// Fungsi Penerbitan Mandiri (Sovereign Minting)
+// Digunakan untuk prototipe e-Rp sebelum otoritas resmi bergabung.
+mapping(address => uint256) public sovereignIDRBalance;
+
+event SovereignMinted(address indexed to, uint256 amount, string reason);
+
+function mintSovereignIDR(address to, uint256 amount) public onlyOwner {
+    require(aksaToken.isH2KVerified(to), "H2K Auth Required for Minting");
+    
+    // Mencetak unit Rupiah Digital STG (sIDR) sebagai aset underlying
+    sovereignIDRBalance[to] += amount;
+    
+    emit SovereignMinted(to, amount, "STG Prototype e-Rupiah");
+}
+
