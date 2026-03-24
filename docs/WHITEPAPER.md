@@ -11,4 +11,6 @@ Membangun infrastruktur keuangan yang mandiri dan tahan terhadap ancaman komputa
 STG memperkenalkan arsitektur **Hybrid CBDC** yang menghubungkan Rupiah Digital (e-Rp) dengan unit AKSA. 
 * **Mekanisme:** Menggunakan sistem *Lock-and-Mint*. e-Rp dikunci dalam Sovereign Vault, dan unit AKSA diterbitkan dengan jaminan 1:1.
 * **Privasi H2K:** Transaksi e-Rp dalam ekosistem STG dilindungi oleh biometrik jantung, memberikan privasi absolut bagi warga negara namun tetap terlacak dalam koridor hukum kedaulatan.
+# 🏺 AKSARA LOGIC PROTOCOL
+Aksara Logic adalah sistem enkripsi pasca-kuantum berbasis linguistik Nusantara dan biometrik hardware.
 
