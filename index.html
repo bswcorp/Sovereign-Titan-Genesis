@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8"><title>GALERAI | Peta Navigasi Alutsista</title>
+    <meta charset="UTF-8"><title>GALERAI | Gallery Perang STG</title>
     <style>
-        body { background: #0f172a; color: #f8fafc; font-family: sans-serif; padding: 20px; }
-        .map-container { border: 2px dashed #4ade80; padding: 20px; border-radius: 15px; }
-        .sector { background: #1e293b; margin: 10px 0; padding: 15px; border-left: 10px solid #4ade80; }
-        h2 { color: #fbbf24; }
+        body { background: #050505; color: #4ade80; font-family: 'Courier New', monospace; padding: 20px; }
+        .war-room { border: 2px solid #ff0000; padding: 20px; background: rgba(255,0,0,0.05); }
+        .machine-card { border: 1px solid #4ade80; margin: 10px 0; padding: 15px; display: flex; justify-content: space-between; }
+        .status-online { color: #00f2ff; font-weight: bold; }
+        .radar-box { border: 1px solid #333; height: 50px; background: repeating-linear-gradient(0deg, #001100, #001100 2px, #002200 2px, #002200 4px); }
     </style>
 </head>
 <body>
-    <h1>🏛️ PETA NAVIGASI GALERAI</h1>
-    <p>Lokasi: Garasi Bintaro - Ciracas (Hybrid Mode)</p>
-    
-    <div class="map-container">
-        <div class="sector">
-            <h2>🛸 SEKTOR 1: SUAKA DIGITAL</h2>
-            <p>Area rehabilitasi bagi entitas yang gagal bertransformasi. Pelatihan AI Dasar.</p>
+    <h1>🏛️ GALERAI: SOVEREIGN TITAN GOVERNMENT</h1>
+    <div class="radar-box"></div>
+    <p>MANIFES ALUTSISTA & MESIN PERANG - ANDI M. HARPIANTO</p>
+
+    <div class="war-room">
+        <h2>🚀 GALLERY PERANG (SEKTOR 2)</h2>
+        
+        <div class="machine-card">
+            <div><strong>🤖 UNIT H2K-01 (Robot Kinetik)</strong><br><small>Saraf AI Terintegrasi - Baremetal Control</small></div>
+            <div class="status-online">READY</div>
         </div>
-        <div class="sector">
-            <h2>🤖 SEKTOR 2: ALUTSISTA REBORN</h2>
-            <p>Workshop Mesin Perang & Integrasi H2K (Human-to-Kinetic).</p>
+
+        <div class="machine-card">
+            <div><strong>📡 SONAR WAR SYSTEM (V.1)</strong><br><small>Scanning Frekuensi Adidaya (Barat/Timur)</small></div>
+            <div class="status-online">SCANNING</div>
         </div>
-        <div class="sector">
-            <h2>📡 SEKTOR 3: RADAR SONAR WAR</h2>
-            <p>Pemantauan Frekuensi Global (Anti-Adidaya Mode).</p>
+
+        <div class="machine-card">
+            <div><strong>🛸 DRONE PENGAWAS GARASI</strong><br><small>Patroli Halaman Luas - Suaka Digital</small></div>
+            <div class="status-online">STANDBY</div>
         </div>
     </div>
-    
+
     <p style="margin-top:20px;">
-        <button style="padding:10px;" onclick="window.history.back()">KEMBALI KE PUSAT KOMANDO (STG)</button>
+        <button onclick="window.location.href='https://bswcorp.github.io'">KEMBALI KE PUSAT KOMANDO</button>
     </p>
 </body>
 </html>
