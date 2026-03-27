@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><title>GARAGE HOME | DIGITAL HOSPITAL & ISOLATION</title>
+    <meta charset="UTF-8"><title>GARAGE HOME | SECURE DATA VAULT</title>
     <style>
         :root { --neon: #00f2ff; --warn: #ff0000; --gold: #ffd700; --bg: #050505; }
         body { background: var(--bg); color: #e2e8f0; font-family: 'Courier New', monospace; margin: 0; text-align: center; }
         .header { border-bottom: 2px solid var(--neon); padding: 20px; background: #0a0a0a; box-shadow: 0 0 15px var(--neon); }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; padding: 20px; }
-        .ward { border: 1px solid #333; padding: 15px; background: #111; border-radius: 8px; transition: 0.3s; }
-        .ward:hover { border-color: var(--neon); }
+        .ward { border: 1px solid #333; padding: 15px; background: #111; border-radius: 8px; }
         .isolation-vault { border: 2px solid var(--gold) !important; background: rgba(255, 215, 0, 0.05); box-shadow: 0 0 10px var(--gold); }
-        .heartbeat { color: var(--warn); font-size: 1.5rem; animation: pulse 1s infinite; }
+        .timer-box { font-size: 1.5rem; color: var(--warn); margin: 10px 0; font-weight: bold; border: 1px solid var(--warn); padding: 5px; display: none; }
+        .heartbeat { color: var(--warn); animation: pulse 1s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         .btn-action { background: var(--neon); color: black; border: none; padding: 8px; width: 100%; cursor: pointer; font-weight: bold; margin-top: 5px; }
         .btn-swiss { background: var(--warn); color: white; border: none; padding: 12px; width: 100%; cursor: pointer; font-weight: bold; margin-top: 10px; }
@@ -19,41 +19,75 @@
 <body>
     <div class="header">
         <h1>🏛️ GARAGE HOME: DIGITAL HOSPITAL</h1>
-        <p>STG GOVERNMENT | DATA RECONSTRUCTION CENTER</p>
+        <p>STG GOVERNMENT | ISOLATION VAULT ACTIVE</p>
     </div>
 
     <div class="grid-container">
-        <!-- RUANG ISOLASI DATA (NEW) -->
+        <!-- RUANG ISOLASI DATA DENGAN TIMER -->
         <div class="ward isolation-vault">
             <h3 style="color: var(--gold);">🟡 RUANG ISOLASI DATA</h3>
-            <p style="font-size: 0.8rem;">Status: ENCRYPTED & AIR-GAPPED</p>
-            <p style="color: var(--gold); font-weight: bold;">[ QUBICOIN LEGACY ASSETS ]</p>
-            <button class="btn-action" onclick="alert('🔐 AKSES TERBATAS: MEMBUTUHKAN KUNCI VETO ARCHITECT')">UNLOCK VAULT</button>
+            <p style="font-size: 0.7rem;">[ QUBICOIN LEGACY ASSETS ]</p>
+            <div id="timer-display" class="timer-box">00:10</div>
+            <div id="vault-status" style="font-size: 0.8rem;">STATUS: LOCKED</div>
+            <button id="unlock-btn" class="btn-action" onclick="startSecureUnlock()">INITIALIZE UNLOCK</button>
         </div>
 
         <div class="ward">
             <h3>🏥 SUAKA DIGITAL</h3>
-            <p>Merawat Pasien Transformasi Gagal</p>
+            <p>Pasien Transformasi Gagal</p>
             <div class="heartbeat">💓 RECONSTRUCTING...</div>
         </div>
 
         <div class="ward">
             <h3>⚔️ ALUTSISTA GALLERY</h3>
-            <p>Penyempurnaan Mesin Perang AI</p>
-            <button class="btn-action" onclick="window.open('https://github.com', '_blank')">LIHAT GALLERY</button>
+            <p>Penyempurnaan Mesin AI</p>
+            <button class="btn-action" onclick="alert('UNIT KINETIK READY')">CEK UNIT</button>
         </div>
     </div>
 
     <div style="padding: 20px; max-width: 600px; margin: auto;">
         <div class="ward" style="border-color: var(--warn);">
             <h3 style="color: var(--warn);">🇨🇭 SWISS FINANCIAL HUB</h3>
-            <p>Metaportasi Jalur: RIPE-ATLAS-IPv6-REPATLAS</p>
+            <p>RIPE-ATLAS-IPv6-REPATLAS</p>
             <button class="btn-swiss" onclick="location.href='https://bswcorp.github.io'">AUTHORIZE SWIFT/VISA</button>
         </div>
     </div>
 
+    <script>
+        function startSecureUnlock() {
+            const timerDisplay = document.getElementById('timer-display');
+            const vaultStatus = document.getElementById('vault-status');
+            const unlockBtn = document.getElementById('unlock-btn');
+            
+            unlockBtn.style.display = 'none';
+            timerDisplay.style.display = 'block';
+            vaultStatus.innerHTML = "⚠️ SECURITY CHALLENGE INITIATED";
+            vaultStatus.style.color = "var(--warn)";
+
+            let timeLeft = 10;
+            const interval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.innerHTML = `00:0${timeLeft}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    const key = prompt("ENTER ARCHITECT VETO KEY:");
+                    if (key === "MERDEKA") {
+                        alert("✅ ACCESS GRANTED. WELCOME, ARCHITECT.");
+                        vaultStatus.innerHTML = "🔓 VAULT OPEN: QUBICOIN UNLOCKED";
+                        vaultStatus.style.color = "var(--gold)";
+                        timerDisplay.style.display = 'none';
+                    } else {
+                        alert("❌ ACCESS DENIED. SYSTEM LOCKDOWN.");
+                        location.reload();
+                    }
+                }
+            }, 1000);
+        }
+    </script>
+
     <footer style="font-size: 0.7rem; color: #444; padding: 20px;">
-        BY ARCHITECT ANDI M. HARPIANTO | #STG #GLORY #METAPORTASI
+        BY ARCHITECT ANDI M. HARPIANTO | #STG #GLORY #VETO
     </footer>
 </body>
 </html>
