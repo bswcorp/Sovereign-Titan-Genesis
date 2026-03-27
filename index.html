@@ -1,59 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><title>GARAGE HOME | SECURE DATA VAULT</title>
+    <meta charset="UTF-8"><title>GARAGE | DIGITAL HOSPITAL & VAULT</title>
     <style>
-        :root { --neon: #00f2ff; --warn: #ff0000; --gold: #ffd700; --bg: #050505; }
+        :root { --neon: #4ade80; --warn: #ff0000; --gold: #ffd700; --bg: #050505; }
         body { background: var(--bg); color: #e2e8f0; font-family: 'Courier New', monospace; margin: 0; text-align: center; }
         .header { border-bottom: 2px solid var(--neon); padding: 20px; background: #0a0a0a; box-shadow: 0 0 15px var(--neon); }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; padding: 20px; }
         .ward { border: 1px solid #333; padding: 15px; background: #111; border-radius: 8px; }
-        .isolation-vault { border: 2px solid var(--gold) !important; background: rgba(255, 215, 0, 0.05); box-shadow: 0 0 10px var(--gold); }
-        .timer-box { font-size: 1.5rem; color: var(--warn); margin: 10px 0; font-weight: bold; border: 1px solid var(--warn); padding: 5px; display: none; }
-        .heartbeat { color: var(--warn); animation: pulse 1s infinite; }
+        .isolation-vault { border: 2px solid var(--gold) !important; background: rgba(255, 215, 0, 0.1); box-shadow: 0 0 15px var(--gold); }
+        .timer-box { font-size: 2rem; color: var(--warn); margin: 10px 0; font-weight: bold; border: 2px solid var(--warn); padding: 10px; display: none; }
+        .btn-action { background: var(--neon); color: black; border: none; padding: 12px; width: 100%; cursor: pointer; font-weight: bold; margin-top: 10px; border-radius: 5px; }
+        .heartbeat { color: var(--warn); animation: pulse 1s infinite; font-weight: bold; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-        .btn-action { background: var(--neon); color: black; border: none; padding: 8px; width: 100%; cursor: pointer; font-weight: bold; margin-top: 5px; }
-        .btn-swiss { background: var(--warn); color: white; border: none; padding: 12px; width: 100%; cursor: pointer; font-weight: bold; margin-top: 10px; }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>🏛️ GARAGE HOME: DIGITAL HOSPITAL</h1>
-        <p>STG GOVERNMENT | ISOLATION VAULT ACTIVE</p>
+        <h1>🏛️ GARAGE: DIGITAL HOSPITAL</h1>
+        <p>FOCUS AREA: REHABILITASI & ISOLASI DATA | STG GOV</p>
     </div>
 
     <div class="grid-container">
-        <!-- RUANG ISOLASI DATA DENGAN TIMER -->
+        <!-- RUANG ISOLASI DATA (GARAGE CORE) -->
         <div class="ward isolation-vault">
             <h3 style="color: var(--gold);">🟡 RUANG ISOLASI DATA</h3>
-            <p style="font-size: 0.7rem;">[ QUBICOIN LEGACY ASSETS ]</p>
-            <div id="timer-display" class="timer-box">00:10</div>
-            <div id="vault-status" style="font-size: 0.8rem;">STATUS: LOCKED</div>
+            <p style="font-size: 0.8rem;">[ QUBICOIN LEGACY ASSETS ]</p>
+            <div id="timer-display" class="timer-box">10</div>
+            <div id="vault-status" style="font-size: 1rem; font-weight: bold;">STATUS: LOCKED</div>
             <button id="unlock-btn" class="btn-action" onclick="startSecureUnlock()">INITIALIZE UNLOCK</button>
         </div>
 
         <div class="ward">
             <h3>🏥 SUAKA DIGITAL</h3>
             <p>Pasien Transformasi Gagal</p>
-            <div class="heartbeat">💓 RECONSTRUCTING...</div>
-        </div>
-
-        <div class="ward">
-            <h3>⚔️ ALUTSISTA GALLERY</h3>
-            <p>Penyempurnaan Mesin AI</p>
-            <button class="btn-action" onclick="alert('UNIT KINETIK READY')">CEK UNIT</button>
+            <div class="heartbeat">💓 RECONSTRUCTING DATA...</div>
         </div>
     </div>
 
-    <div style="padding: 20px; max-width: 600px; margin: auto;">
-        <div class="ward" style="border-color: var(--warn);">
-            <h3 style="color: var(--warn);">🇨🇭 SWISS FINANCIAL HUB</h3>
-            <p>RIPE-ATLAS-IPv6-REPATLAS</p>
-            <button class="btn-swiss" onclick="location.href='https://bswcorp.github.io'">AUTHORIZE SWIFT/VISA</button>
-        </div>
+    <div style="padding: 20px;">
+        <button style="background:#333; color:#fff; padding:10px; border:none; cursor:pointer;" onclick="window.location.href='https://bswcorp.github.io/Sovereign-Titan-Genesis/'">KEMBALI KE STG PORTAL</button>
     </div>
 
     <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playSound(freq, type) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+
         function startSecureUnlock() {
             const timerDisplay = document.getElementById('timer-display');
             const vaultStatus = document.getElementById('vault-status');
@@ -61,33 +64,36 @@
             
             unlockBtn.style.display = 'none';
             timerDisplay.style.display = 'block';
-            vaultStatus.innerHTML = "⚠️ SECURITY CHALLENGE INITIATED";
+            vaultStatus.innerHTML = "⚠️ SECURITY CHALLENGE ACTIVE";
             vaultStatus.style.color = "var(--warn)";
 
             let timeLeft = 10;
             const interval = setInterval(() => {
                 timeLeft--;
-                timerDisplay.innerHTML = `00:0${timeLeft}`;
+                timerDisplay.innerHTML = timeLeft;
+                
+                // Suara TIK-TOK
+                playSound(440, 'sine');
                 
                 if (timeLeft <= 0) {
                     clearInterval(interval);
+                    // Suara Alarm Final
+                    playSound(880, 'square');
+                    setTimeout(() => playSound(1200, 'square'), 100);
+
                     const key = prompt("ENTER ARCHITECT VETO KEY:");
                     if (key === "MERDEKA") {
-                        alert("✅ ACCESS GRANTED. WELCOME, ARCHITECT.");
+                        alert("✅ ACCESS GRANTED. WELCOME ARCHITECT.");
                         vaultStatus.innerHTML = "🔓 VAULT OPEN: QUBICOIN UNLOCKED";
                         vaultStatus.style.color = "var(--gold)";
                         timerDisplay.style.display = 'none';
                     } else {
-                        alert("❌ ACCESS DENIED. SYSTEM LOCKDOWN.");
+                        alert("❌ ACCESS DENIED. LOCKDOWN.");
                         location.reload();
                     }
                 }
             }, 1000);
         }
     </script>
-
-    <footer style="font-size: 0.7rem; color: #444; padding: 20px;">
-        BY ARCHITECT ANDI M. HARPIANTO | #STG #GLORY #VETO
-    </footer>
 </body>
 </html>
