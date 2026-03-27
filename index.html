@@ -1,41 +1,106 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-    <meta charset="UTF-8"><title>GALERAI | Gallery Perang STG</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GALERAI | RIPE Atlas & IBM Scale Admin</title>
     <style>
-        body { background: #050505; color: #4ade80; font-family: 'Courier New', monospace; padding: 20px; }
-        .war-room { border: 2px solid #ff0000; padding: 20px; background: rgba(255,0,0,0.05); }
-        .machine-card { border: 1px solid #4ade80; margin: 10px 0; padding: 15px; display: flex; justify-content: space-between; }
-        .status-online { color: #00f2ff; font-weight: bold; }
-        .radar-box { border: 1px solid #333; height: 50px; background: repeating-linear-gradient(0deg, #001100, #001100 2px, #002200 2px, #002200 4px); }
+        :root { --neon-green: #4ade80; --ibm-blue: #0f62fe; --warning: #f43f5e; --bg: #050505; }
+        body { background: var(--bg); color: #e2e8f0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; overflow-x: hidden; }
+        
+        /* HEADER & HUD */
+        header { background: rgba(0,0,0,0.8); border-bottom: 2px solid var(--ibm-blue); padding: 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
+        .logo-section { font-weight: bold; letter-spacing: 2px; }
+        .badge { background: var(--ibm-blue); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; }
+
+        /* GRID SYSTEM */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 20px; }
+        .card { background: #111; border: 1px solid #333; border-radius: 12px; padding: 20px; position: relative; transition: 0.3s; }
+        .card:hover { border-color: var(--ibm-blue); box-shadow: 0 0 15px rgba(15, 98, 254, 0.3); }
+        
+        /* RIPE ATLAS PROBES */
+        .probe-status { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+        .status-light { width: 12px; height: 12px; border-radius: 50%; background: var(--neon-green); box-shadow: 0 0 8px var(--neon-green); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
+        /* IBM SPECTRUM SCALE CHART SIMULATION */
+        .bar-container { display: flex; align-items: flex-end; gap: 5px; height: 80px; margin-top: 20px; }
+        .bar { background: var(--ibm-blue); width: 100%; transition: height 0.5s ease-in-out; border-radius: 2px 2px 0 0; }
+
+        /* BUTTONS */
+        .btn { background: transparent; border: 1px solid var(--neon-green); color: var(--neon-green); padding: 10px; width: 100%; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 0.8rem; margin-top: 15px; }
+        .btn:hover { background: var(--neon-green); color: black; }
+
+        /* SENSOR LOGS */
+        #log-container { background: #000; color: var(--neon-green); font-family: monospace; height: 150px; overflow-y: auto; padding: 10px; border-radius: 6px; font-size: 0.8rem; border: 1px solid #222; }
     </style>
 </head>
 <body>
-    <h1>🏛️ GALERAI: SOVEREIGN TITAN GOVERNMENT</h1>
-    <div class="radar-box"></div>
-    <p>MANIFES ALUTSISTA & MESIN PERANG - ANDI M. HARPIANTO</p>
 
-    <div class="war-room">
-        <h2>🚀 GALLERY PERANG (SEKTOR 2)</h2>
-        
-        <div class="machine-card">
-            <div><strong>🤖 UNIT H2K-01 (Robot Kinetik)</strong><br><small>Saraf AI Terintegrasi - Baremetal Control</small></div>
-            <div class="status-online">READY</div>
-        </div>
+<header>
+    <div class="logo-section">🏛️ GALERAI <span class="badge">ADMIN v2.0</span></div>
+    <div style="font-size: 0.8rem; color: #888;">NODE: STG-JAKARTA-AMBASSADOR</div>
+</header>
 
-        <div class="machine-card">
-            <div><strong>📡 SONAR WAR SYSTEM (V.1)</strong><br><small>Scanning Frekuensi Adidaya (Barat/Timur)</small></div>
-            <div class="status-online">SCANNING</div>
-        </div>
-
-        <div class="machine-card">
-            <div><strong>🛸 DRONE PENGAWAS GARASI</strong><br><small>Patroli Halaman Luas - Suaka Digital</small></div>
-            <div class="status-online">STANDBY</div>
-        </div>
+<div class="dashboard-grid">
+    <!-- RIPE ATLAS SECTION -->
+    <div class="card">
+        <h3>📡 RIPE ATLAS PROBES</h3>
+        <div class="probe-status"><span>JAKARTA AMBASSADOR</span> <div class="status-light"></div></div>
+        <div class="probe-status"><span>BINTARO NODE</span> <div class="status-light"></div></div>
+        <div class="probe-status"><span>CIRACAS NODE</span> <div class="status-light" style="background: var(--gold); box-shadow: 0 0 8px var(--gold);"></div></div>
+        <p style="font-size: 0.7rem; color: #666;">Status: Measuring Sovereign Connectivity (IPv4/IPv6)</p>
+        <button class="btn" onclick="window.open('https://atlas.ripe.net/', '_blank')">View RIPE Maps</button>
     </div>
 
-    <p style="margin-top:20px;">
-        <button onclick="window.location.href='https://bswcorp.github.io'">KEMBALI KE PUSAT KOMANDO</button>
-    </p>
+    <!-- IBM SPECTRUM SCALE SECTION -->
+    <div class="card">
+        <h3>🏗️ IBM SPECTRUM SCALE</h3>
+        <p style="font-size: 0.8rem;">GPFS Cluster Load:</p>
+        <div class="bar-container" id="chart">
+            <div class="bar" style="height: 40%"></div>
+            <div class="bar" style="height: 70%"></div>
+            <div class="bar" style="height: 55%"></div>
+            <div class="bar" style="height: 90%"></div>
+            <div class="bar" style="height: 30%"></div>
+        </div>
+        <button class="btn" onclick="alert('mmgetstatus: ALL NODES ONLINE')">mmgetstatus</button>
+    </div>
+
+    <!-- INTRUSION LOGS (GALERAI) -->
+    <div class="card">
+        <h3>🚨 GALERAI INTRUSION LOGS</h3>
+        <div id="log-container">
+            [SYS] Initializing Saraf AI...<br>
+            [SONAR] Scanning West/East Perimeter...<br>
+            [GPFS] Mounting /gpfs/titan/alutsista...<br>
+        </div>
+        <button class="btn" style="border-color: var(--warning); color: var(--warning);">FORCE VETO LOCK</button>
+    </div>
+</div>
+
+<div style="text-align: center; padding: 40px; color: #444;">
+    <p>Architecture by Andi Muhammad Harpianto | Sovereign Titan Government</p>
+    <p>#BlockchainResurrection #JonPostelLegacy</p>
+</div>
+
+<script>
+    // Dinamis Log
+    const logs = [
+        "[INFO] IPv6 Path via Swiss Linked.",
+        "[ALERT] RIPE Atlas Ambassador measuring Latency...",
+        "[GPFS] mmcloudgateway service healthy.",
+        "[H2K] Kinetic synchronization complete.",
+        "[SONAR] Silent monitor: No intel detected."
+    ];
+    setInterval(() => {
+        const logBox = document.getElementById('log-container');
+        const entry = document.createElement('div');
+        entry.innerHTML = `> ${logs[Math.floor(Math.random() * logs.length)]}`;
+        logBox.appendChild(entry);
+        logBox.scrollTop = logBox.scrollHeight;
+    }, 4000);
+</script>
+
 </body>
 </html>
