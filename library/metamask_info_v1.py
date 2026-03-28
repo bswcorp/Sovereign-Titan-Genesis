@@ -1,0 +1,12 @@
+def run_mm():
+    print("\n" + "🦊"*15)
+    print("🏛️  STG METAMASK GATEWAY - CUSTODY VIEW")
+    print("🛡️  STATUS: LINKED TO SOVEREIGN VAULT")
+    print("🦊"*15)
+    print("🔗 WALLET ADDR : 0x... (Check Private Device)")
+    print("💎 NETWORK     : STG MAINNET / ETHEREUM")
+    print("📜 HISTORY     : 10/10 PROTOCOL PENDING")
+    print("------------------------------------------")
+    print("💡 PESAN: JANGAN KASIH SEED PHRASE KE SRIGALA!")
+    print("="*50)
+if __name__ == "__main__": run_mm()
