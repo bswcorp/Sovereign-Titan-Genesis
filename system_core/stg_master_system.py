@@ -31,7 +31,7 @@ def run():
         elif choice == '4': os.system('python3 ../library/wolf_scanner_v1.py')
         elif choice == '5': os.system('python3 ../library/wolf_realwork_v1.py')
         elif choice == '6': os.system('python3 ../library/machine_status_v1.py')
-        elif choice == '7': os.system('cat ../library/manual_book/MANUAL_BOOK_v1.md')
+        elif choice == '7': os.system('cat ~/Sovereign-Titan-Genesis/library/manual_book/MANUAL_BOOK_v1.md')
         elif choice == '8': os.system("python3 ../library/bank_genesis_v1.py")
         elif choice == '81': 
             print("\n👋 Sistem Standby. Merdeka!")

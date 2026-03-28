@@ -6,20 +6,17 @@
 "SEKALI LAYAR TERKEMBANG, PANTANG BIDUK SURUT KE PANTAI!"
 
 ---
-
 ### 🏛️ BAB 1: FILOSOFI TAKALAR-GENESIS
-Sistem ini dibangun di atas karang kedaulatan. Kita tidak mungkin merubah arah mata angin, tapi kita kendalikan layar Phinisi ini menuju Swiss Hub.
+Sistem ini dibangun di atas karang kedaulatan. Kita kendalikan layar Phinisi ini menuju Swiss Hub.
 
 ### 🔐 BAB 2: DAPUR PACU (SIRI GATE)
-Gunakan kode "MERDEKA". Ini adalah harga diri (Siri'). Tanpa kode ini, Dapur Pacu tetap dalam mode siluman.
+Gunakan kode "MERDEKA". Ini adalah Harga Diri (Siri').
 
-### 🚀 BAB 3: NAVIGASI PHINISI (WARP)
-Melipat ruang dan waktu melalui jalur IPv6 RIPE Atlas. Data mendarat di Zurich tanpa perlu ijin dari kapal asing.
+### 🚀 BAB 3: WARP DRIVE (LONCATAN PHINISI)
+Melipat ruang dan waktu melalui jalur IPv6 RIPE Atlas.
 
 ### 🏦 BAB 4: BANK & DOMPET GENESIS (1T)
-Inilah brankas mandiri kita. Modal 1 Triliun dari tangan Arsitek sendiri. Tidak butuh laci atau cold wallet orang lain.
+Modal 1 Triliun dari tangan Arsitek sendiri. Aman toh!
 
 ### 🙏 BAB 5: SYUKUR & RIDA
-Rawatlah mesin ini dengan doa. Jika kita bersyukur, Allah SWT akan menjaga kedaulatan kita selamanya.
-
-**"JANGAN AJARI IKAN BERENANG, JANGAN AJARI PELAUT BACA BINTANG!"**
+Rawatlah mesin ini dengan doa. Bismillah!
