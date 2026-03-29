@@ -29,3 +29,12 @@ Rawatlah mesin ini dengan doa. Bismillah!
 
 "Kami tidak hanya memberi platform, kami memberi Ketenangan Kedaulatan."
 ---
+
+### 🌐 CHAPTER 8: DEFI & SOVEREIGN ECOSYSTEM
+**STG INTEGRATION:**
+- **PERMISSIONLESS:** No central authority can freeze STG assets.
+- **TRANSPARENCY:** Every 1T transfer is recorded in the Web 4.0 Ledger.
+- **USER CONTROL:** You are the bank. You are the custodian.
+
+"WE DON'T PROVIDE DEFI SERVICES; WE ESTABLISH FINANCIAL SOVEREIGNTY."
+---

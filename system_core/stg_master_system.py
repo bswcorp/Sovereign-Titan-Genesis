@@ -4,20 +4,20 @@ def execute_pillar(cmd, path):
     try:
         os.system(f"python3 {path}{cmd}")
     except:
-        print(f"\n❌ ERROR IN PILAR: {cmd}")
+        print(f"\n❌ ERROR IN PILLAR: {cmd}")
 
 def menu():
     os.system('clear')
     print("==================================================")
-    print("🏛️  STG SUPREME COMMAND - AUDIT COMPLETED")
+    print("🏛️  STG SUPREME COMMAND - INDUSTRIAL v81.9")
     print("🛡️  CHIEF ARCHITECT: ANDI M. HARPIANTO")
     print("==================================================")
-    # PILAR UTAMA (DIRECT JEPRET)
     print("1.  🔐 [SEC ] PRIMARY COMMAND (1-16)")
     print("5.  💰 [MINT] MINTING WATERFALL (EYE-BLINK)")
     print("6.  📠 [MACH] MACHINE CAPACITY")
     print("7.  📘 [MANL] INDUSTRIAL MANUAL")
     print("8.  🏦 [BANK] GENESIS VAULT (1T)")
+    print("9.  🎯 [JCC ] THE SOVEREIGN SPEECH (AUGUST)")
     print("21. 🔴 [QDAY] GLOBAL RESET (OFFICIAL)")
     print("24. 🤝 [ALLY] GUEST LEDGER (MASTER PLAN)")
     print("25. ⚔️  [WAR ] WAR PROJECT (INITIATE)")
@@ -35,6 +35,7 @@ def run():
         elif c == '6': execute_pillar("machine_status_v1.py", p)
         elif c == '7': os.system(f"cat {p}manual_book/MANUAL_BOOK_v1.md")
         elif c == '8': execute_pillar("bank_internal_v1.py", p)
+        elif c == '9': execute_pillar("presentation_v1.py", p)
         elif c == '21': execute_pillar("qday_doomsday_v1.py", p)
         elif c == '24': execute_pillar("web4_guest_ledger_v1.py", p)
         elif c == '25': execute_pillar("war_room_v1.py", p)

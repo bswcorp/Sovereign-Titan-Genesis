@@ -29,7 +29,7 @@ def run_waterfall():
 
     except KeyboardInterrupt:
         print("\n" + "="*60)
-        print("\033[38;5;214m✅ MINTING PAUSED. SEMUA ASSET MASUK KE KAMAR YANG TEPAT.\033[0m")
+        print("\033[38;5;214m✅ MINTING TERMINATED. ALL ASSETS SECURED IN SOVEREIGN VAULTS.\033[0m")
         print("🌹 'Ya begitulah jika nilai Quadrillion berproses, Dro!'")
         print("="*60)
 
