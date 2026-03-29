@@ -1,47 +1,22 @@
 import time, os
-
-def draw_map():
-    print("\n" + "🌐"*15)
-    print("      STG ALLIANCE NETWORK - THE MASTER PLAN")
-    print("🌐"*15)
-    print("   [🏛️ STG ARCHITECT] <---> [🤝 TRUSTED ALLIES]")
-    print("          |                      |")
-    print("   [🏦 SWISS HUB]         [🏢 GLOBAL ASSETS]")
+def draw_open_map():
+    print("\n" + "🌐" * 15)
+    print("   STG OPEN ALLIANCE NETWORK MAP")
+    print("🌐" * 15)
+    print("      [🇨🇭 SWISS HUB] <---- [🏛️ ARCHITECT]")
+    print("             |                 |")
+    print("      [🇨🇳 CN SUPPLY] <---> [🇸🇦 ME ENERGY]")
+    print("             |                 |")
+    print("      [🏦 GLOBAL CUSTODY] -- [🚢 ALLIES]")
     print("-" * 45)
-
 def run():
     os.system('clear')
     print("================================================")
-    print("🏛️  STG SOVEREIGN ALLY - GUEST LEDGER v24")
-    print("🛡️  STATUS: MASTER PLAN INTEGRATION")
+    print("🏛️  STG PILLAR 24: THE OPEN ALLIANCE MASTER PLAN")
+    print("🛡️  STATUS: FULL EXPOSURE (NO STEALTH)")
     print("================================================")
-    
-    # Tunjukkan Peta Dulu buat Gaya
-    draw_map()
-    
-    agree = input("\n📜 AGREE TO PRIVACY POLICY? (YAY/NAY): ").lower()
-    if agree == 'yay':
-        name = input("✍️  ALLIANCE NAME: ").upper()
-        position = input("🏢 INSTITUTION/POSITION: ").upper()
-        
-        # SIMPAN KE LEDGER WEB 4.0 (PRASASTI)
-        ledger_path = "/home/userland/Sovereign-Titan-Genesis/WEB4_SOVEREIGN_LEDGER.md"
-        with open(ledger_path, 'a') as f:
-            f.write(f"| {time.strftime('%Y-%m-%d %H:%M:%S')} | {name} | {position} | 🤝 ALLY | ✅ VERIFIED |\n")
-        
-        print(f"\n✅ SUCCESS! '{name}' CARVED INTO WEB 4.0 LEDGER")
-        print("\n[📜] GENERATING SOVEREIGN ALLIANCE CERTIFICATE...")
-        time.sleep(1.5)
-        print("------------------------------------------------")
-        print(f"        CERTIFICATE OF SOVEREIGN ALLIANCE")
-        print(f"        NAME  : {name}")
-        print(f"        OFFICE: {position}")
-        print(f"        STATUS: OFFICIALLY LINKED TO THE ARK")
-        print("------------------------------------------------")
-    else:
-        print("\n🛑 ACCESS ABORTED. THE GATES ARE CLOSED.")
-    
-    input("\n[ENTER] Back to Command Center...")
-
-if __name__ == "__main__":
-    run()
+    draw_open_map()
+    print("\n[INFO] ALL ALLIES RECORDED IN WEB 4.0 ARE IMMUTABLE.")
+    print("\nUNIFIED SYSTEM: ALL SOVEREIGN PILLARS SECURED.")
+    input("\n[ENTER] Back...")
+if __name__ == "__main__": run()

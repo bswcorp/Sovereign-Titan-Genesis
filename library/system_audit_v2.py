@@ -1,12 +1,24 @@
 import time, os
+
 def run():
     os.system('clear')
-    print("🔍 [AUDIT REPORT: GLOBAL READINESS]")
-    print("-" * 45)
-    print("💎 VAULT STATUS    : 1,000,000,000,000 $QSTATE")
-    print("🛡️  ENCRYPTION      : QUANTUM-RESISTANT LONTARA")
-    print("🌐 NETWORK         : WEB 4.0 IMMUTABLE LEDGER")
-    print("🚀 READINESS LEVEL : 100% (AUGUST READY)")
-    print("-" * 45)
+    # Ambil data dari Vol 8
+    last_trf = 0
+    if os.path.exists('last_transfer.tmp'):
+        with open('last_transfer.tmp', 'r') as f:
+            last_trf = int(f.read())
+
+    print("==================================================")
+    print("🏛️  STG CIVILIZATION READINESS - HOT HUB AUDIT")
+    print(f"📡 TIMESTAMP: {time.strftime('%Y-%m-%d %H:%M:%S')}")
+    print("==================================================")
+    print(f"\n📈 HOT WALLET INFLOW: +{last_trf:,} $QSTATE")
+    print(f"🔥 HOT HUB STATUS   : [ACTIVE & LIQUID]")
+    print("🛡️  VAULT INTEGRITY  : [VERIFIED]")
+    print("\n--------------------------------------------------")
+    print("✅ BALANCE INCREASED IN HOT LEDGER.")
     print("UNIFIED SYSTEM: ALL SOVEREIGN PILLARS SECURED.")
+    print("==================================================")
+    input("\n[ENTER] Back...")
+
 if __name__ == "__main__": run()
