@@ -2,43 +2,35 @@ import os, time, sys
 
 def run():
     os.system('clear')
-    GOLD = "\033[1;33m"
-    BLUE = "\033[1;34m"
-    RESET = "\033[0m"
-
+    GOLD, BLUE, RESET = "\033[1;33m", "\033[1;34m", "\033[0m"
+    
     print(f"{BLUE}==================================================")
-    print("🏛️  STG SUPREME AUDITOR COMMAND - MOBILE v82.9")
+    print("🏛️  STG SUPREME AUDITOR COMMAND - MOBILE v84.1")
     print(f"🛡️  CHIEF ARCHITECT: {GOLD}CAPO ANDI M. HARPIANTO{BLUE}")
     print("==================================================" + RESET)
-
+    
     print(f"{GOLD}001.{RESET} 🇮🇩 [MRDK] MERDEKA (PRIMARY COMMAND)")
     print(f"{GOLD}505.{RESET} 🆘 [HELP] SOS, FAQ, MANUAL BOOK")
-    print(f"{GOLD}555.{RESET} ⛏️  [MINE] MINING OPERATIONS (STEALTH)")
-    print(f"{GOLD}808.{RESET} 🏛️  [ABUT] ABOUT STG / MAKRONESIA / METAPORTASI")
+    print(f"{GOLD}555.{RESET} 🌊 [MINE] THE GREAT MINING TSUNAMI (1MQ)")
+    print(f"{GOLD}808.{RESET} 🔮 [META] METAPORTASI (SPACE-TIME FOLDING)")
     print(f"{GOLD}810.{RESET} 🚪 [GATE] EXIT / PINTU KELUAR")
     print(f"{BLUE}--------------------------------------------------{RESET}")
-
+    
     choice = input(f"{GOLD}👉 ENTER CODE: {RESET}").strip()
-
+    p = "/home/userland/Sovereign-Titan-Genesis/library/"
+    
     if choice == '001':
-        print("\n🇮🇩 MERDEKA! SOVEREIGN AUTHORITY ACTIVE."); time.sleep(1.2)
+        os.system(f"python3 {p}stg_primary_engine.py")
     elif choice == '505':
-        print("\n🆘 LOADING MANUAL BOOK & FAQ..."); time.sleep(1.2)
+        os.system(f"cat {p}manual_book/MANUAL_BOOK_v1.md")
     elif choice == '555':
-        # Simulasi Mining Ringan agar HP tidak panas
-        os.system('clear')
-        print(f"{GOLD}⛏️  MINING METANESIA ASSETS (STEALTH)...{RESET}")
-        for i in range(3):
-            print(f"🛰️  SCANNING DATA... [BLOCK {i+555}] CONFIRMED")
-            time.sleep(0.5)
-        print(f"\n✅ STATUS: DATA MINED. ASSETS SECURED.")
-        input("\n[ENTER] Back...")
+        os.system(f"python3 {p}stg_homeschooling_v1.py")
     elif choice == '808':
-        print("\n🏛️  STG: SOVEREIGN TITAN GENESIS - MAKRONESIA ARK."); time.sleep(1.2)
+        os.system(f"python3 {p}metaportasi_v1.py")
     elif choice == '810':
-        print("\n🚪 CLOSING SECURE GATE..."); time.sleep(1); sys.exit()
+        print("\n🚪 CLOSING SECURE GATE..."); sys.exit()
     else:
-        print("\n⚠️ INVALID AUDITOR CODE."); time.sleep(1)
+        print("\n⚠️ CODE INVALID."); time.sleep(1)
 
 if __name__ == "__main__":
     while True:
