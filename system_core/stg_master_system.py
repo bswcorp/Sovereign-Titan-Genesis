@@ -1,49 +1,46 @@
-import os, sys, time
-
-def execute_pillar(cmd, path):
-    try:
-        os.system(f"python3 {path}{cmd}")
-    except:
-        print(f"\n❌ ERROR IN PILLAR: {cmd}")
-
-def menu():
-    os.system('clear')
-    print("==================================================")
-    print("🏛️  STG SUPREME COMMAND - INDUSTRIAL v81.9")
-    print("🛡️  CHIEF ARCHITECT: ANDI M. HARPIANTO")
-    print("==================================================")
-    print("1.  🔐 [SEC ] PRIMARY COMMAND (1-16)")
-    print("5.  💰 [MINT] MINTING WATERFALL (EYE-BLINK)")
-    print("6.  📠 [MACH] MACHINE CAPACITY")
-    print("7.  📘 [MANL] INDUSTRIAL MANUAL")
-    print("8.  🏦 [BANK] QUORUM-STATE LIQUIDITY (VAULT)")
-    print("9.  🎯 [JCC ] THE SOVEREIGN SPEECH (AUGUST)")
-    print("10. 🕵️  [AUDT] CIVILIZATION READINESS (HOT HUB)")
-    print("21. 🔴 [QDAY] GLOBAL RESET (OFFICIAL)")
-    print("24. 🤝 [ALLY] GUEST LEDGER (MASTER PLAN)")
-    print("25. ⚔️  [WAR ] WAR PROJECT (INITIATE)")
-    print("81. 🚪 [EXIT] SYSTEM STANDBY")
-    print("==================================================")
+import os, time, sys
 
 def run():
-    while True:
-        menu()
-        c = input("👉 SELECT PILLAR: ").strip()
-        p = "/home/userland/Sovereign-Titan-Genesis/library/"
-        
-        if c == '1': execute_pillar("stg_primary_engine.py", p)
-        elif c == '5': execute_pillar("minting_waterfall_v1.py", p)
-        elif c == '6': execute_pillar("machine_status_v1.py", p)
-        elif c == '7': os.system(f"cat {p}manual_book/MANUAL_BOOK_v1.md")
-        elif c == '8': execute_pillar("bank_internal_v1.py", p)
-        elif c == '9': execute_pillar("presentation_v1.py", p)
-        elif c == '10': execute_pillar("system_audit_v2.py", p)
-        elif c == '21': execute_pillar("qday_doomsday_v1.py", p)
-        elif c == '24': execute_pillar("web4_guest_ledger_v1.py", p)
-        elif c == '25': execute_pillar("war_room_v1.py", p)
-        elif c == '81': break
-        else: print("\n⚠️ COMMAND UNAVAILABLE."); time.sleep(1)
-        
-        if c != '81': input("\n[ENTER] Back to Center...")
+    os.system('clear')
+    GOLD = "\033[1;33m"
+    BLUE = "\033[1;34m"
+    RESET = "\033[0m"
 
-if __name__ == "__main__": run()
+    print(f"{BLUE}==================================================")
+    print("🏛️  STG SUPREME AUDITOR COMMAND - MOBILE v82.9")
+    print(f"🛡️  CHIEF ARCHITECT: {GOLD}CAPO ANDI M. HARPIANTO{BLUE}")
+    print("==================================================" + RESET)
+
+    print(f"{GOLD}001.{RESET} 🇮🇩 [MRDK] MERDEKA (PRIMARY COMMAND)")
+    print(f"{GOLD}505.{RESET} 🆘 [HELP] SOS, FAQ, MANUAL BOOK")
+    print(f"{GOLD}555.{RESET} ⛏️  [MINE] MINING OPERATIONS (STEALTH)")
+    print(f"{GOLD}808.{RESET} 🏛️  [ABUT] ABOUT STG / MAKRONESIA / METAPORTASI")
+    print(f"{GOLD}810.{RESET} 🚪 [GATE] EXIT / PINTU KELUAR")
+    print(f"{BLUE}--------------------------------------------------{RESET}")
+
+    choice = input(f"{GOLD}👉 ENTER CODE: {RESET}").strip()
+
+    if choice == '001':
+        print("\n🇮🇩 MERDEKA! SOVEREIGN AUTHORITY ACTIVE."); time.sleep(1.2)
+    elif choice == '505':
+        print("\n🆘 LOADING MANUAL BOOK & FAQ..."); time.sleep(1.2)
+    elif choice == '555':
+        # Simulasi Mining Ringan agar HP tidak panas
+        os.system('clear')
+        print(f"{GOLD}⛏️  MINING METANESIA ASSETS (STEALTH)...{RESET}")
+        for i in range(3):
+            print(f"🛰️  SCANNING DATA... [BLOCK {i+555}] CONFIRMED")
+            time.sleep(0.5)
+        print(f"\n✅ STATUS: DATA MINED. ASSETS SECURED.")
+        input("\n[ENTER] Back...")
+    elif choice == '808':
+        print("\n🏛️  STG: SOVEREIGN TITAN GENESIS - MAKRONESIA ARK."); time.sleep(1.2)
+    elif choice == '810':
+        print("\n🚪 CLOSING SECURE GATE..."); time.sleep(1); sys.exit()
+    else:
+        print("\n⚠️ INVALID AUDITOR CODE."); time.sleep(1)
+
+if __name__ == "__main__":
+    while True:
+        try: run()
+        except KeyboardInterrupt: sys.exit()

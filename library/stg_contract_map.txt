@@ -1,0 +1,4 @@
+[ DEPLOYMENT MAP - COMMAND CENTER BINTARO ]
+1. PRIMARY VAULT   : Treasury.sol (The Money Engine)
+2. MONITORING      : Sultanmeter.sol (The Dashboard)
+3. STATUS          : READY FOR GANACHE DEPLOYMENT
