@@ -8,7 +8,7 @@ def draw_tsc_header():
     print(f"├" + "─"*12 + "┬" + "─"*35 + "┤")
     print(f"│ {W}ARCHT: ANDI {W}│ {W}SYSTEM: STG-UNIFIED INFRASTRUCTURE  {W}│")
     print(f"└" + "─"*12 + "┴" + "─"*35 + "┘")
-    print(f"{B}INDUSTRIAL STATUS: [E2Z_SOVEREIGNTY_ACTIVE v98.1]{R}")
+    print(f"{B}INDUSTRIAL STATUS: [HEIR_PROTECTION_ACTIVE v99.0]{R}")
     print("-" * 50)
 
 def run():
@@ -19,6 +19,7 @@ def run():
         print("111. [BILL] QUANTUM INVOICE GENERATOR")
         print("112. [PASS] BINTARO TRAFFIC VISUALIZATION")
         print("113. [LOYL] FUTURE LOYALTY & REWARD LOG")
+        print("114. [CERT] E-CERTIFICATE: KHAMEL M. GUFRANY")
         print("212. [RBOT] TACTICAL ROBOT & MINING MAP")
         print("505. [SPEC] 3-MINUTE PITCH & TECH MANUAL")
         print("555. [FLOW] LIQUIDITY TSUNAMI (1MQ)")
@@ -34,8 +35,11 @@ def run():
         elif choice == '111': os.system(f"python3 {p}stg_invoice_v1.py")
         elif choice == '112': os.system(f"python3 {p}stg_epass_card.py")
         elif choice == '113': os.system(f"python3 {p}stg_loyalty_ledger.py")
+        elif choice == '114': os.system(f"python3 {p}stg_shareholder_cert.py")
         elif choice == '212': os.system(f"python3 {p}stg_robot_dash_v1.py")
-        elif choice == '505': os.system(f"cat {p}manual_book/MANUAL_BOOK_v1.md; read")
+        elif choice == '505': 
+            os.system(f"cat {p}manual_book/MANUAL_BOOK_v1.md")
+            input("\n[ENTER] TO RETURN...")
         elif choice == '555': os.system(f"python3 {p}stg_homeschooling_v1.py")
         elif choice == '808': os.system(f"python3 {p}metaportasi_v1.py")
         elif choice == '810': sys.exit()
