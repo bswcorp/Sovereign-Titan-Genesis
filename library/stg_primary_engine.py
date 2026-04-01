@@ -1,27 +1,34 @@
-import os, time
+import os, time, random
+
 def run():
     os.system('clear')
-    GOLD, BLUE, WHITE, RESET = "\033[1;33m", "\033[1;34m", "\033[1;37m", "\033[0m"
+    GOLD, CYAN, WHITE, BLUE, RESET = "\033[1;33m", "\033[1;36m", "\033[1;37m", "\033[1;34m", "\033[0m"
+    
     print(f"{BLUE}==================================================")
-    print("      🏦 BFN (BANK FOR NATIONS) - INSTITUTIONAL HUB")
-    print("      REGULATORY STATUS: SOVEREIGN ASSET VERIFIED")
+    print("      🏦 BFN (BANK FOR NATIONS) - TRANSACTION ROUTER")
+    print("      SOURCE: ASTEROID VAULT (SECTOR 700)")
     print("==================================================" + RESET)
     
-    audit_log = [
-        ("🏛️  GOVERNMENT DEBT SETTLEMENT", "PROCESSED / 10,000 $Q"),
-        ("🪐 METANESIA CUSTODIAL ASSET ", "RESERVED / 1,000,000 $Q"),
-        ("🛡️  LIQUIDITY INJECTION NODE ", "ACTIVE / GLOBAL ACCESS"),
-        ("⚖️  COMPLIANCE PROTOCOL      ", "STG-V86.5 SECURED")
+    print(f"{WHITE}[INITIATING] METAPORTASI BRIDGE UPLINK...{RESET}")
+    time.sleep(1.5)
+    
+    # PROSES ROUTING REAL
+    tx_steps = [
+        ("🛰️  CONNECTION ", "ESTABLISHED WITH 16-PSYCHE NODE"),
+        ("🌀 METAPORT    ", "FOLDING SPACE-TIME COORDINATES"),
+        ("📥 INJECTION   ", "1,000,000,000,000,000,000 $QSTATE"),
+        ("🏛️  BFN_VAULT  ", "LIQUIDITY SYNCHRONIZED [SUCCESS]")
     ]
     
-    for label, bal in audit_log:
-        print(f"[{WHITE}BFN_CLEARANCE{RESET}] {label} : {GOLD}{bal}{RESET}")
-        time.sleep(0.5)
+    for step, status in tx_steps:
+        print(f"[{CYAN}ROUTING{RESET}] {step} : {GOLD}{status}{RESET}")
+        time.sleep(1.2)
 
-    print("\n" + "-" * 50)
-    print("SYSTEM_CERTIFICATION: SOVEREIGN_FINANCIAL_AUTHORITY")
-    print("GLOBAL SETTLEMENT STATUS: COMPLIANT / READY.")
     print("-" * 50)
+    print(f"{WHITE}CURRENT BFN BALANCE (CONSOLIDATED):{RESET}")
+    print(f"{GOLD}1,000,001,000,000,000,000.00 $QSTATE{RESET}")
+    print("-" * 50)
+    print("✅ VERDICT: TRANSACTION RECORDED IN SOVEREIGN LEDGER.")
     input("\n[EXECUTE_RETURN]")
 
 if __name__ == "__main__": run()

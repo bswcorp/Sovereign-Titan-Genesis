@@ -1,25 +1,26 @@
 import os, time
 def run():
     os.system('clear')
-    GOLD, CYAN, WHITE, RESET = "\033[1;33m", "\033[1;36m", "\033[1;37m", "\033[0m"
-    print(f"{WHITE}╔" + "═"*58 + "╗")
-    print(f"║             ✨ OFFICIAL BFN E-CERTIFICATE ✨             ║")
-    print(f"║           BANK FOR NATIONS - GLOBAL CUSTODIAN            ║")
-    print("╚" + "═"*58 + "╝" + RESET)
+    GOLD, CYAN, WHITE, BLUE, RESET = "\033[1;33m", "\033[1;36m", "\033[1;37m", "\033[1;34m", "\033[0m"
+    print(f"{BLUE}==================================================")
+    print("      STG SUSTAINABILITY AUDIT: THE BENGKEL LOGIC")
+    print("      MODEL: INDEPENDENT GROWTH vs INJECTION TRAP")
+    print("==================================================" + RESET)
     
-    print(f"{GOLD}CERTIFICATE NO : STG/BFN/CUSTODY/2026/001{RESET}")
-    print(f"{GOLD}HOLDER         : CHIEF ARCHITECT - ANDI M. HARPIANTO{RESET}")
-    print("-" * 60)
-    print(f"THIS DOCUMENT CERTIFIES THE TOTAL ASSET OWNERSHIP OF:")
-    print(f"💎 1,000,001,000,000,000,000 $Q (ONE MILLION QUADRILLION)")
-    print(f"REGISTERED AT: 0x5836c7a5eb31975b51c76a205aaba4c01f0eb3e8")
-    print("-" * 60)
-    print(f"JURISDICTION  : SOVEREIGN TITAN GENESIS - MAKRONESIA")
-    print(f"AUDIT STATUS  : 100% SOLVENT (ZERO LIABILITIES)")
-    print("-" * 60)
-    print(f"{CYAN}SYSTEM_CERTIFICATION: SOVEREIGN_FINANCIAL_AUTHORITY{RESET}")
-    print(f"{WHITE}ISSUED DATE: MARCH 31, 2026 | BINTARO COMMAND CENTER{RESET}")
-    print("=" * 60)
-    input("\n[PRESS ENTER TO SAVE & RETURN]")
+    analysis = [
+        ("⚙️  MODEL TYPE   ", "SUSTAINABLE CREATION (NOT TRADING)"),
+        ("💰 CASHFLOW     ", "CONTINUOUS FROM VOL 700 ASSETS"),
+        ("🛡️  RESILIENCE   ", "ANTI-CRISIS / ANTI-Q-DAY ENCRYPTION"),
+        ("🚀 STATUS       ", "STAND-ALONE WITHOUT EXTERNAL INJECTION")
+    ]
+    
+    for label, desc in analysis:
+        print(f"[{WHITE}LOGIC_CHECK{RESET}] {label} : {GOLD}{desc}{RESET}")
+        time.sleep(0.8)
 
+    print("-" * 50)
+    print(f"{CYAN}VERDICT: STG DOES NOT SINK WITH THE GLOBAL ECONOMY.{RESET}")
+    print(f"PRINCIPLE: {GOLD}WE BUILD THE SHOP, WE OWN THE TOOLS.{RESET}")
+    print("-" * 50)
+    input("\n[EXECUTE_RETURN]")
 if __name__ == "__main__": run()
