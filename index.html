@@ -1,42 +1,41 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8"><title>STG | PORTAL KEDAULATAN</title>
+    <meta charset="UTF-8"><title>STG | MARS GRAVITY ASSIST HUD</title>
     <style>
-        body { background: #050505; color: #00f2ff; font-family: 'Share Tech Mono', monospace; text-align: center; padding-top: 15%; overflow: hidden; }
-        .btn-orbit { background: transparent; border: 2px solid #ffd700; color: #ffd700; padding: 20px; cursor: pointer; font-weight: bold; font-size: 1.2rem; box-shadow: 0 0 20px rgba(255,215,0,0.2); }
-        .btn-orbit:hover { background: #ffd700; color: #000; box-shadow: 0 0 40px #ffd700; }
-        .marquee { position: absolute; bottom: 10px; width: 100%; color: #444; font-size: 0.8rem; }
+        :root { --neon: #ff4500; --gold: #ffd700; --bg: #050505; }
+        body { background: var(--bg); color: white; font-family: 'Share Tech Mono', monospace; margin: 0; text-align: center; }
+        .hud-container { border: 2px solid var(--neon); margin: 20px; padding: 20px; background: rgba(255, 69, 0, 0.05); }
+        .mars-orbit { width: 300px; height: 300px; border: 1px dashed #555; border-radius: 50%; margin: 20px auto; position: relative; }
+        .planet-mars { width: 60px; height: 60px; background: radial-gradient(circle, #ff4500, #8b0000); border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 30px var(--neon); }
+        .spacecraft { width: 10px; height: 10px; background: var(--gold); border-radius: 50%; position: absolute; animation: slingshot 5s infinite linear; }
+        @keyframes slingshot {
+            0% { top: 0%; left: 0%; }
+            40% { top: 45%; left: 45%; } /* Dekat Mars */
+            60% { top: 55%; left: 55%; } /* Gravity Assist */
+            100% { top: 100%; left: 100%; transform: scale(2); } /* Melesat */
+        }
+        .data-stream { font-size: 0.8rem; color: var(--neon); text-align: left; padding: 10px; border-top: 1px solid var(--neon); }
     </style>
 </head>
 <body>
-<a href="https://whatsapp.com/channel/0029VbBmk0n0VycOrVAPcK15" style="display:block; background:#25D366; color:white; padding:10px; text-decoration:none; border-radius:10px; margin-bottom:20px; font-weight:bold;">🟢 JOIN OFFICIAL WHATSAPP CHANNEL STG</a>
-    <h1>🏛️ STG GOVERNMENT GATEWAY</h1>
-    <p>TANYA PADA RUMPUT YANG BERGOYANG...</p>
-    <br>
-    <button class="btn-orbit" onclick="startSovereignty()">🌌 AKTIFKAN RADAR & SUARA</button>
-    
-    <div class="marquee">ARCHITECT: ANDI M. HARPIANTO | PROBE ID: 19546</div>
+    <div class="hud-container">
+        <h1 style="color:var(--neon)">🔴 MISSION STATUS: MARS GRAVITY ASSIST</h1>
+        <p>EVENT: MAYDAY 2026 | TARGET: 16 PSYCHE</p>
+        
+        <div class="mars-orbit">
+            <div class="planet-mars"></div>
+            <div class="spacecraft"></div>
+        </div>
 
-    <script>
-        function startSovereignty() {
-            // Memulai Audio Context (Izin dari Browser)
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            
-            // 1. Bunyi Beep Kedaulatan (High Frequency)
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'square'; // Suara Industrial
-            osc.frequency.setValueAtTime(880, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.2);
-
-            alert("🚀 SINYAL TERKIRIM KE SWISS HUB!\nGlory to the Architect!");
-            window.location.href = 'https://bswcorp.github.io';
-        }
-    </script>
+        <div class="data-stream">
+            [SYS] APPROACHING MARS... DISTANCE: 3,421 KM <br>
+            [SYS] VELOCITY: 21,000 KPH (SLINGSHOT ACTIVE) <br>
+            [SYS] DSOC LASER: CONNECTED TO SWISS HUB <br>
+            [SYS] STATUS: FOLDING SPACE-TIME...
+        </div>
+        
+        <button onclick="location.href='https://github.io'" style="background:var(--neon); color:white; border:none; padding:10px; margin-top:10px; cursor:pointer;">KEMBALI KE SIRKUS</button>
+    </div>
 </body>
 </html>
