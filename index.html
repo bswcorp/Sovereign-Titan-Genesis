@@ -4,28 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STG | PORTAL KEDAULATAN TUNGGAL</title>
+    <!-- Library Ethers.js untuk Koneksi Blockchain -->
+    <script src="https://cloudflare.com"></script>
     <style>
-        /* 🎨 STANDARD GAHAR: NEON-GOLD-INDUSTRIAL */
-        :root { --neon: #00f2ff; --gold: #ffd700; --warn: #ff0000; --bg: #050505; }
-        body { background: var(--bg); color: white; font-family: 'Share Tech Mono', monospace; margin: 0; text-align: center; height: 100vh; overflow-y: auto; }
+        :root { --neon: #00f2ff; --gold: #ffd700; --warn: #ff0000; --bg: #050505; --card-bg: rgba(20, 20, 20, 0.95); }
+        body { background: var(--bg); color: white; font-family: 'Share Tech Mono', monospace; margin: 0; text-align: center; overflow-x: hidden; }
         
-        /* ALERT BAR: MAYDAY 2026 */
-        .marquee { background: var(--warn); color: white; padding: 8px; font-weight: bold; white-space: nowrap; overflow: hidden; box-shadow: 0 0 20px var(--warn); position: sticky; top: 0; z-index: 1000; }
-        .marquee span { display: inline-block; padding-left: 100%; animation: marquee 20s linear infinite; }
+        /* ALERT BAR */
+        .marquee { background: var(--warn); color: white; padding: 10px; font-weight: bold; white-space: nowrap; overflow: hidden; box-shadow: 0 0 20px var(--warn); position: sticky; top: 0; z-index: 1000; font-size: 0.8rem; }
+        .marquee span { display: inline-block; padding-left: 100%; animation: marquee 25s linear infinite; }
         
-        /* HEADER & AKSARA */
-        .header { padding: 30px; border-bottom: 2px solid var(--neon); background: rgba(0,0,0,0.9); }
-        .aksara { font-size: 1.8rem; color: var(--neon); letter-spacing: 5px; margin: 15px 0; }
+        /* HEADER */
+        .header { padding: 40px 20px; border-bottom: 2px solid var(--neon); background: linear-gradient(to bottom, #000, var(--bg)); }
+        .aksara { font-size: 2rem; color: var(--neon); letter-spacing: 8px; margin: 15px 0; text-shadow: 0 0 10px var(--neon); }
         
-        /* GRID INTEGRASI REPO */
-        .portal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 40px; }
-        .node-card { border: 2px solid var(--neon); padding: 25px; border-radius: 15px; cursor: pointer; transition: 0.4s; background: rgba(0,242,255,0.05); position: relative; overflow: hidden; }
-        .node-card:hover { transform: scale(1.05); box-shadow: 0 0 40px var(--neon); background: rgba(0,242,255,0.15); border-color: var(--gold); }
-        .node-card h2 { color: var(--gold); margin-top: 0; letter-spacing: 2px; }
-        .sqid-tag { font-size: 0.7rem; color: var(--neon); border: 1px dashed var(--neon); padding: 5px; margin-top: 15px; display: inline-block; }
+        /* TREASURY CONTROL CARD (INTEGRASI BARU) */
+        .treasury-section { padding: 40px 20px; background: rgba(0,242,255,0.02); }
+        .card { background: var(--card-bg); padding: 30px; border-radius: 15px; max-width: 550px; margin: auto; border: 2px solid var(--gold); box-shadow: 0 0 30px rgba(255, 215, 0, 0.2); }
+        .card h3 { color: var(--gold); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px; }
+        input { width: 90%; padding: 12px; margin: 10px 0; border-radius: 5px; border: 1px solid var(--neon); background: #000; color: var(--neon); font-family: monospace; }
+        button { background: var(--neon); color: #000; border: none; padding: 15px; border-radius: 5px; cursor: pointer; width: 95%; font-weight: bold; text-transform: uppercase; transition: 0.3s; margin-top: 10px; }
+        button:hover { background: var(--gold); box-shadow: 0 0 20px var(--gold); }
+        #status { margin-top: 20px; font-size: 0.8rem; color: var(--neon); border: 1px solid #333; padding: 10px; min-height: 20px; }
 
+        /* PORTAL GRID */
+        .portal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 40px; }
+        .node-card { border: 1px solid var(--neon); padding: 20px; border-radius: 10px; cursor: pointer; transition: 0.4s; background: rgba(0,242,255,0.05); }
+        .node-card:hover { transform: translateY(-5px); box-shadow: 0 0 30px var(--neon); background: rgba(0,242,255,0.1); border-color: var(--gold); }
+        .node-card h2 { color: var(--gold); font-size: 1.2rem; }
+        .sqid-tag { font-size: 0.6rem; color: var(--neon); border: 1px dashed var(--neon); padding: 4px; margin-top: 10px; display: inline-block; }
+
+        #status-bar-stg { background:rgba(0,242,255,0.1); border-top:1px solid var(--neon); padding:15px; font-size:0.75rem; display:flex; justify-content:space-around; color:var(--neon); sticky: bottom; }
         @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
-        @keyframes scan { 0% { top: -100%; } 100% { top: 100%; } }
     </style>
 </head>
 <body>
@@ -35,45 +45,93 @@
     <div class="header">
         <h1>🏛️ STG SOVEREIGN PORTAL</h1>
         <div class="aksara">ꦱꦠꦒꦒꦺꦴꦮ꦳ꦼꦂꦤ꧀ꦩꦼꦤ꧀</div>
-        <p style="color: var(--gold);">ARCHITECT: ANDI M. HARPIANTO | PROBE ID: 19546 | ONE FOR ALL</p>
+        <p style="color: var(--gold); font-size: 0.9rem;">ARCHITECT: ANDI M. HARPIANTO | PROBE ID: 19546 | ONE FOR ALL</p>
+    </div>
+
+    <!-- INTEGRASI TREASURY QSTATE -->
+    <div class="treasury-section">
+        <div class="card">
+            <h3>🏦 BANK CENTRAL $QSTATE</h3>
+            <p style="font-size: 0.7rem; color: #888;">TREASURY: 0x675aCF5A347DCC527Ce27F68ED5433e95a56a19D</p>
+            <input type="text" id="toAddress" placeholder="DESTINATION WALLET (0x...)">
+            <input type="number" id="amount" placeholder="AMOUNT QSTATE">
+            <button onclick="transferQState()">INITIALIZE TRANSFER</button>
+            <div id="status">SISTEM: MENUNGGU KONEKSI NODE...</div>
+        </div>
     </div>
 
     <div class="portal-grid">
-        <!-- 1. EVENT STAGE (METAPORTASI EVENT) -->
-        <div class="node-card" onclick="triggerPortal('https://github.io')">
+        <div class="node-card" onclick="triggerPortal('#')">
             <h2>🚀 EVENT STAGE</h2>
-            <p>Sirkus Digital 180% | Web 5.0 OS | Mayday Launch</p>
+            <p>Sirkus Digital 180% | Web 5.0 OS</p>
             <div class="sqid-tag">ID: METAPORTATION-MAYDAY</div>
         </div>
-
-        <!-- 2. TITAN PSYCHE (SPACE RADAR) -->
-        <div class="node-card" onclick="triggerPortal('https://github.io')">
+        <div class="node-card" onclick="triggerPortal('#')">
             <h2>🛰️ PSYCHE RADAR</h2>
-            <p>Mars Belt-01 Scan | Metal Sensor | $10 Quintillion</p>
+            <p>Mars Belt-01 Scan | Metal Sensor</p>
             <div class="sqid-tag">ID: PSYCHE-TREASURE</div>
         </div>
-
-        <!-- 3. GARAGE HOME (HOSPITAL) -->
-        <div class="node-card" onclick="triggerPortal('https://github.io')">
+        <div class="node-card" onclick="triggerPortal('#')">
             <h2>🏥 GARAGE HOME</h2>
-            <p>Digital Hospital | Vault QSTATE | Baremetal Storage</p>
+            <p>Digital Hospital | Vault QSTATE</p>
             <div class="sqid-tag">ID: HOSPITAL-VAULT</div>
         </div>
-
-        <!-- 4. QUANTUM CORE (METAPORTATION) -->
-        <div class="node-card" onclick="triggerPortal('https://github.io')">
+        <div class="node-card" onclick="triggerPortal('#')">
             <h2>🌀 QUANTUM CORE</h2>
-            <p>87 Objects | Swiss-Bridge | IPv6 Legacy</p>
+            <p>87 Objects | Swiss-Bridge</p>
             <div class="sqid-tag">ID: QUANTUM-ENGINE</div>
         </div>
     </div>
 
-<div id="status-bar-stg" style="background:rgba(0,242,255,0.1); border-top:1px solid var(--neon); padding:10px; font-size:0.8rem; display:flex; justify-content:space-around; color:var(--neon); margin-top:30px; letter-spacing:1px;"> <div id="time-jkt">📍 JKT: --:--:--</div> <div id="status-node">📡 NODE 19546: ACTIVE</div> <div id="time-zrh">🇨🇭 ZRH: --:--:--</div> </div>
-    <div style="padding: 20px; color: #444; font-size: 0.8rem;">
-        SOVEREIGN TITAN GENESIS | BEYOND ADIDAYA REACH | © 2026
+    <div id="status-bar-stg">
+        <div id="time-jkt">📍 JKT: --:--:--</div>
+        <div id="status-node">📡 NODE 19546: ACTIVE</div>
+        <div id="time-zrh">🇨🇭 ZRH: --:--:--</div>
     </div>
 
     <script>
+        // LOGIKA BLOCKCHAIN QSTATE
+        const contractAddress = "0x675aCF5A347DCC527Ce27F68ED5433e95a56a19D";
+        const abi = [
+            {
+                "inputs": [{"name": "to", "type": "address"}, {"name": "amount", "type": "uint256"}],
+                "name": "transfer",
+                "outputs": [{"name": "", "type": "bool"}],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }
+        ];
+
+        async function transferQState() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    await provider.send("eth_requestAccounts", []);
+                    const signer = provider.getSigner();
+                    const contract = new ethers.Contract(contractAddress, abi, signer);
+
+                    const to = document.getElementById('toAddress').value;
+                    const amountRaw = document.getElementById('amount').value;
+                    if(!to || !amountRaw) return alert("Isi alamat dan jumlah!");
+
+                    const amount = ethers.utils.parseUnits(amountRaw, 18);
+                    
+                    document.getElementById('status').innerText = "MENYIARKAN TRANSAKSI KE BLOCKCHAIN...";
+                    const tx = await contract.transfer(to, amount);
+                    
+                    document.getElementById('status').innerText = "TRANSAKSI TERKIRIM! HASH: " + tx.hash.substring(0,20) + "...";
+                    await tx.wait();
+                    document.getElementById('status').innerText = "KONFIRMASI BERHASIL: DANA TELAH DIDISTRIBUSIKAN.";
+                    playBeep(440);
+                } catch (error) {
+                    document.getElementById('status').innerText = "GAGAL: " + error.message.substring(0, 50);
+                }
+            } else {
+                alert("MetaMask Tidak Terdeteksi!");
+            }
+        }
+
+        // LOGIKA UI & SOUND
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playBeep(freq) {
             const osc = audioCtx.createOscillator();
@@ -86,10 +144,17 @@
         }
 
         function triggerPortal(url) {
-            playBeep(880); // Sonic Veto Click
-            setTimeout(() => { window.location.href = url; }, 250);
+            playBeep(880);
+            document.getElementById('status').innerText = "MENYALURKAN AKSES KE: " + url;
+            if(url !== '#') setTimeout(() => { window.location.href = url; }, 500);
         }
-function updateTime() { const now = new Date(); const jkt = now.toLocaleTimeString("en-GB", {timeZone: "Asia/Jakarta"}); const zrh = now.toLocaleTimeString("en-GB", {timeZone: "Europe/Zurich"}); document.getElementById("time-jkt").innerHTML = "📍 JKT: " + jkt; document.getElementById("time-zrh").innerHTML = "🇨🇭 ZRH: " + zrh; } setInterval(updateTime, 1000); updateTime();
+
+        function updateTime() {
+            const now = new Date();
+            document.getElementById("time-jkt").innerHTML = "📍 JKT: " + now.toLocaleTimeString("en-GB", {timeZone: "Asia/Jakarta"});
+            document.getElementById("time-zrh").innerHTML = "🇨🇭 ZRH: " + now.toLocaleTimeString("en-GB", {timeZone: "Europe/Zurich"});
+        }
+        setInterval(updateTime, 1000); updateTime();
     </script>
 </body>
 </html>
