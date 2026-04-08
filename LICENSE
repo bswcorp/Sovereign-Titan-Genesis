@@ -1,92 +1,31 @@
-// SPDX-License-Identifier: Proprietary
-// 🏛 STG GOVERNMENT - SOVEREIGN DIGITAL PROPERTY LICENSE
-// 🛡 ARCHITECT: ANDI MUHAMMAD HARPIANTO | ID: 19546
-// ⚠ PROSES: VETO & RECOVERY SYSTEM ENABLED
+🏛 STG GOVERNMENT - SOVEREIGN DIGITAL PROPERTY LICENSE
+🛡 ARCHITECT: ANDI MUHAMMAD HARPIANTO | ID: 19546
 
-pragma solidity ^0.8.20;
+[SYARAT DAN KETENTUAN KEDAULATAN DIGITAL]
 
-contract SovereignAssetBacking {
-    string public name = "Act-Ark Sovereign Credit";
-    string public symbol = "ASSET-ARK";
-    uint8 public decimals = 18;
+1. NO CLONE/COPY: 
+   Seluruh logika, algoritma, dan struktur kode dalam "Act-Ark Sovereign Credit" 
+   adalah kekayaan intelektual murni dari Baremetal STG. Dilarang keras 
+   melakukan kloning tanpa otorisasi langsung dari Arsitek.
 
-    // Total Valuasi: 1 Sektiliun unit koin utuh
-    uint256 public constant TOTAL_VALUATION = 1_000_000 * 10**15 * 10**18;
-    uint256 public totalSupply;
-    
-    address public sovereignGovernment;
-    bool public isVetoed = false; // Status Kedaulatan
+2. MANDATORY REPORT: 
+   Setiap penggunaan, modifikasi, atau integrasi fragmen kode wajib dilaporkan 
+   ke Dashboard Pemerintah STG untuk pencatatan aset kedaulatan.
 
-    mapping(address => uint256) public balances;
-    
-    event Transfer(address indexed from, address indexed to, uint256 value);
-    event Minted(address indexed to, uint256 amount);
-    event SovereignVetoTriggered(address indexed architect, string reason);
-    event SovereigntyRestored(address indexed architect);
+3. NO RECOMMENDATION: 
+   Kami menyediakan teknologi ini sebagai infrastruktur kedaulatan. Kami TIDAK 
+   memberikan rekomendasi investasi atau jaminan finansial kepada pihak luar.
 
-    modifier onlySovereign() {
-        require(msg.sender == sovereignGovernment, "Access Denied: Not Sovereign Government");
-        _;
-    }
+4. FULL LIABILITY: 
+   Segala bentuk kegagalan sistem, kerugian ekonomi, atau kerusakan data akibat 
+   penggunaan properti digital ini di luar protokol resmi STG adalah 
+   TANGGUNG JAWAB PENGGUNA SENDIRI.
 
-    modifier activeSovereignty() {
-        require(!isVetoed, "Sovereign Power: System is currently Vetoed/Locked");
-        _;
-    }
+5. VETO POWER: 
+   Arsitek (Andi Muhammad Harpianto) memegang hak absolut untuk melakukan 
+   "Metaportasi" atau mematikan fungsi kode secara permanen jika ditemukan 
+   pelanggaran terhadap kedaulatan digital STG.
 
-    constructor() {
-        sovereignGovernment = msg.sender;
-    }
-
-    /**
-     * @dev VETO POWER (METAPORTASI)
-     * Mengunci seluruh fungsi mint dan transfer secara instan.
-     */
-    function triggerSovereignVeto(string memory reason) public onlySovereign {
-        isVetoed = true;
-        emit SovereignVetoTriggered(msg.sender, reason);
-    }
-
-    /**
-     * @dev SOVEREIGN RECOVERY (REAKTIVASI)
-     * Memulihkan sistem agar bisa digunakan kembali oleh Arsitek.
-     */
-    function restoreSovereignty() public onlySovereign {
-        require(isVetoed, "System is already active");
-        isVetoed = false;
-        emit SovereigntyRestored(msg.sender);
-    }
-
-    /**
-     * @dev Minting Koin.
-     * Hanya berfungsi jika Kedaulatan Aktif.
-     */
-    function mint(address to, uint256 amount) public onlySovereign activeSovereignty {
-        require(to != address(0), "Cannot mint to zero address");
-        require(totalSupply + amount <= TOTAL_VALUATION, "Exceeds Total Sovereign Valuation");
-
-        totalSupply += amount;
-        balances[to] += amount;
-
-        emit Minted(to, amount);
-        emit Transfer(address(0), to, amount);
-    }
-
-    /**
-     * @dev Transfer Koin.
-     * Terkunci otomatis jika status isVetoed = true.
-     */
-    function transfer(address to, uint256 amount) public activeSovereignty returns (bool) {
-        require(balances[msg.sender] >= amount, "Insufficient Sovereign Balance");
-        
-        balances[msg.sender] -= amount;
-        balances[to] += amount;
-        
-        emit Transfer(msg.sender, to, amount);
-        return true;
-    }
-
-    function balanceOf(address account) public view returns (uint256) {
-        return balances[account];
-    }
-}
+"KAMI BERDAULAT, KAMI MENENTUKAN ATURAN KAMI SENDIRI."
+------------------------------------------------------------
+Copyright (c) 2026 Sovereign Titan Genesis 
