@@ -1,1 +1,10 @@
 nohup: ignoring input
+[main 3294259] STG Sync: Arus Kedaulatan Berlanjut - 2026-04-10 01:59:42
+ 8 files changed, 156 insertions(+), 1 deletion(-)
+ create mode 100644 nusantara-root/bank.sh
+ create mode 100755 nusantara-root/scripts/asset_accumulator.sh
+ create mode 100644 nusantara-root/scripts/key_validator.py
+ create mode 100644 nusantara-root/scripts/nohup.out
+ create mode 120000 nusantara-root/scripts/stg_mining_status.py
+ create mode 100755 nusantara-root/scripts/stg_silent_sync.sh
+ create mode 100644 nusantara-root/scripts/sync.log

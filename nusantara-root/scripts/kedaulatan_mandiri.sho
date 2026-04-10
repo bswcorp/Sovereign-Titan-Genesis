@@ -1,0 +1,29 @@
+#!/bin/bash
+# Script Simulasi Kedaulatan Digital - Versi "Sultan Nusantara"
+
+TARGET=1000000
+CURRENT=0
+WAKTU=$(date +"%T")
+
+clear
+echo -e "\e[1;32m[!] MENGINISIASI PROTOKOL KEDAULATAN MANDIRI...\e[0m"
+sleep 2
+
+while [ $CURRENT -lt $TARGET ]
+do
+    # Menghasilkan angka acak seolah-olah "Arus Materi" masuk
+    TAMBAH=$(( ( RANDOM % 500 )  + 100 ))
+    CURRENT=$(( CURRENT + TAMBAH ))
+    
+    # Animasi Aliran Matrix di layar
+    echo -e "\e[32m$(date +"%T") [ARUS] +$TAMBAH USD | HASH: $(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1) | TOTAL: $CURRENT\e[0m"
+    
+    # Progress Bar Mini
+    PERSEN=$(( (CURRENT * 100) / TARGET ))
+    echo -ne "\e[1;33mPROGRES KEDAULATAN: [${PERSEN}%] \r\e[0m"
+    
+    # Kecepatan aliran (bisa diubah, makin kecil makin kencang)
+    sleep 0.1
+done
+
+echo -e "\n\e[1;35m[!!!] TARGET TERCAPAI: ANDA SUDAH BERDAULAT PENUH! [!!!]\e[0m"
