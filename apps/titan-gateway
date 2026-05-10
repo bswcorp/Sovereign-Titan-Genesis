@@ -1,0 +1,3 @@
+npx nx add @nx/next
+npx nx g @nx/next:app apps/titan-gateway --directory=apps/titan-gateway --style=tailwind --appDir=true
+
