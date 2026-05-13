@@ -3,88 +3,79 @@ package rpc
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"log"
 	"net/http"
-	"strconv"
-
-	"stg-chain/core"
 )
 
-type JSONRPCRequest struct {
+type RPCRequest struct {
 	JSONRPC string        `json:"jsonrpc"`
 	Method  string        `json:"method"`
 	Params  []interface{} `json:"params"`
 	ID      int           `json:"id"`
 }
 
-type JSONRPCResponse struct {
+type RPCResponse struct {
 	JSONRPC string      `json:"jsonrpc"`
+	ID      int         `json:"id"`
 	Result  interface{} `json:"result,omitempty"`
 	Error   interface{} `json:"error,omitempty"`
-	ID      int         `json:"id"`
 }
 
-func StartRPCServer(port int, state *core.StateDB) {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+func handler(w http.ResponseWriter, r *http.Request) {
+	// Enable CORS for localhost explorer connections
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
-		body, err := ioutil.ReadAll(r.Body)
-		if err != nil {
-			http.Error(w, "invalid request body", http.StatusBadRequest)
-			return
-		}
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
 
-		var req JSONRPCRequest
-		err = json.Unmarshal(body, &req)
-		if err != nil {
-			http.Error(w, "invalid json", http.StatusBadRequest)
-			return
-		}
+	var req RPCRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 
-		resp := JSONRPCResponse{
-			JSONRPC: "2.0",
-			ID:      req.ID,
-		}
+	var result interface{}
+	var rpcErr interface{}
 
-		switch req.Method {
+	switch req.Method {
+	case "eth_chainId":
+		result = "0x309" // 777 in Hexadecimal format
+	case "web3_clientVersion":
+		result = "STG-Chain/v0.1"
+	case "net_version":
+		result = "777"
+	case "eth_blockNumber":
+		result = "0x1"
+	default:
+		rpcErr = "method not supported"
+	}
 
-		case "eth_blockNumber":
-			resp.Result = "0x" + strconv.FormatUint(state.GetLatestBlock(), 16)
+	resp := RPCResponse{
+		JSONRPC: "2.0",
+		ID:      req.ID,
+	}
 
-		case "eth_getBalance":
-			if len(req.Params) < 1 {
-				resp.Error = "missing address param"
-				break
-			}
+	if rpcErr != nil {
+		resp.Error = rpcErr
+	} else {
+		resp.Result = result
+	}
 
-			address, ok := req.Params[0].(string)
-			if !ok {
-				resp.Error = "invalid address format"
-				break
-			}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(resp)
+}
 
-			balance := state.GetBalance(address)
-			resp.Result = "0x" + strconv.FormatUint(balance, 16)
-
-		case "web3_clientVersion":
-			resp.Result = "STG-Chain/v0.1.0"
-
-		case "net_version":
-			resp.Result = "777"
-
-		default:
-			resp.Error = "method not supported"
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(resp)
-	})
-
+func StartRPCServer(port int) {
+	http.HandleFunc("/", handler)
 	addr := fmt.Sprintf(":%d", port)
-
-	fmt.Println("RPC server listening on", addr)
-
+	log.Printf("STG RPC listening on %s\n", addr)
 	err := http.ListenAndServe(addr, nil)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 }
