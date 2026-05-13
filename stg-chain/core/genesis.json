@@ -4,22 +4,28 @@
     "homesteadBlock": 0,
     "eip155Block": 0,
     "eip158Block": 0,
-    "quorumState": {
+    "byzantiumBlock": 0,
+    "constantinopleBlock": 0,
+    "petersburgBlock": 0,
+    "istanbulBlock": 0,
+    "clique": {
       "period": 3,
-      "epoch": 30000,
-      "policy": "IBFT"
+      "epoch": 30000
     }
   },
-  "nonce": "0x0000000000000309",
+  "nonce": "0x0",
   "timestamp": "0x6641e400",
-  "extraData": "0x4e7573616e746172612d526f6f742047656e65736973",
-  "gasLimit": "0x47b760",
+  "extraData": "0x5354472d434841494e2d47454e45534953",
+  "gasLimit": "0x1C9C380",
   "difficulty": "0x1",
   "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
   "coinbase": "0x0000000000000000000000000000000000000000",
   "alloc": {
     "0x3AA63941Fe0Ce029f4523c57A30C6dca3cB7343F": {
-      "balance": "1000000000000000000000000000000000000"
+      "balance": "100000000000000000000000000"
     }
-  }
+  },
+  "number": "0x0",
+  "gasUsed": "0x0",
+  "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
 }
