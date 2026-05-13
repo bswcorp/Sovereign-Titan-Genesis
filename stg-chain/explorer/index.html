@@ -1,88 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>STG-Chain | Live Command Explorer</title>
-    <style>
-        body { background: #050505; color: #00ff00; font-family: 'Courier New', monospace; padding: 30px; }
-        .dashboard-container { max-width: 900px; margin: 0 auto; }
-        .explorer-card { border: 1px solid #d4af37; background: rgba(17,17,17,0.9); padding: 25px; margin-bottom: 25px; box-shadow: 0 0 20px rgba(212,175,55,0.15); }
-        .metrics-grid { display: flex; justify-content: space-between; margin-bottom: 20px; }
-        .metric-box { background: #000; border: 1px solid #333; padding: 15px; width: 45%; text-align: left; }
-        .tx-list { background: #000; border: 1px solid #333; padding: 15px; text-align: left; max-height: 250px; overflow-y: auto; font-size: 0.85em; }
-        .tx-item { border-bottom: 1px solid #222; padding: 8px 0; color: #aaa; }
-        .tx-hash { color: #d4af37; font-weight: bold; }
-    </style>
+<meta charset="UTF-8">
+<title>STG Explorer</title>
+<style>
+body{
+	background:#050505;
+	color:#00ffcc;
+	font-family:monospace;
+	padding:20px;
+}
+.card{
+	background:#111;
+	border:1px solid #333;
+	padding:20px;
+	margin-bottom:20px;
+	border-radius:10px;
+}
+h1{
+	color:#00ffaa;
+}
+.value{
+	color:#ffd700;
+	font-size:20px;
+}
+.tx{
+	border-bottom:1px solid #222;
+	padding:10px 0;
+}
+</style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <div class="explorer-card">
-            <h2 style="color: #d4af37; letter-spacing: 3px; margin-top: 0;">🛰️ STG-CHAIN REAL-TIME EXPLORER</h2>
-            <p style="color: #666; margin-bottom: 20px;">AUTOMATED LIVE LEDGER VERIFICATION STREAM</p>
-            <hr color="#d4af37" style="opacity: 0.3;">
-            
-            <div class="metrics-grid">
-                <div class="metric-box">
-                    <div style="color: #888; font-size: 0.8em;">LATEST CHAIN BLOCK</div>
-                    <div id="blockHeight" style="font-size: 2em; font-weight: bold; color: #00ff00; margin-top: 5px;">0x0</div>
-                </div>
-                <div class="metric-box">
-                    <div style="color: #888; font-size: 0.8em;">GENESIS VAULT BALANCE</div>
-                    <div id="genesisBalance" style="font-size: 2em; font-weight: bold; color: #d4af37; margin-top: 5px;">0x0</div>
-                </div>
-            </div>
 
-            <div style="text-align: left; margin-bottom: 10px; color: #d4af37; font-weight: bold;">[📜 LIVE TRANSACTION REGISTRY]</div>
-            <div class="tx-list" id="txRegistryDisplay">
-                <div style="color: #444;">Awaiting network tx transmission signals...</div>
-            </div>
-        </div>
-    </div>
+<h1>🛰️ STG CHAIN EXPLORER</h1>
 
-    <script>
-    async function rpcFetch(method, params = []) {
-        const response = await fetch("http://localhost:8545", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ jsonrpc: "2.0", method: method, params: params, id: Date.now() })
-        });
-        return await response.json();
-    }
+<div class="card">
+	<div>Current Block:</div>
+	<div id="blockNumber" class="value">Loading...</div>
+</div>
 
-    async function streamNetworkData() {
-        try {
-            // 1. Pull Block Height
-            const blockData = await rpcFetch("eth_blockNumber");
-            document.getElementById("blockHeight").innerText = blockData.result || "0x0";
+<div class="card">
+	<div>Genesis Balance:</div>
+	<div id="genesisBalance" class="value">Loading...</div>
+</div>
 
-            // 2. Pull Genesis Wallet Balance
-            const balanceData = await rpcFetch("eth_getBalance", ["0xgenesis"]);
-            document.getElementById("genesisBalance").innerText = balanceData.result || "0x0";
+<div class="card">
+	<h3>Latest Transactions</h3>
+	<div id="txList"></div>
+</div>
 
-            // 3. Pull Tx Registry List
-            const txData = await rpcFetch("stg_transactions");
-            const txContainer = document.getElementById("txRegistryDisplay");
-            
-            if (txData.result && txData.result.length > 0) {
-                txContainer.innerHTML = "";
-                txData.result.forEach(tx => {
-                    const item = document.createElement("div");
-                    item.className = "tx-item";
-                    item.innerHTML = `> HASH: <span class="tx-hash">${tx.hash.substring(0,20)}...</span> | FROM: <span>${tx.from}</span> | TO: <span>${tx.to}</span> | VALUE: <span style="color:#00ff00;">${tx.value} unit</span>`;
-                    txContainer.appendChild(item);
-                });
-            } else {
-                txContainer.innerHTML = `<div style="color: #444;">> Empty Mempool. No transactions mined on current state.</div>`;
-            }
+<script>
+const RPC_URL = "http://localhost:8545";
 
-        } catch (err) {
-            console.error("RPC Stream disconnected:", err);
-        }
-    }
+async function rpc(method, params=[]) {
+	const res = await fetch(RPC_URL,{
+		method:"POST",
+		headers:{
+			"Content-Type":"application/json"
+		},
+		body:JSON.stringify({
+			jsonrpc:"2.0",
+			method,
+			params,
+			id:1
+		})
+	});
+	return await res.json();
+}
 
-    // Mengaktifkan Polling Otomatis setiap 3 detik (Real-Time Refresh)
-    setInterval(streamNetworkData, 3000);
-    streamNetworkData(); // Initial execution run
-    </script>
+async function refreshExplorer(){
+	try {
+		// block number
+		const block = await rpc("eth_blockNumber");
+		document.getElementById("blockNumber").innerText = block.result;
+
+		// genesis balance
+		const bal = await rpc("eth_getBalance", ["0xgenesis"]);
+		document.getElementById("genesisBalance").innerText = bal.result;
+
+		// transactions
+		const txs = await rpc("stg_transactions");
+		const txList = document.getElementById("txList");
+		txList.innerHTML = "";
+
+		if(txs.result && txs.result.length > 0) {
+			txs.result.reverse().forEach(tx=>{
+				const div = document.createElement("div");
+				div.className = "tx";
+				div.innerHTML = `
+					<div>HASH: ${tx.hash}</div>
+					<div>FROM: ${tx.from}</div>
+					<div>TO: ${tx.to}</div>
+					<div>VALUE: ${tx.value}</div>
+				`;
+				txList.appendChild(div);
+			});
+		}
+	} catch (err) {
+		console.error("Explorer sync tracking error:", err);
+	}
+}
+
+refreshExplorer();
+setInterval(refreshExplorer,2000);
+</script>
 </body>
 </html>
