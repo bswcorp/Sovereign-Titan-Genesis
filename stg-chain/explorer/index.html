@@ -1,108 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>STG Explorer</title>
-<style>
-body{
-	background:#050505;
-	color:#00ffcc;
-	font-family:monospace;
-	padding:20px;
-}
-.card{
-	background:#111;
-	border:1px solid #333;
-	padding:20px;
-	margin-bottom:20px;
-	border-radius:10px;
-}
-h1{
-	color:#00ffaa;
-}
-.value{
-	color:#ffd700;
-	font-size:20px;
-}
-.tx{
-	border-bottom:1px solid #222;
-	padding:10px 0;
-}
-</style>
+    <meta charset="UTF-8">
+    <title>STG-Chain Mission Control Panel</title>
+    <style>
+        body { background: #020202; color: #00ffcc; font-family: 'Courier New', monospace; padding: 25px; text-align: center; }
+        .dashboard-grid { max-width: 950px; margin: 0 auto; background: rgba(15,15,15,0.95); border: 1px solid #d4af37; padding: 30px; box-shadow: 0 0 30px rgba(0,255,200,0.1); border-radius: 8px; }
+        .header-title { color: #00ffaa; font-size: 2.2em; letter-spacing: 4px; margin: 0 0 5px 0; text-shadow: 0 0 10px rgba(0,255,170,0.3); }
+        .data-card { background: #000; border: 1px solid #222; padding: 20px; margin: 15px 0; border-radius: 6px; text-align: left; }
+        .ledger-metric { font-size: 24px; color: #ffd700; font-weight: bold; margin-top: 5px; }
+        .tx-row { border-bottom: 1px solid #151515; padding: 12px 0; font-size: 0.85em; color: #a0a0a0; }
+        .tx-hash-badge { color: #d4af37; font-weight: bold; }
+    </style>
 </head>
 <body>
+    <div class="dashboard-grid">
+        <h1 class="header-title">🛰️ STG-CHAIN MISSION CONTROL PANEL</h1>
+        <div style="color: #666; font-size: 0.9em; margin-bottom: 25px;">BAREMETAL LEDGER STREAM INTERFACE -- LIVE REFRESH</div>
 
-<h1>🛰️ STG CHAIN EXPLORER</h1>
+        <div class="data-card">
+            <div style="color: #888; font-size: 0.85em; letter-spacing: 1px;">CURRENT VERIFIED BLOCK HEIGHT:</div>
+            <div id="blockHeightDisplay" class="ledger-metric">Syncing...</div>
+        </div>
 
-<div class="card">
-	<div>Current Block:</div>
-	<div id="blockNumber" class="value">Loading...</div>
-</div>
+        <div class="data-card">
+            <div style="color: #888; font-size: 0.85em; letter-spacing: 1px;">GENESIS WALLET CORES BALANCE:</div>
+            <div id="genesisBalanceDisplay" class="ledger-metric">Syncing...</div>
+        </div>
 
-<div class="card">
-	<div>Genesis Balance:</div>
-	<div id="genesisBalance" class="value">Loading...</div>
-</div>
+        <div class="data-card">
+            <h3 style="color: #00ffaa; margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px;">📜 REAL-TIME TRANSACTION FEED</h3>
+            <div id="transactionFeedContainer" style="max-height: 200px; overflow-y: auto;">
+                <div style="color: #444;">Connecting to local node stream vectors...</div>
+            </div>
+        </div>
+    </div>
 
-<div class="card">
-	<h3>Latest Transactions</h3>
-	<div id="txList"></div>
-</div>
+    <script>
+    const TARGET_NODE_RPC = "http://localhost:8545";
 
-<script>
-const RPC_URL = "http://localhost:8545";
+    async function processJsonRpcCall(method, params = []) {
+        const payload = await fetch(TARGET_NODE_RPC, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ jsonrpc: "2.0", method: method, params: params, id: Date.now() })
+        });
+        return await payload.json();
+    }
 
-async function rpc(method, params=[]) {
-	const res = await fetch(RPC_URL,{
-		method:"POST",
-		headers:{
-			"Content-Type":"application/json"
-		},
-		body:JSON.stringify({
-			jsonrpc:"2.0",
-			method,
-			params,
-			id:1
-		})
-	});
-	return await res.json();
-}
+    async function performDashboardRefreshLoop() {
+        try {
+            // Update Block Heights
+            const blockPayload = await processJsonRpcCall("eth_blockNumber");
+            document.getElementById("blockHeightDisplay").innerText = blockPayload.result;
 
-async function refreshExplorer(){
-	try {
-		// block number
-		const block = await rpc("eth_blockNumber");
-		document.getElementById("blockNumber").innerText = block.result;
+            // Update Genesis Asset Balances
+            const balancePayload = await processJsonRpcCall("eth_getBalance", ["0xgenesis"]);
+            document.getElementById("genesisBalanceDisplay").innerText = parseInt(balancePayload.result, 16) + " QBC";
 
-		// genesis balance
-		const bal = await rpc("eth_getBalance", ["0xgenesis"]);
-		document.getElementById("genesisBalance").innerText = bal.result;
+            // Update Transaction Registry List
+            const txPayload = await processJsonRpcCall("stg_transactions");
+            const container = document.getElementById("transactionFeedContainer");
+            container.innerHTML = "";
 
-		// transactions
-		const txs = await rpc("stg_transactions");
-		const txList = document.getElementById("txList");
-		txList.innerHTML = "";
+            if (txPayload.result && txPayload.result.length > 0) {
+                txPayload.result.reverse().forEach(tx => {
+                    const row = document.createElement("div");
+                    row.className = "tx-row";
+                    row.innerHTML = `> HASH: <span class="tx-hash-badge">${tx.hash.substring(0, 24)}...</span> | FROM: <span>${tx.from}</span> | TO: <span>${tx.to}</span> | TX_VAL: <span style="color:#00ff00;">${tx.value} units</span>`;
+                    container.appendChild(row);
+                });
+            } else {
+                container.innerHTML = "<div style='color:#333;'>[Mempool Empty]: No transaction movements detected on current state tree.</div>";
+            }
+        } catch (error) {
+            console.error("Dashboard connection interrupted:", error);
+        }
+    }
 
-		if(txs.result && txs.result.length > 0) {
-			txs.result.reverse().forEach(tx=>{
-				const div = document.createElement("div");
-				div.className = "tx";
-				div.innerHTML = `
-					<div>HASH: ${tx.hash}</div>
-					<div>FROM: ${tx.from}</div>
-					<div>TO: ${tx.to}</div>
-					<div>VALUE: ${tx.value}</div>
-				`;
-				txList.appendChild(div);
-			});
-		}
-	} catch (err) {
-		console.error("Explorer sync tracking error:", err);
-	}
-}
-
-refreshExplorer();
-setInterval(refreshExplorer,2000);
-</script>
+    // Initialize Polling Engine Loop (every 2 seconds)
+    setInterval(performDashboardRefreshLoop, 2000);
+    performDashboardRefreshLoop();
+    </script>
 </body>
 </html>

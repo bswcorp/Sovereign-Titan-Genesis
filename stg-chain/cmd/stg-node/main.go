@@ -36,7 +36,7 @@ func main() {
 	fmt.Println("Genesis Loaded:", *genesisPath)
 	fmt.Println("RPC Port:", *rpcPort)
 
-	stateStore := core.NewStateDB()
+	stateStore := core.NewStateDB("core/state_db.json")
 
 	go func() {
 		for {
