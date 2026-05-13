@@ -32,7 +32,8 @@ func NewStateDB() *StateDB {
 		CipherMap:    make(map[string]string),
 	}
 
-	// Initialize Level 2 Aksara-Logic Encryption Matrix
+	s.Balances["0xgenesis"] = 1000000
+
 	s.CipherMap["0"] = "꧐"
 	s.CipherMap["1"] = "꧑"
 	s.CipherMap["2"] = "꧒"
@@ -43,52 +44,50 @@ func NewStateDB() *StateDB {
 	s.CipherMap["7"] = "꧗"
 	s.CipherMap["8"] = "꧘"
 	s.CipherMap["9"] = "꧙"
-	s.CipherMap["A"] = "ꦄ"
-	s.CipherMap["B"] = "ꦧ"
-	s.CipherMap["C"] = "ꦼ"
-	s.CipherMap["D"] = "ꦢ"
-	s.CipherMap["E"] = "ꦌ"
-	s.CipherMap["X"] = "ꦏꦱ"
 
-	// Genesis Allocation
-	s.Balances["0xgenesis"] = 1000000
 	return s
 }
 
-// EncryptStringToAksara converts standard hex telemetry data into Aksara-Logic parameters
 func (s *StateDB) EncryptStringToAksara(input string) string {
-	upperInput := strings.ToUpper(input)
-	var output []string
-	for _, char := range upperInput {
-		strChar := string(char)
-		if val, exists := s.CipherMap[strChar]; exists {
-			output = append(output, val)
+	upper := strings.ToUpper(input)
+
+	var out []string
+
+	for _, c := range upper {
+		v, ok := s.CipherMap[string(c)]
+
+		if ok {
+			out = append(out, v)
 		} else {
-			output = append(output, strChar)
+			out = append(out, string(c))
 		}
 	}
-	return strings.Join(output, "")
+
+	return strings.Join(out, "")
 }
 
 func (s *StateDB) IncrementBlock() {
 	s.mu.Lock()
 	defer s.mu.Unlock()
+
 	s.CurrentBlock++
 }
 
 func (s *StateDB) GetBlock() uint64 {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
+
 	return s.CurrentBlock
 }
 
 func (s *StateDB) GetBalance(addr string) uint64 {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
+
 	return s.Balances[addr]
 }
 
-func (s *StateDB) SendTransaction(from string, to string, value uint64) (string, error) {
+func (s *StateDB) SendTransaction(from, to string, value uint64) (string, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
@@ -99,8 +98,16 @@ func (s *StateDB) SendTransaction(from string, to string, value uint64) (string,
 	s.Balances[from] -= value
 	s.Balances[to] += value
 
-	raw := fmt.Sprintf("%s:%s:%d:%d", from, to, value, time.Now().UnixNano())
+	raw := fmt.Sprintf(
+		"%s:%s:%d:%d",
+		from,
+		to,
+		value,
+		time.Now().UnixNano(),
+	)
+
 	hash := sha256.Sum256([]byte(raw))
+
 	txHash := "0x" + hex.EncodeToString(hash[:])
 
 	tx := Transaction{
@@ -111,11 +118,13 @@ func (s *StateDB) SendTransaction(from string, to string, value uint64) (string,
 	}
 
 	s.Transactions = append(s.Transactions, tx)
+
 	return txHash, nil
 }
 
 func (s *StateDB) GetTransactions() []Transaction {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
+
 	return s.Transactions
 }
