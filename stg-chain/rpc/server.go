@@ -46,6 +46,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var result interface{}
+	var rpcErr interface{}
 
 	switch req.Method {
 	case "eth_blockNumber":
@@ -57,6 +58,32 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		} else {
 			result = "0x0"
 		}
+	case "eth_sendTransaction":
+		if len(req.Params) > 0 {
+			txData, ok := req.Params[0].(map[string]interface{})
+			if ok {
+				from, _ := txData["from"].(string)
+				to, _ := txData["to"].(string)
+				valHex, _ := txData["value"].(string)
+				
+				// Parse hex values cleanly
+				valParsed, err := strconv.ParseUint(valHex[2:], 16, 64)
+				if err == nil {
+					txHash, txErr := stateStore.AddTransaction(from, to, valParsed)
+					if txErr == nil {
+						result = txHash
+					} else {
+						rpcErr = txErr.Error()
+					}
+				} else {
+					rpcErr = "invalid execution value format"
+				}
+			}
+		} else {
+			rpcErr = "missing transmission parameters"
+		}
+	case "stg_getTransactionHistory":
+		result = stateStore.GetTransactions()
 	case "eth_chainId":
 		result = "0x309"
 	case "net_version":
@@ -64,10 +91,16 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	case "web3_clientVersion":
 		result = "STG-Chain/v0.1-Quantum"
 	default:
-		result = null
+		rpcErr = "method not supported"
 	}
 
-	resp := RPCResponse{JSONRPC: "2.0", ID: req.ID, Result: result}
+	resp := RPCResponse{JSONRPC: "2.0", ID: req.ID}
+	if rpcErr != nil {
+		resp.Error = rpcErr
+	} else {
+		resp.Result = result
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(resp)
 }
