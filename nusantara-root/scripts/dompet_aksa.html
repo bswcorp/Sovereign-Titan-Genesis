@@ -6,11 +6,10 @@
     <style>
         body { background-color: #050505; color: #d4af37; font-family: 'Courier New', monospace; text-align: center; }
         .dashboard { border: 2px solid #d4af37; padding: 30px; margin: 40px auto; width: 85%; background: rgba(17, 17, 17, 0.9); box-shadow: 0 0 30px #d4af37; }
-        .stat-box { display: inline-block; width: 45%; margin: 10px; padding: 25px; border: 1px solid #333; background: #000; vertical-align: top; }
-        .amount { font-size: 2.5em; font-weight: bold; color: #00ff00; text-shadow: 0 0 15px #00ff00; font-variant-numeric: tabular-nums; }
-        .label { font-size: 1.1em; color: #aaa; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 2px; }
+        .stat-box { display: inline-block; width: 30%; margin: 10px; padding: 25px; border: 1px solid #333; background: #000; vertical-align: top; }
+        .amount { font-size: 2em; font-weight: bold; color: #00ff00; text-shadow: 0 0 15px #00ff00; font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; }
+        .label { font-size: 1em; color: #aaa; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 2px; }
         
-        /* Gaya Komponen Baru untuk Riwayat Transaksi */
         .tx-log-container { border: 1px solid #333; background: #000; margin-top: 25px; padding: 20px; text-align: left; }
         .tx-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85em; }
         .tx-table th { border-bottom: 1px solid #d4af37; padding: 10px; color: #d4af37; text-align: left; }
@@ -27,25 +26,32 @@
 
 <div class="dashboard">
     <h1 style="letter-spacing: 5px;">SOVEREIGN TITAN GENESIS</h1>
-    <p style="color: #888;">INTERNAL COMMAND CENTER - QUANTUM VALUATION TERMINAL</p>
+    <p style="color: #888;">INTERNAL COMMAND CENTER - QUANTUM STATE REGISTRY TERMINAL</p>
     <hr color="#d4af37">
     
+    <!-- Box 1: Economic Valuation -->
     <div class="stat-box">
-        <div class="label">Valuasi Kuantum Tembako (sIDR)</div>
+        <div class="label">Valuasi Kuantum Tembako</div>
         <div id="valuation" class="amount">Connecting...</div>
-        <div style="font-size: 0.8em; color: #666; margin-top: 10px;">Formula: (5 ETH Pool / 1M Circulating) * 100K Quadrillion</div>
+        <div style="font-size: 0.7em; color: #666; margin-top: 10px;">Formula: (5 ETH Pool / 1M Circ) * 100K Quad</div>
     </div>
 
+    <!-- Box 2: Node Blockchain Height -->
     <div class="stat-box">
-        <div class="label">Tinggi Blok Node (Live RPC)</div>
+        <div class="label">Tinggi Blok Node (RPC)</div>
         <div id="blockHeight" class="amount" style="color: #d4af37;">0x0</div>
-        <div style="font-size: 1em; color: #00ff00; margin-top: 10px;"><span class="status-blink"></span> LIVE RPC STREAM</div>
+        <div style="font-size: 0.7em; color: #00ff00; margin-top: 10px;"><span class="status-blink"></span> LIVE RPC STREAM</div>
     </div>
 
-    <!-- Container Form Transaksi Terpasang -->
+    <!-- 💳 NEW BOX 3: LIVE ARCHITECT VAULT REGISTRY BALANCES (PHASE 4) -->
+    <div class="stat-box">
+        <div class="label">Sultan Ledger Balance</div>
+        <div id="vaultBalance" class="amount" style="color: #00ffff; text-shadow: 0 0 15px #00ffff;">0 QBC</div>
+        <div style="font-size: 0.7em; color: #888; margin-top: 10px;">Address: 0x3AA63941... (Unit 008)</div>
+    </div>
+
     <div id="metaportationFormContainer"></div>
 
-    <!-- 📋 KOMPONEN BARU: LIVE TRANSACTION HISTORY LOG (PHASE 3) -->
     <div class="tx-log-container">
         <div style="font-size: 1em; color: #d4af37; font-weight: bold; letter-spacing: 2px;">📜 LIVE LEDGER REGISTRY AUDIT</div>
         <table class="tx-table">
@@ -67,7 +73,7 @@
 
     <div class="ticker-container">
         <div class="ticker-text">
-            [MARKET] QSTATE/SAR: 3.75 ▲ | QSTATE/CNY: 7.23 ▲ | [AMMO] 100K QUADRILLION LOADED | [PHASE 3] TX REGISTRY MEMORY LIVE | [SYSTEM] QUANTUM PROTECTION ACTIVE
+            [MARKET] QSTATE/SAR: 3.75 ▲ | QSTATE/CNY: 7.23 ▲ | [AMMO] 100K QUADRILLION LOADED | [PHASE 4] LIVE STATE STORAGE BALANCES ENGAGED | [SYSTEM] QUANTUM PROTECTION ACTIVE
         </div>
     </div>
 </div>
@@ -77,10 +83,11 @@
     const circulatingSupply = 1000000; 
     const totalSovereignSupply = 100000000000000000000; 
     const ethToIdrRate = 45000000; 
+    const sultanWallet = "0x3AA63941Fe0Ce029f4523c57A30C6dca3cB7343F";
 
     async function fetchChainData() {
         try {
-            // 1. Ambil Tinggi Blok Node
+            // 1. Fetch Block Height Metrics
             const blockResponse = await fetch("http://localhost:8545", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -100,19 +107,31 @@
                 document.getElementById('valuation').innerText = "Rp " + finalValuationIdr.toLocaleString('id-ID');
             }
 
-            // 2. ⚡ AMBIL DATA REKOR HISTORI TRANSAKSI (PHASE 3 CORNERSTONE)
+            // 2. ⚡ FETCH LIVE WALLET BALANCE REGISTRY (PHASE 4 CONE)
+            const balanceResponse = await fetch("http://localhost:8545", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ jsonrpc: "2.0", method: "eth_balanceOf", params: [sultanWallet], id: 2 })
+            });
+            const balanceData = await balanceResponse.json();
+            
+            if (balanceData.result) {
+                const rawBalance = parseInt(balanceData.result, 16);
+                document.getElementById('vaultBalance').innerText = rawBalance.toLocaleString() + " QBC";
+            }
+
+            // 3. Fetch Transaction Registry History Entries
             const txResponse = await fetch("http://localhost:8545", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ jsonrpc: "2.0", method: "stg_getTransactionHistory", params: [], id: 2 })
+                body: JSON.stringify({ jsonrpc: "2.0", method: "stg_getTransactionHistory", params: [], id: 3 })
             });
             const txData = await txResponse.json();
             
             if (txData.result && txData.result.length > 0) {
                 const tbody = document.getElementById("txLogBody");
-                tbody.innerHTML = ""; // Bersihkan placeholder lama
+                tbody.innerHTML = "";
                 
-                // Tampilkan data mutasi dari memori Go ke dalam tabel visual
                 txData.result.forEach(tx => {
                     const row = `<tr>
                         <td style="color: #00ff00; font-weight: bold;">${tx.hash}</td>
@@ -126,6 +145,7 @@
         } catch (err) {
             document.getElementById('valuation').innerText = "RPC OFFLINE";
             document.getElementById('blockHeight').innerText = "0x0";
+            document.getElementById('vaultBalance').innerText = "0 QBC";
         }
     }
 
