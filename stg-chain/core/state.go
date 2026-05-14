@@ -18,10 +18,11 @@ type Transaction struct {
 }
 
 type StateDB struct {
-	mu        sync.RWMutex
-	balances  map[string]uint64
+	mu         sync.RWMutex
+	balances   map[string]uint64
 	txRegistry []Transaction
-	latestBlk uint64
+	latestBlk  uint64
+	EventBus   chan Transaction // Phase 5: Real-time broadcast pipe
 }
 
 func NewStateDB() *StateDB {
@@ -29,8 +30,9 @@ func NewStateDB() *StateDB {
 		balances:   make(map[string]uint64),
 		txRegistry: make([]Transaction, 0),
 		latestBlk:  1,
+		EventBus:   make(chan Transaction, 100),
 	}
-	// Lock Initial Sovereign Capital for Andi Muhammad Harpianto (Sultan)
+	// Initial Asset Reservation
 	db.balances["0x3AA63941Fe0Ce029f4523c57A30C6dca3cB7343F"] = 100000000000000000
 	return db
 }
@@ -41,6 +43,12 @@ func (s *StateDB) GetBalance(address string) uint64 {
 	return s.balances[address]
 }
 
+func (s *StateDB) SetBalance(address string, amount uint64) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.balances[address] = amount
+}
+
 func (s *StateDB) AddTransaction(from, to string, amount uint64) (string, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -49,11 +57,9 @@ func (s *StateDB) AddTransaction(from, to string, amount uint64) (string, error)
 		return "", errors.New("insufficient balance inside sovereign core storage")
 	}
 
-	// Mutate State Balances Securely
 	s.balances[from] -= amount
 	s.balances[to] += amount
 
-	// Generate Cryptographic Transaction Hash
 	timestamp := time.Now().Unix()
 	rawPayload := fmt.Sprintf("%s-%s-%d-%d", from, to, amount, timestamp)
 	hashBytes := sha256.Sum256([]byte(rawPayload))
@@ -68,6 +74,13 @@ func (s *StateDB) AddTransaction(from, to string, amount uint64) (string, error)
 	}
 
 	s.txRegistry = append(s.txRegistry, newTx)
+	
+	// Phase 5 Broadcast: Fire event non-blockingly into the stream pipe
+	select {
+	case s.EventBus <- newTx:
+	default:
+	}
+
 	return txHash, nil
 }
 
