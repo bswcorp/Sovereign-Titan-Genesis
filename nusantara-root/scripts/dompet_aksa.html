@@ -70,6 +70,17 @@
         </table>
     </div>
 
+    <!-- 🏆 COUNCIL VALIDATOR CONFLICT RESOLUTION BOARD -->
+    <div class="tx-log-container" style="border-color: #00ff00;">
+        <div style="font-size: 1em; color: #00ff00; font-weight: bold; letter-spacing: 2px;">🏆 BFT VALIDATOR BLOCK SIGNING ALTAR (3/5 QUORUM)</div>
+        <p style="font-size: 0.8em; color: #888;">Simulate signatures from Council of Five to push the ledger forward.</p>
+        <button class="query-btn" style="margin: 5px;" onclick="signBlock('val1')">Sign Val 1</button>
+        <button class="query-btn" style="margin: 5px;" onclick="signBlock('val2')">Sign Val 2</button>
+        <button class="query-btn" style="margin: 5px;" onclick="signBlock('val3')">Sign Val 3</button>
+        <button class="query-btn" style="margin: 5px;" onclick="signBlock('val4')">Sign Val 4</button>
+        <button class="query-btn" style="margin: 5px;" onclick="signBlock('val5')">Sign Val 5</button>
+        <pre id="consensusStatus" style="font-size: 0.8em; color: #aaa; margin-top: 10px;">Status: Awaiting signatures...</pre>
+    </div>
     <div class="ticker-container">
         <div class="ticker-text">
             [MARKET] QSTATE/SAR: 3.75 ▲ | [WS STREAM] CONNECTED TO PORT 8546/WS | [AMMO] 100K QUADRILLION LOADED | [SYSTEM] QUANTUM PROTECTION ACTIVE
@@ -141,6 +152,18 @@
     }
 
     setInterval(syncBlockMetadata, 1000);
+    async function signBlock(validator) {
+        const statusText = document.getElementById("consensusStatus");
+        try {
+            const response = await fetch("http://localhost:8545", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ jsonrpc: "2.0", method: "stg_submitValidatorSignature", params: [validator], id: 77 })
+            });
+            const data = await response.json();
+            statusText.innerText = data.error ? "🚨 Rejected: " + data.error : "📡 Server response: " + data.result;
+        } catch(e) { statusText.innerText = "🚨 Engine offline."; }
+    }
     initializeWebSocket();
 </script>
 

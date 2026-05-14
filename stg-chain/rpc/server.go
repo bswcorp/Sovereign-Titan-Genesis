@@ -49,6 +49,22 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	var rpcErr interface{}
 
 	switch req.Method {
+	case "stg_submitValidatorSignature":
+		if len(req.Params) > 0 {
+			valAddr, _ := req.Params[0].(string)
+			sealed, err := consensusEngine.CollectSignature(valAddr)
+			if err == nil && sealed {
+				stateStore.IncrementBlock()
+				consensusEngine.PrepareBlock(stateStore.GetLatestBlock()+1, "0xStateRootRoot")
+				result = "BLOCK_SEALED_BY_QUORUM"
+			} else if err != nil {
+				rpcErr = err.Error()
+			} else {
+				result = "SIGNATURE_COLLECTED"
+			}
+		} else {
+			rpcErr = "missing validator parameter"
+		}
 	case "eth_blockNumber":
 		result = "0x" + strconv.FormatUint(stateStore.GetLatestBlock(), 16)
 	case "eth_getBalance":

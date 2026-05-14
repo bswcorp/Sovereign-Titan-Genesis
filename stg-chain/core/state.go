@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"sync"
 	"time"
+	
+	"stg-chain/storage"
 )
 
 type Transaction struct {
@@ -22,18 +24,26 @@ type StateDB struct {
 	balances   map[string]uint64
 	txRegistry []Transaction
 	latestBlk  uint64
-	EventBus   chan Transaction // Phase 5: Real-time broadcast pipe
+	EventBus   chan Transaction
+	diskStore  *storage.Store // Phase 8 Storage Connection
 }
 
 func NewStateDB() *StateDB {
+	disk := storage.NewStore()
 	db := &StateDB{
 		balances:   make(map[string]uint64),
 		txRegistry: make([]Transaction, 0),
 		latestBlk:  1,
 		EventBus:   make(chan Transaction, 100),
+		diskStore:  disk,
 	}
-	// Initial Asset Reservation
-	db.balances["0x3AA63941Fe0Ce029f4523c57A30C6dca3cB7343F"] = 100000000000000000
+	
+	// Seed Sovereign Architect allocations and write record to local storage disk
+	sultanWallet := "0x3AA63941Fe0Ce029f4523c57A30C6dca3cB7343F"
+	initialFunds := uint64(100000000000000000)
+	db.balances[sultanWallet] = initialFunds
+	db.diskStore.PutBalance(sultanWallet, initialFunds)
+	
 	return db
 }
 
@@ -41,12 +51,6 @@ func (s *StateDB) GetBalance(address string) uint64 {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 	return s.balances[address]
-}
-
-func (s *StateDB) SetBalance(address string, amount uint64) {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	s.balances[address] = amount
 }
 
 func (s *StateDB) AddTransaction(from, to string, amount uint64) (string, error) {
@@ -59,6 +63,10 @@ func (s *StateDB) AddTransaction(from, to string, amount uint64) (string, error)
 
 	s.balances[from] -= amount
 	s.balances[to] += amount
+	
+	// Commit balances to LevelDB
+	s.diskStore.PutBalance(from, s.balances[from])
+	s.diskStore.PutBalance(to, s.balances[to])
 
 	timestamp := time.Now().Unix()
 	rawPayload := fmt.Sprintf("%s-%s-%d-%d", from, to, amount, timestamp)
@@ -75,7 +83,6 @@ func (s *StateDB) AddTransaction(from, to string, amount uint64) (string, error)
 
 	s.txRegistry = append(s.txRegistry, newTx)
 	
-	// Phase 5 Broadcast: Fire event non-blockingly into the stream pipe
 	select {
 	case s.EventBus <- newTx:
 	default:
@@ -94,6 +101,14 @@ func (s *StateDB) IncrementBlock() {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.latestBlk++
+	
+	// Archive the block event structurally down to disk
+	blockMeta := map[string]interface{}{
+		"number":    s.latestBlk,
+		"timestamp": time.Now().Unix(),
+		"tx_count":  len(s.txRegistry),
+	}
+	s.diskStore.PutBlock(s.latestBlk, blockMeta)
 }
 
 func (s *StateDB) GetLatestBlock() uint64 {

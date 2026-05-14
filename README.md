@@ -1,29 +1,23 @@
-# 🏛️ Sovereign Titan Genesis (STG)
-> *The Big Tent Ecosystem for Educational Sovereignty, Financial Tech, and Defense Hardware.*
+# 🌐 Sovereign Titan Genesis - STG UNIFIED Monorepo
 
-## 📋 Overview
-Sovereign Titan Genesis (STG) adalah ekosistem teknologi terintegrasi yang dikelola di bawah naungan **Yayasan Sovereign Titan Genesis**. Proyek ini bertujuan untuk menyatukan tiga pilar utama kemandirian digital:
-1. **Homeschooling Core:** Kurikulum pendidikan mandiri berbasis digital.
-2. **Qstate Engine:** Infrastruktur operasional dan manajemen aset digital.
-3. **H2K Defense:** Integrasi perangkat keras untuk perlindungan perimeter dan privasi data.
+## ⚔️ MAKLUMAT SENJATA TRISULA
+Penerbitan 3 Core Rantai Terikat dari STG ini dimaksudkan untuk menegakkan kedaulatan digital, ekonomi, dan fisik Nusantara.
 
-## 🏗️ Architecture
-Proyek ini menggunakan struktur **Git Submodules** untuk menjaga modularitas setiap unit:
-- `/knowledge`: Kurikulum Homeschooling.
-- `/operation`: Mesin operasional Qstate.
-- `/defense`: Driver dan integrasi hardware H2K.
-- `/search`: Mesin pencari mandiri Titan Search.
+### 1️⃣ STG-UNIFIED
+**Prinsip:** Berkemajemukan bersama hidup damai di Nusantara, walau berbeda-beda tetap satu setia pada Ibu Pertiwi.
+- Pusat tata kelola, *planning*, *execution*, dan penegakan hukum konsensus *Quorum-State*.
 
-## 🚀 Getting Started
-Untuk mensinkronkan seluruh ekosistem di mesin lokal Anda:
-1. Clone repo utama: `git clone [URL_REPO_STG]`
-2. Jalankan script sinkronisasi:
-   ```bash
-   chmod +x titan-sync.sh
-   ./titan-sync.sh
+### 2️⃣ STG-ECOSYSTEM
+**Prinsip:** Mendasari kewirausahaan bagi *next generation* untuk tetap dapat maju dan berkembang dalam membesut *Startups Company* melalui inkubator penuh (*Incubator Full*).
+- Infrastruktur teknis operasional: `blockchain/`, `backend/`, dan `frontend/` (Lapisan Pengalaman).
 
-## 🛡️ [SOVEREIGN BUG BOUNTY ACTIVE](SOVEREIGN_BUG_BOUNTY.md)
-Join the elite 1,000 reviewers and earn your first AKSA tokens.
+### 3️⃣ STG-PROYEK
+**Prinsip:** Pusat perencanaan dan pelaksanaan pembangunan jalan, gedung, jembatan, data center, krisis center, serta media center dengan mengedepankan infrastruktur sosial dan kemaslahatan umat.
+- Koridor pembangunan fisik dan integrasi teknologi untuk kemakmuran Unit 012.
 
-## 🏛️ [THE GUARDIAN MANIFESTO](stg-web3/contracts/GuardianManifesto.sol)
-All Guardians must sign the On-Chain Oath to unlock Unit 008 access.
+---
+
+## 🛡️ SERTIFIKAT KEPERCAYAAN & TRANSPARANSI
+Laporan audit Unit 008 (Agunan senilai **Rp 1.498 T**) tersimpan secara sah di dalam folder `docs/audit/` sebagai jaminan kekuatan finansial ekosistem.
+
+**"人为人，人为一人 — Satu untuk Semua, Semua untuk Satu."**
