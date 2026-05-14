@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  stg-db:
+    image: postgres:15-alpine
+    container_name: stg-postgres-db
+    environment:
+      POSTGRES_USER: capo
+      POSTGRES_PASSWORD: SiriNaPacce777Password
+      POSTGRES_DB: stg_bank_ledger
+    ports:
+      - "5432:5432"
+    volumes:
+      - stg_db_data:/var/lib/postgresql/data
+    networks:
+      - stg-trisula-network
+
+  stg-backend-bank:
+    image: node:18-alpine
+    container_name: stg-express-bank
+    working_dir: /app
+    volumes:
+      - ./STG-ECOSYSTEM/backend:/app
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - DATABASE_URL=postgresql://capo:SiriNaPacce777Password@stg-db:5432/stg_bank_ledger
+      - BLOCKCHAIN_RPC=http://stg-node:8545
+      - QUBICOIN_CONTRACT=0x5fbdb2315678afecb367f032d93f642f64180aa3
+    depends_on:
+      - stg-db
+    command: npm start
+    networks:
+      - stg-trisula-network
+
+volumes:
+  stg_db_data:
+    driver: local
+
+networks:
+  stg-trisula-network:
+    driver: bridge
