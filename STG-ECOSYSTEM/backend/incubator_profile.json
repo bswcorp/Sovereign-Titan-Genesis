@@ -1,0 +1,44 @@
+{
+  "incubator": {
+    "system_id": "STG-INCUBATOR-UNIFIED-01",
+    "version": "1.0.0",
+    "status": "OPERATIONAL",
+    "last_sync_timestamp": "2026-05-15T04:38:00Z",
+    "governance_rule": "3-of-5-Council-Verification"
+  },
+  "funding_matrix": {
+    "collateral_source": "Unit_008_Sovereign_Vault",
+    "total_allocation_pool_aksa": 5000000000,
+    "max_grant_per_startup_aksa": 250000000,
+    "liquidity_compliance_standard": "ESG-Digital-Asset-Act-2026"
+  },
+  "incubation_tiers": [
+    {
+      "tier_id": "TIER-01-GENESIS",
+      "name": "Nusantara Layer-1 Protocol Devs",
+      "grant_amount_aksa": 250000000,
+      "requirements": {
+        "min_audit_score": 95,
+        "h2k_biometric_auth_required": true,
+        "open_source_compliance": "MIT-Sovereign-License"
+      }
+    },
+    {
+      "tier_id": "TIER-02-ECOSYSTEM",
+      "name": "Sovereign Startups App Layer",
+      "grant_amount_aksa": 100000000,
+      "requirements": {
+        "min_audit_score": 85,
+        "h2k_biometric_auth_required": false,
+        "open_source_compliance": "GNU-GPL-v3"
+      }
+    }
+  ],
+  "monitoring_metrics": {
+    "prometheus_tracking_keys": [
+      "stg_incubator_applications_total",
+      "stg_incubator_grants_disbursed_total",
+      "stg_incubator_failed_audits_total"
+    ]
+  }
+}
