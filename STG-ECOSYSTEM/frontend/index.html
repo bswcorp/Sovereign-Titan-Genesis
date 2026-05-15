@@ -87,6 +87,33 @@
             }
         });
 
+        window.mintSovereignBadge = async function() {
+            const log = document.getElementById("logDisplay");
+            try {
+                log.innerText = "[LOG]: Generating SVG Badge artwork and packing metadata to IPFS...";
+                const response = await fetch("http://127.0.0", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ ownerAddress: "0x3AA63941Fe0Ce029f4523c57A30C6dca3cB7343F" })
+                });
+                const resData = await response.json();
+                log.innerText = `✅ NFT MINTED SUCCESSFUL! Saved with CID: ${resData.cid}`;
+                loadNFTGallery();
+            } catch(e) { log.innerText = "🚨 Minting operation failure."; }
+        }
+
+        async function loadNFTGallery() {
+            try {
+                const response = await fetch("http://127.0.0");
+                const nfts = await response.json();
+                const grid = document.getElementById("nftGalleryGrid");
+                grid.innerHTML = "";
+                nfts.forEach(nft => {
+                    grid.innerHTML += `\n                        <div style="border: 1px solid #333; background: #000; padding: 10px; text-align: center;">\n                            <img src="https://ipfs.io{nft.cid}" style="width: 100%; border: 1px solid #d4af37;" onerror="this.src='https://placehold.co'">\n                            <div style="font-size: 0.75em; color: #00ff00; margin-top: 5px;">${nft.name}</div>\n                        </div>`;
+                });
+            } catch(e) {}
+        }
+        loadNFTGallery();
         setInterval(updateTelemetryFeed, 3000);
         updateTelemetryFeed();
     </script>

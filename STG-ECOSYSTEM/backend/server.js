@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
-const pool = require('./db');
+const { Pool } = require('pg');
 const { uploadToIPFS } = require('./ipfs');
 require('dotenv').config();
 
@@ -12,77 +12,76 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const profilePath = path.join(__dirname, 'incubator_profile.json');
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL || "postgresql://postgres:postgres@stg-db:5432/stg_unified"
+});
 
-// 🌐 ROUTE 3: Automated IPFS Metadata Registry Anchor
-app.post('/api/assets/mint-metadata', async (req, res) => {
-    const { assetName, description, imageUrl } = req.body;
-    
-    if (!assetName || !imageUrl) {
-        return res.status(400).json({ error: "Missing required parameter mappings." });
-    }
+// Inisialisasi Tabel NFT di PostgreSQL
+pool.query(`
+    CREATE TABLE IF NOT EXISTS sovereign_nfts (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100),
+        cid VARCHAR(100),
+        owner VARCHAR(100),
+        minted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+`).catch(err => console.error(err));
 
-    const tempMetadataPath = path.join(__dirname, 'temp_nft_metadata.json');
-    
-    // Construct standard ERC-721 metadata structure format specifications
-    const nftMetadata = {
-        name: assetName,
-        description: description || "Sovereign Titan Genesis Decentralized Ecosystem Asset",
-        image: imageUrl,
-        attributes: [
-            { "trait_type": "Origin", "value": "Nusantara Core" },
-            { "trait_type": "Security", "value": "Quantum-Shielded" }
-        ],
-        compiled_at: new Date().toISOString()
-    };
+// API 1: Generate dan Mint NFT Tameng Kedaulatan
+app.post('/api/assets/mint-sovereign-nft', async (req, res) => {
+    const { ownerAddress } = req.body;
+    if (!ownerAddress) return res.status(400).json({ error: "Wallet address required." });
+
+    const nftName = "Titan Guard Access Token #008";
+    const svgPath = path.join(__dirname, 'temp_nft.svg');
+    const metaPath = path.join(__dirname, 'temp_meta.json');
+
+    // 🛡️ Generator Seni Digital SVG (Tameng Emas Unit 008)
+    const svgContent = `
+    <svg xmlns="http://w3.org" viewBox="0 0 400 400" width="400" height="400">
+        <rect width="100%" height="100%" fill="#050505"/>
+        <polygon points="200,40 320,100 320,260 200,360 80,260 80,100" fill="none" stroke="#d4af37" stroke-width="8"/>
+        <text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" fill="#00ff00" font-family="monospace" font-size="24" font-weight="bold">TITAN GUARD</text>
+        <text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="32" font-weight="bold">UNIT 008</text>
+        <circle cx="200" cy="200" r="140" fill="none" stroke="#d4af37" stroke-width="2" stroke-dasharray="10"/>
+    </svg>`;
 
     try {
-        fs.writeFileSync(tempMetadataPath, JSON.stringify(nftMetadata, null, 2));
-        
-        // Push metadata package out to the IPFS network stream mapping node
-        const cidHash = await uploadToIPFS(tempMetadataPath);
-        fs.unlinkSync(tempMetadataPath); // Clear temporary disk files cleanly
+        // 1. Amankan gambar ke IPFS
+        fs.writeFileSync(svgPath, svgContent);
+        const imageCid = await uploadToIPFS(svgPath);
 
-        return res.json({
-            status: "METADATA_DECENTRALIZED_PIN_SUCCESS",
-            ipfs_uri: `ipfs://${cidHash}`,
-            gateway_url: `https://ipfs.io{cidHash}`
-        });
+        // 2. Buat Metadata ERC-721 Standard
+        const metadata = {
+            name: nftName,
+            description: "Sovereign Access Token to Unit 008 Secured Dashboard Network",
+            image: `https://ipfs.io{imageCid}`,
+            attributes: [{ "trait_type": "Security_Level", "value": "Maximum" }]
+        };
+        fs.writeFileSync(metaPath, JSON.stringify(metadata));
+        const metaCid = await uploadToIPFS(metaPath);
+
+        // Hapus file sampah lokal
+        fs.unlinkSync(svgPath);
+        fs.unlinkSync(metaPath);
+
+        // 3. Catat Kepemilikan Permanen ke PostgreSQL
+        await pool.query("INSERT INTO sovereign_nfts (name, cid, owner) VALUES ($1, $2, $3)", [nftName, metaCid, ownerAddress]);
+
+        return res.json({ status: "MINT_SUCCESS", cid: metaCid, metadata: metadata });
     } catch (err) {
-        return res.status(500).json({ error: "Failed to anchor metadata object parameters onto IPFS." });
+        return res.status(500).json({ error: err.message });
     }
 });
 
-app.get('/api/incubator/profile', async (fileReq, fileRes) => {
+// API 2: Ambil Semua Koleksi NFT dari Database
+app.get('/api/assets/my-nfts', async (req, res) => {
     try {
-        const rawData = fs.readFileSync(profilePath, 'utf8');
-        const jsonProfile = JSON.parse(rawData);
-
-        const rpcResponse = await fetch(process.env.CHAINSTACK_HTTP_ENDPOINT, {
-            method: "POST",
-            headers: { 
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${process.env.CHAINSTACK_API_KEY}`
-            },
-            body: JSON.stringify({ jsonrpc: "2.0", method: "eth_blockNumber", params: [], id: 1 })
-        });
-        const rpcData = await rpcResponse.json();
-        const currentBlock = rpcData.result || "0x0";
-
-        await pool.query(
-            "INSERT INTO node_telemetry (node_id, block_height) VALUES ($1, $2) ON CONFLICT DO NOTHING",
-            [process.env.CHAINSTACK_NODE_ID, currentBlock]
-        ).catch(() => {});
-
-        jsonProfile.monitoring_metrics.live_chainstack_block = currentBlock;
-        jsonProfile.system_id = process.env.CHAINSTACK_NODE_ID;
-        
-        return fileRes.json(jsonProfile);
+        const result = await pool.query("SELECT * FROM sovereign_nfts ORDER BY id DESC");
+        return res.json(result.rows);
     } catch (err) {
-        return fileRes.status(500).json({ error: "Failed to bridge data from Chainstack Node." });
+        return res.status(500).json({ error: err.message });
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`📡 STG PERSISTENT PROXY GATEWAY: Active on port :${PORT}`);
-});
+app.listen(PORT, () => console.log(`Backend server active on port ${PORT}`));
