@@ -10,33 +10,34 @@
         .glass-panel { border: 1px solid rgba(214, 175, 55, 0.3); background: rgba(12, 12, 12, 0.95); padding: 25px; box-shadow: 0 0 20px rgba(0, 255, 0, 0.1); }
         .trisula-header { color: #d4af37; font-size: 1.8em; letter-spacing: 4px; margin-top: 0; }
         .telemetry-num { font-size: 2.2em; font-weight: bold; color: #00ffff; text-shadow: 0 0 15px #00ffff; font-variant-numeric: tabular-nums; }
-        .connect-btn { background: transparent; border: 1px solid #d4af37; color: #d4af37; padding: 12px 20px; cursor: pointer; letter-spacing: 1px; font-weight: bold; transition: 0.3s; width: 100%; max-width: 300px; }
+        .connect-btn { background: transparent; border: 1px solid #d4af37; color: #d4af37; padding: 12px 24px; cursor: pointer; letter-spacing: 1px; font-weight: bold; transition: 0.3s; width: 100%; max-width: 300px; }
         .connect-btn:hover { background: #d4af37; color: #000; box-shadow: 0 0 15px #d4af37; }
-        .log-terminal { background: #000; padding: 15px; text-align: left; font-size: 0.8em; border-left: 3px solid #d4af37; color: #aaa; max-width: 1000px; margin: 20px auto; overflow-x: auto; }
+        .log-terminal { background: #000; padding: 15px; text-align: left; font-size: 0.8em; border-left: 3px solid #d4af37; color: #aaa; max-width: 1000px; margin: 20px auto; overflow-y: auto; max-height: 200px; }
+        .pulse-light { height: 10px; width: 10px; background-color: #00ff00; border-radius: 50%; display: inline-block; animation: blink 1s infinite; margin-right: 8px; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
     <div class="glass-panel" style="max-width: 1000px; margin: 0 auto 20px auto;">
         <h1 class="trisula-header">STG MISSION CONTROL & TELEMETRY</h1>
-        <p style="color: #888; font-size: 0.8em; margin-bottom: 0;">INTEGRATED ANALYTICS INTERFACE — PHASE 11 PRODUCTION SYSTEM</p>
+        <p style="color: #888; font-size: 0.8em; margin-bottom: 0;">INTEGRATED ANALYTICS INTERFACE — DB PERSISTENCE MODULE ACTIVE</p>
     </div>
 
-    <!-- 📊 PHASE 11: LIVE TELEMETRY OVERHAUL LAYOUT -->
     <div class="grid-layout">
         <div class="glass-panel">
-            <div style="color: #aaa; font-size: 0.8em; letter-spacing: 1px;">LEDGER HEIGHT</div>
-            <div id="metricBlock" class="telemetry-num" style="color: #d4af37; text-shadow: 0 0 15px #d4af37;">0x777</div>
-            <div style="color: #555; font-size: 0.7em; margin-top: 5px;">Source: rpc.quorumstate</div>
+            <div style="color: #aaa; font-size: 0.8em; letter-spacing: 1px;"><span class="pulse-light"></span>CHAINSTACK NODE HEIGHT</div>
+            <div id="metricBlock" class="telemetry-num" style="color: #d4af37; text-shadow: 0 0 15px #d4af37;">0x0</div>
+            <div id="nodeIdLabel" style="color: #555; font-size: 0.7em; margin-top: 5px;">Target: jolly-goldberg</div>
         </div>
         <div class="glass-panel">
             <div style="color: #aaa; font-size: 0.8em; letter-spacing: 1px;">INCUBATION GRANTS</div>
-            <div id="metricGrants" class="telemetry-num">50,000,000</div>
+            <div id="metricGrants" class="telemetry-num">0 AKSA</div>
             <div style="color: #555; font-size: 0.7em; margin-top: 5px;">Allocation Pool Unit 008</div>
         </div>
         <div class="glass-panel">
-            <div style="color: #aaa; font-size: 0.8em; letter-spacing: 1px;">STG-1AI AUDIT STATUS</div>
-            <div id="metricAI" class="telemetry-num" style="color: #00ff00; text-shadow: 0 0 15px #00ff00;">100%</div>
-            <div style="color: #555; font-size: 0.7em; margin-top: 5px;">Sentinel Auto-Compliance</div>
+            <div style="color: #aaa; font-size: 0.8em; letter-spacing: 1px;">POSTGRES STORAGE STATE</div>
+            <div id="metricDB" class="telemetry-num" style="color: #00ff00; text-shadow: 0 0 15px #00ff00;">CONNECTED</div>
+            <div style="color: #555; font-size: 0.7em; margin-top: 5px;">Immutable Archiver Active</div>
         </div>
     </div>
 
@@ -45,7 +46,7 @@
         <div id="terminalTargetContainer" style="margin-top: 20px;"></div>
     </div>
 
-    <pre id="logDisplay" class="log-terminal">@STG-UNIFIED: Initializing telemetry channels...</pre>
+    <div id="logDisplay" class="log-terminal">> [SYSTEM]: Live telemetry channel operational. Awaiting network packets...</div>
 
     <script type="module">
         import { connectSovereignWallet } from './src/services/wallet.js';
@@ -53,16 +54,26 @@
 
         initMetaportationTerminal('terminalTargetContainer');
 
-        async function updateTelemetry() {
+        async function updateTelemetryFeed() {
             try {
-                // Read live stats dynamically via our internal proxy architecture
                 const response = await fetch("http://127.0.0");
                 const data = await response.json();
+                
+                if (data.monitoring_metrics) {
+                    document.getElementById('metricBlock').innerText = data.monitoring_metrics.live_chainstack_block;
+                    document.getElementById('nodeIdLabel').innerText = `Target Node: ${data.system_id}`;
+                    
+                    const logBox = document.getElementById('logDisplay');
+                    const timestamp = new Date().toLocaleTimeString();
+                    logBox.innerHTML += `<br>> [${timestamp}] DB COMMIT: Node height ${data.monitoring_metrics.live_chainstack_block} written to stg_unified.node_telemetry`;
+                    logBox.scrollTop = logBox.scrollHeight;
+                }
                 if (data.funding_matrix) {
                     document.getElementById('metricGrants').innerText = data.funding_matrix.total_allocation_pool_aksa.toLocaleString() + " AKSA";
                 }
             } catch (err) {
-                document.getElementById('logDisplay').innerText = "[WARN]: Telemetry server offline. Polling logic waiting...";
+                document.getElementById('metricDB').innerText = "DB ERROR";
+                document.getElementById('metricDB').style.color = "#ff0000";
             }
         }
 
@@ -70,16 +81,14 @@
             const display = document.getElementById('logDisplay');
             try {
                 const accounts = await connectSovereignWallet();
-                display.innerText = `✅ SHIELD LINKED\nSovereign Root: ${accounts}\nStatus: Active inside Multi-Sig Consensus Group.`;
-                display.style.color = "#00ff00";
+                display.innerHTML += `<br>> ✅ SHIELD LINKED: Core Account ${accounts}`;
             } catch (err) {
-                display.innerText = `🚨 CONNECTION DENIED: ${err.message}`;
-                display.style.color = "#ff0000";
+                display.innerHTML += `<br>> 🚨 ACCESS DENIED: ${err.message}`;
             }
         });
 
-        setInterval(updateTelemetry, 3000);
-        updateTelemetry();
+        setInterval(updateTelemetryFeed, 3000);
+        updateTelemetryFeed();
     </script>
 </body>
 </html>
