@@ -98,6 +98,40 @@
                 });
                 const resData = await response.json();
                 log.innerText = `✅ NFT MINTED SUCCESSFUL! Saved with CID: ${resData.cid}`;
+        window.executeBankClearing = async function() {
+            const targetAcc = document.getElementById("bankTargetAccount").value;
+            const targetAmt = document.getElementById("bankTargetAmount").value;
+            const log = document.getElementById("logDisplay");
+            
+            if(!targetAcc || !targetAmt) return;
+            try {
+                log.innerText = "[BANK_PROCESSING]: Verifying double-entry transactional safety balance limits...";
+                const response = await fetch("http://127.0.0", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        fromAccount: "STG-BANK-RESERVE-008",
+                        toAccount: targetAcc,
+                        amount: targetAmt,
+                        note: "Incubator Startup Seed Funding Allocation Project"
+                    })
+                });
+                const statusData = await response.json();
+                if (statusData.error) throw new Error(statusData.error);
+                log.innerText = `✅ SETTLEMENT COMPLETE: Disbursed ${targetAmt} AKSA to ${targetAcc}. Clearing Status: COMMITTED.`;
+                loadBankBalance();
+            } catch(e) { log.innerText = `🚨 SETTLEMENT REJECTED: ${e.message}`; log.style.color = "#ff0000"; }
+        }
+
+        async function loadBankBalance() {
+            try {
+                const response = await fetch("http://127.0.0");
+                const data = await response.json();
+                document.getElementById("bankReserveDisplay").innerText = parseFloat(data.balance_aksa).toLocaleString() + " AKSA";
+            } catch(e) {}
+        }
+        setInterval(loadBankBalance, 3000);
+        loadBankBalance();
                 loadNFTGallery();
             } catch(e) { log.innerText = "🚨 Minting operation failure."; }
         }
@@ -113,9 +147,58 @@
                 });
             } catch(e) {}
         }
+        window.executeBankClearing = async function() {
+            const targetAcc = document.getElementById("bankTargetAccount").value;
+            const targetAmt = document.getElementById("bankTargetAmount").value;
+            const log = document.getElementById("logDisplay");
+            
+            if(!targetAcc || !targetAmt) return;
+            try {
+                log.innerText = "[BANK_PROCESSING]: Verifying double-entry transactional safety balance limits...";
+                const response = await fetch("http://127.0.0", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        fromAccount: "STG-BANK-RESERVE-008",
+                        toAccount: targetAcc,
+                        amount: targetAmt,
+                        note: "Incubator Startup Seed Funding Allocation Project"
+                    })
+                });
+                const statusData = await response.json();
+                if (statusData.error) throw new Error(statusData.error);
+                log.innerText = `✅ SETTLEMENT COMPLETE: Disbursed ${targetAmt} AKSA to ${targetAcc}. Clearing Status: COMMITTED.`;
+                loadBankBalance();
+            } catch(e) { log.innerText = `🚨 SETTLEMENT REJECTED: ${e.message}`; log.style.color = "#ff0000"; }
+        }
+
+        async function loadBankBalance() {
+            try {
+                const response = await fetch("http://127.0.0");
+                const data = await response.json();
+                document.getElementById("bankReserveDisplay").innerText = parseFloat(data.balance_aksa).toLocaleString() + " AKSA";
+            } catch(e) {}
+        }
+        setInterval(loadBankBalance, 3000);
+        loadBankBalance();
         loadNFTGallery();
         setInterval(updateTelemetryFeed, 3000);
         updateTelemetryFeed();
     </script>
+    <!-- 🏦 COMPONENT WIDGET: BANK STG PROTOTYPE CORE -->
+    <div class="glass-panel" style="max-width: 1000px; margin: 20px auto; text-align: left;">
+        <div style="color: #00ffff; font-weight: bold; letter-spacing: 2px;">🏦 PROTOTYPE BANK STG CENTRAL CLEARING SYSTEM</div>
+        <p style="font-size: 0.8em; color: #888;">Kelola sirkulasi kliring dana taktis internal Unit 012 langsung dari Sovereign Pool.</p>
+        
+        <div style="margin: 15px 0; font-size: 1.2em; color: #fff;">
+            RESERVE ACCOUNT BALANCE: <span id="bankReserveDisplay" style="color: #00ff00; font-weight: bold;">Loading Pool...</span>
+        </div>
+
+        <div style="border-top: 1px solid #222; padding-top: 15px; display: flex; gap: 10px;">
+            <input type="text" id="bankTargetAccount" placeholder="Target Account Number (e.g. INCUBATOR-STARTUP-01)" style="flex: 2; background: #000; border: 1px solid #333; color: #fff; padding: 10px;">
+            <input type="number" id="bankTargetAmount" placeholder="Amount AKSA" style="flex: 1; background: #000; border: 1px solid #333; color: #fff; padding: 10px;">
+            <button class="connect-btn" style="width: auto; margin: 0; padding: 10px 20px; border-color: #00ffff; color: #00ffff;" onclick="executeBankClearing()">DISBURSE FUNDS</button>
+        </div>
+    </div>
 </body>
 </html>
