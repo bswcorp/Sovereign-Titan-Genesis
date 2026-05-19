@@ -3,372 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qubicoin (QBC) | Sovereign Financial Hub</title>
-    <!-- Memuat dependensi krusial via CDN terpercaya -->
-    <script src="cloudflare.com"></script>
-    <script src="cloudflare.com"></script>
+    <title>STG Control Terminal - Unlocked</title>
+    <script src="https://cloudflare.com"></script>
     <style>
-        :root {
-            --bg-primary: #020617;
-            --bg-card: rgba(15, 23, 42, 0.7);
-            --accent-gold: #fbbf24;
-            --accent-green: #10b981;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-glow: rgba(251, 191, 36, 0.15);
-        }
+        :root { --bg-primary: #020617; --bg-card: rgba(15, 23, 42, 0.8); --accent-gold: #fbbf24; --text-main: #f8fafc; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-main);
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        .app-container { max-width: 1200px; margin: 0 auto; }
+        body { background-color: var(--bg-primary); color: var(--text-main); font-family: system-ui, sans-serif; padding: 20px; }
         .hidden { display: none !important; }
-        
-        /* Glassmorphic Cards & Layout */
-        .banner-header {
-            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
-            border: 1px solid var(--accent-gold);
-            border-radius: 12px; padding: 25px; margin-bottom: 25px;
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 0 25px var(--border-glow);
-        }
-        .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
-        .card {
-            background: var(--bg-card); border: 1px solid #1e293b;
-            border-radius: 12px; padding: 25px; backdrop-filter: blur(12px);
-        }
-        
-        /* Auth Portal Layout */
-        .auth-container { max-width: 450px; margin: 80px auto; }
-        .auth-tabs { display: flex; margin-bottom: 20px; gap: 10px; }
-        .auth-tab { flex: 1; padding: 10px; background: #0f172a; border: 1px solid #1e293b; color: #fff; cursor: pointer; text-align: center; font-weight: bold; border-radius: 6px; }
-        .auth-tab.active { border-color: var(--accent-gold); color: var(--accent-gold); }
-
-        /* Metrics Display */
-        .metrics-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
-        .metric-box { background: rgba(0,0,0,0.4); border: 1px solid #334155; padding: 15px; border-radius: 8px; }
-        .metric-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
-        .metric-value { font-size: 1.4rem; font-weight: bold; margin-top: 5px; }
-
-        /* Forms & Inputs */
+        .card { background: var(--bg-card); border: 1px solid #1e293b; border-radius: 12px; padding: 25px; max-width: 450px; margin: 60px auto; backdrop-filter: blur(10px); }
+        .dashboard { max-width: 1000px; margin: 0 auto; background: #0f172a; padding: 25px; border-radius: 12px; border: 1px solid var(--accent-gold); }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab { flex: 1; padding: 12px; text-align: center; background: #000; border: 1px solid #1e293b; cursor: pointer; font-weight: bold; border-radius: 6px; }
+        .tab.active { border-color: var(--accent-gold); color: var(--accent-gold); }
         .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px; }
-        input {
-            width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #334155;
-            padding: 12px; border-radius: 6px; color: #fff; font-family: monospace;
-        }
+        label { display: block; font-size: 0.85rem; color: #94a3b8; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 12px; background: rgba(0,0,0,0.6); border: 1px solid #334155; color: #fff; border-radius: 6px; font-family: monospace; font-size: 1rem; }
         input:focus { border-color: var(--accent-gold); outline: none; }
-        
-        /* Interactive Elements */
-        .btn {
-            background: transparent; border: 1px solid var(--accent-gold); color: var(--accent-gold);
-            padding: 12px 20px; font-weight: bold; border-radius: 6px; cursor: pointer;
-            transition: all 0.2s; text-transform: uppercase; font-size: 0.8rem;
-        }
-        .btn:hover { background: var(--accent-gold); color: #000; box-shadow: 0 0 15px var(--accent-gold); }
-        .btn-block { width: 100%; margin-top: 10px; }
-        
-        /* Lists & Logs */
-        .activity-log { background: rgba(0,0,0,0.4); border: 1px solid #1e293b; border-radius: 8px; max-height: 200px; overflow-y: auto; font-family: monospace; font-size: 0.8rem; }
-        .log-item { padding: 10px; border-bottom: 1px solid #0f172a; display: flex; justify-content: space-between; }
-        
-        /* QR Framework Visuals */
-        #qrCodeArea { background: white; padding: 15px; display: inline-block; border-radius: 8px; margin-top: 15px; }
+        .btn { width: 100%; padding: 12px; background: transparent; border: 1px solid var(--accent-gold); color: var(--accent-gold); font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; margin-top: 5px; }
+        .btn:hover { background: var(--accent-gold); color: #000; }
+        .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
+        .metric-box { background: rgba(0,0,0,0.5); border: 1px solid #1e293b; padding: 15px; border-radius: 8px; }
     </style>
 </head>
 <body>
 
-    <!-- 1. PORTAL OTENTIKASI (GATEWAY UTAMA) -->
-    <div id="authPortal" class="auth-container card">
-        <div class="auth-tabs">
-            <div id="tabLogin" class="auth-tab active" onclick="switchAuthTab('LOGIN')">MASUK</div>
-            <div id="tabRegister" class="auth-tab" onclick="switchAuthTab('REGISTER')">DAFTAR</div>
+    <!-- GATEWAY AUTHENTICATION -->
+    <div id="authPortal" class="card">
+        <div class="tabs">
+            <div id="tabLogin" class="tab active" onclick="switchTab('LOGIN')">MASUK</div>
+            <div id="tabRegister" class="tab" onclick="switchTab('REGISTER')">DAFTAR PILOT ACC</div>
         </div>
-        
-        <form id="authForm" onsubmit="handleAuthExecution(event)">
-            <div class="form-group hidden" id="usernameGroup">
-                <label>Username</label>
-                <input type="text" id="authUsername" placeholder="Inisial Command">
-            </div>
-            <div class="form-group">
-                <label>Email Terdaftar</label>
-                <input type="email" id="authEmail" required placeholder="name@stg.inc">
-            </div>
-            <div class="form-group">
-                <label>Password Akun</label>
-                <input type="password" id="authPassword" required placeholder="••••••••">
-            </div>
+        <form id="authForm" onsubmit="executeAuth(event)">
+            <div class="form-group hidden" id="userGroup"><label>Nama Operator/Pilot</label><input type="text" id="inpUser" placeholder="Contoh: CapoSTG"></div>
+            <div class="form-group"><label>Email Akun</label><input type="email" id="inpEmail" required placeholder="capo@stg.inc"></div>
+            <div class="form-group"><label>Password</label><input type="password" id="inpPass" required placeholder="••••••••"></div>
+            
+            <!-- SEKTOR YANG DI-BONGKAR: INPUT WALLET MANUAL AKTIF -->
             <div class="form-group hidden" id="walletGroup">
-                <label>Injeksi Alamat MetaMask (Opsional untuk Daftar)</label>
-                <input type="text" id="authWallet" readonly placeholder="Klik Hubungkan Dompet di atas">
-                <button type="button" class="btn btn-block" style="margin-top: 8px;" onclick="linkWalletToForm()">AMBIL ALAMAT METAMASK</button>
+                <label>Alamat Wallet MetaMask (Ketik Manual / Paste Bebas)</label>
+                <input type="text" id="inpWallet" placeholder="Ketik 0x... atau Tempel Alamat Wallet Anda">
+                <button type="button" class="btn" style="font-size:0.75rem; margin-top:8px;" onclick="fetchMetaMaskAddr()">COBA DETEKSI OTOMATIS</button>
             </div>
-            <button type="submit" class="btn btn-block" id="submitAuthBtn">MASUK CORE SYSTEM</button>
+            
+            <button type="submit" class="btn" style="margin-top: 15px;" id="btnSubmit">MASUK STG HUB</button>
         </form>
     </div>
 
-    <!-- 2. APPLIKASI UTAMA (DASHBOARD) -->
-    <div id="mainDashboard" class="app-container hidden">
-        <header class="banner-header">
-            <div>
-                <h1 style="color: var(--accent-gold); letter-spacing: 1px;">🏛️ QUBICOIN TERMINAL V2</h1>
-                <p style="color: var(--text-muted); font-size: 0.8rem;">SINKRONISASI PUSAT JARINGAN: ON-CHAIN & OFF-CHAIN LEDGER</p>
+    <!-- MAIN TERMINAL DASHBOARD -->
+    <div id="mainHub" class="dashboard hidden">
+        <h2 style="color:var(--accent-gold); margin-bottom: 5px;">🏛️ STG COMMAND CENTER WALLET</h2>
+        <p style="color:#94a3b8; font-size:0.85rem; margin-bottom: 20px;">SINKRONISASI AKTIF JARINGAN METAMASK INTERNAL & EKSTERNAL</p>
+        
+        <div class="metrics">
+            <div class="metric-box">
+                <div style="font-size:0.75rem; color:#94a3b8;">SALDO CASHOUT INTERNAL (IDR)</div>
+                <div id="txtIdr" style="font-size:1.4rem; font-weight:bold; color:#60a5fa; margin-top:5px;">Rp 0,00</div>
             </div>
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <span id="sessionUserDisplay" style="color: var(--accent-gold); font-weight: bold;">User: -</span>
-                <button class="btn" id="connectWalletBtn" onclick="connectMetaMask()">Hubungkan MetaMask</button>
-                <button class="btn" style="border-color: #ef4444; color: #ef4444;" onclick="logoutSession()">Keluar</button>
+            <div class="metric-box">
+                <div style="font-size:0.75rem; color:#94a3b8;">SALDO ON-CHAIN WALLET (ETH/QBC)</div>
+                <div id="txtCrypto" style="font-size:1.4rem; font-weight:bold; color:var(--accent-gold); margin-top:5px;">0.0000 ETH</div>
             </div>
-        </header>
+        </div>
+        <p style="font-size:0.8rem; color:#94a3b8; margin-bottom:20px;">Connected Wallet Address: <span id="txtAddr" style="font-family:monospace; color:#fff;">None</span></p>
 
-        <div class="dashboard-grid">
-            <!-- SISI KIRI: SALDO & AKTIVITAS -->
-            <div style="display: flex; flex-direction: column; gap: 25px;">
-                <!-- MONITOR FINANCIAL INTEGRASI -->
-                <div class="card">
-                    <h3 style="color: var(--accent-gold);">📊 BALANCE MONITOR MULTI-LAYER</h3>
-                    <div class="metrics-row">
-                        <div class="metric-box">
-                            <div class="metric-label">Saldo Bank Internal (Off-Chain IDR)</div>
-                            <div id="idrBalance" class="metric-value" style="color: #60a5fa;">Rp 0,00</div>
-                        </div>
-                        <div class="metric-box">
-                            <div class="metric-label">Saldo Dompet Utama (On-Chain QBC)</div>
-                            <div id="qbcBalance" class="metric-value" style="color: var(--accent-gold);">0.00 QBC</div>
-                        </div>
-                    </div>
-                    <div class="metric-label">MetaMask Address Connected:</div>
-                    <div id="walletAddressDisplay" style="font-family: monospace; font-size: 0.85rem; word-break: break-all; margin-top: 4px; color: var(--text-muted);">Not Connected</div>
+        <!-- SWAP TERMINAL -->
+        <div style="border-top:1px solid #1e293b; padding-top:20px;">
+            <h4 style="color:var(--accent-gold); margin-bottom:15px;">💱 EKSEKUSI PENUKARAN SWAP KAS INSTAN</h4>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom:15px;">
+                <div class="form-group">
+                    <label>Arah Aliran Dana</label>
+                    <select id="swapDir"><option value="IDR_TO_QBC">Beli QBC Koin (Potong Saldo IDR)</option></select>
                 </div>
-
-                <!-- RIWAYAT TRANSAKSI LIVE -->
-                <div class="card">
-                    <h3 style="color: var(--accent-gold); margin-bottom: 15px;">📜 LOG AKTIVITAS TRANSAKSI REAL-TIME</h3>
-                    <div class="activity-log" id="activityDisplay">
-                        <div style="color: var(--text-muted); text-align: center; padding: 20px;">Belum ada aktivitas transaksi terekam.</div>
-                    </div>
+                <div class="form-group">
+                    <label>Jumlah Nominal Rupiah</label>
+                    <input type="number" id="swapAmt" placeholder="Masukkan jumlah...">
                 </div>
             </div>
-
-            <!-- SISI KANAN: ENGINE PEMBAYARAN & QR -->
-            <div style="display: flex; flex-direction: column; gap: 25px;">
-                <!-- INTEGRASI QRIS / QR PAYMENT MODULE -->
-                <div class="card" style="text-align: center;">
-                    <h3 style="color: var(--accent-gold); text-align: left; margin-bottom: 15px;">📱 LAYANAN QR PAYMENT SYSTEM</h3>
-                    
-                    <div class="form-group" style="text-align: left;">
-                        <label>Masukkan Data String QR / Payload untuk Bayar</label>
-                        <input type="text" id="qrPayloadInput" placeholder="Paste data QR atau Invoice di sini">
-                    </div>
-                    <button class="btn btn-block" onclick="processQrPayment()">EKSEKUSI PEMBAYARAN QR</button>
-                    
-                    <hr style="border: 0; border-top: 1px solid #1e293b; margin: 20px 0;">
-                    
-                    <h4 style="color: var(--text-main); text-align: left; margin-bottom: 10px;">Buat Invoice QR Anda</h4>
-                    <div class="form-group" style="text-align: left;">
-                        <label>Nominal IDR Tagihan</label>
-                        <input type="number" id="qrAmountGen" placeholder="Contoh: 50000">
-                    </div>
-                    <button class="btn btn-block" onclick="generateInvoiceQr()">GENERATE INVOICE QR</button>
-                    <div id="qrCodeContainer" class="hidden">
-                        <div id="qrCodeArea"></div>
-                    </div>
-                </div>
-            </div>
+            <button class="btn" onclick="triggerSwapOrder()">KIRIM PERINTAH SWAP</button>
         </div>
     </div>
 
     <script>
-        const API_URL = "http://localhost:5000/api";
-        const QBC_CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
-        const QBC_ABI = ["function balanceOf(address owner) view returns (uint256)"];
-        
-        let currentAuthMode = "LOGIN";
-        let sessionToken = localStorage.getItem("token") || null;
-        let provider, signer, userAddress, qbcContract;
+        const BASE_API = "http://localhost:5000/api";
+        let mode = "LOGIN", token = localStorage.getItem("stg_token") || null;
 
-        // --- SISTEM KONTROL SESSION & ANTARMUKA ---
-        window.addEventListener('load', () => {
-            if (sessionToken) {
-                initDashboardView();
-            }
-        });
+        window.addEventListener('load', () => { if(token) loadDashboard(); });
 
-        function switchAuthTab(mode) {
-            currentAuthMode = mode;
-            document.getElementById("tabLogin").classList.toggle("active", mode === "LOGIN");
-            document.getElementById("tabRegister").classList.toggle("active", mode === "REGISTER");
-            document.getElementById("usernameGroup").classList.toggle("hidden", mode === "LOGIN");
-            document.getElementById("walletGroup").classList.toggle("hidden", mode === "LOGIN");
-            document.getElementById("submitAuthBtn").innerText = mode === "LOGIN" ? "MASUK CORE SYSTEM" : "DAFTAR SEKARANG";
+        function switchTab(target) {
+            mode = target;
+            document.getElementById("tabLogin").classList.toggle("active", target === "LOGIN");
+            document.getElementById("tabRegister").classList.toggle("active", target === "REGISTER");
+            document.getElementById("userGroup").classList.toggle("hidden", target === "LOGIN");
+            document.getElementById("walletGroup").classList.toggle("hidden", target === "LOGIN");
+            document.getElementById("btnSubmit").innerText = target === "LOGIN" ? "MASUK STG HUB" : "DAFTAR SEKARANG";
         }
 
-        async function linkWalletToForm() {
-            if (!window.ethereum) return alert("MetaMask tidak ditemukan.");
-            const tempProvider = new ethers.BrowserProvider(window.ethereum);
-            const accounts = await tempProvider.send("eth_requestAccounts", []);
-            document.getElementById("authWallet").value = accounts[0];
+        async function fetchMetaMaskAddr() {
+            if(!window.ethereum) return alert("MetaMask tidak terdeteksi otomatis.");
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                document.getElementById("inpWallet").value = accounts[0];
+            } catch(e) { alert("Deteksi otomatis diblokir browser HP. Silakan ketik/paste manual saja, Capo!"); }
         }
 
-        // --- EKSEKUSI AUTH KE SERVER (EXPRESS LAYER) ---
-        async function handleAuthExecution(e) {
+        async function executeAuth(e) {
             e.preventDefault();
-            const email = document.getElementById("authEmail").value;
-            const password = document.getElementById("authPassword").value;
+            const email = document.getElementById("inpEmail").value;
+            const password = document.getElementById("inpPass").value;
             
-            const endpoint = currentAuthMode === "LOGIN" ? "/auth/login" : "/auth/register";
-            const payload = currentAuthMode === "LOGIN" ? { email, password } : {
-                username: document.getElementById("authUsername").value,
-                email, password,
-                walletAddress: document.getElementById("authWallet").value
+            const url = mode === "LOGIN" ? "/auth/login" : "/auth/register";
+            const body = mode === "LOGIN" ? { email, password } : {
+                username: document.getElementById("inpUser").value, email, password,
+                walletAddress: document.getElementById("inpWallet").value
             };
 
             try {
-                const response = await fetch(`${API_URL}${endpoint}`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
+                const res = await fetch(`${BASE_API}${url}`, {
+                    method: "POST", headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
                 });
-                const data = await response.json();
-                
-                if (!response.ok) throw new Error(data.error || "Gagal memproses otentikasi.");
-                
-                if (currentAuthMode === "LOGIN") {
-                    localStorage.setItem("token", data.token);
-                    localStorage.setItem("username", data.user.username);
-                    sessionToken = data.token;
-                    initDashboardView();
+                const data = await res.json();
+                if(!res.ok) throw new Error(data.error || "Akses ditolak.");
+
+                if(mode === "LOGIN") {
+                    localStorage.setItem("stg_token", data.token);
+                    token = data.token;
+                    loadDashboard();
                 } else {
-                    alert("Registrasi sukses! Silakan beralih ke menu Masuk.");
-                    switchAuthTab("LOGIN");
+                    alert("Akun sukses terdaftar! Sekarang silakan beralih ke tab MASUK menggunakan Email Anda.");
+                    switchTab("LOGIN");
                 }
-            } catch (err) {
-                alert(err.message);
+            } catch(err) {
+                alert(`⚠️ PENOLAKAN SISTEM:\n${err.message}`);
             }
         }
 
-        // --- SINKRONISASI DATA UTAMA ---
-        async function initDashboardView() {
+        async function loadDashboard() {
             document.getElementById("authPortal").classList.add("hidden");
-            document.getElementById("mainDashboard").classList.remove("hidden");
-            document.getElementById("sessionUserDisplay").innerText = `User: ${localStorage.getItem("username")}`;
-            await syncServerBalancesAndLogs();
-        }
-
-        async function syncServerBalancesAndLogs() {
-            try {
-                const response = await fetch(`${API_URL}/banking/dashboard`, {
-                    headers: { "Authorization": `Bearer ${sessionToken}` }
-                });
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.error);
-
-                // Update off-chain IDR display
-                const idrBal = data.balances.find(b => b.currency === 'IDR');
-                if (idrBal) {
-                    document.getElementById("idrBalance").innerText = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(idrBal.fiat_balance);
-                }
-
-                // Render logs
-                const logBox = document.getElementById("activityDisplay");
-                if (data.activityLogs.length > 0) {
-                    logBox.innerHTML = "";
-                    data.activityLogs.forEach(tx => {
-                        const item = document.createElement("div");
-                        item.className = "log-item";
-                        item.innerHTML = `<span>> [${tx.tx_type}] Rp ${parseFloat(tx.amount).toLocaleString('id-ID')} | Status: ${tx.status}</span> <span>${new Date(tx.created_at).toLocaleTimeString()}</span>`;
-                        logBox.appendChild(item);
-                    });
-                }
-            } catch (err) {
-                console.error("Gagal sinkronisasi data internal server:", err);
-            }
-        }
-
-        // --- METODE WEB3 CONNECT & BALANCES ---
-        async function connectMetaMask() {
-            if (!window.ethereum) return alert("Pasang ekstensi MetaMask!");
-            try {
-                provider = new ethers.BrowserProvider(window.ethereum);
-                signer = await provider.getSigner();
-                userAddress = await signer.getAddress();
-                
-                document.getElementById("walletAddressDisplay").innerText = userAddress;
-                document.getElementById("connectWalletBtn").innerText = "CONNECTED 🟢";
-                
-                qbcContract = new ethers.Contract(QBC_CONTRACT_ADDRESS, QBC_ABI, signer);
-                
-                // Baca On-Chain balance
-                const qbcBalRaw = await qbcContract.balanceOf(userAddress);
-                document.getElementById("qbcBalance").innerText = `${parseFloat(ethers.formatUnits(qbcBalRaw, 18)).toFixed(2)} QBC`;
-            } catch (err) {
-                console.error("Web3 Provider gagal dimuat:", err);
-            }
-        }
-
-        // --- INTERNAL BANKING ENGINE & QR PAYMENT MECHANICS ---
-        function generateInvoiceQr() {
-            const amount = document.getElementById("qrAmountGen").value;
-            if (!amount || amount <= 0) return alert("Masukkan nilai nominal valid!");
+            document.getElementById("mainHub").classList.remove("hidden");
             
-            const qrContainer = document.getElementById("qrCodeContainer");
-            const qrArea = document.getElementById("qrCodeArea");
-            qrArea.innerHTML = "";
-            qrContainer.classList.remove("hidden");
-
-            // Format payload standard internal ekosistem QBC
-            const payload = {
-                protocol: "QUBICOIN_PAY",
-                merchant_id: "STG_CORE_HQ",
-                amount: parseFloat(amount),
-                currency: "IDR"
-            };
-
-            new QRCode(qrArea, {
-                text: JSON.stringify(payload),
-                width: 180, height: 180
-            });
-        }
-
-        async function processQrPayment() {
-            const rawPayload = document.getElementById("qrPayloadInput").value;
-            if (!rawPayload) return alert("Payload kosong!");
-
             try {
-                const parsed = JSON.parse(rawPayload);
-                if (parsed.protocol !== "QUBICOIN_PAY") throw new Error("Format QR Protokol Tidak Dikenali.");
+                const res = await fetch(`${BASE_API}/banking/dashboard`, { headers: { "Authorization": `Bearer ${token}` } });
+                const data = await res.json();
+                const balanceObj = data.balances.find(b => b.currency === 'IDR');
+                if(balanceObj) {
+                    document.getElementById("txtIdr").innerText = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(balanceObj.fiat_balance);
+                }
+            } catch(e) { console.error(e); }
 
-                if (!confirm(`Konfirmasi pembayaran QR ke merchant ${parsed.merchant_id} sebesar Rp ${parsed.amount.toLocaleString('id-ID')}?`)) return;
-
-                const response = await fetch(`${API_URL}/banking/qr-pay`, {
-                    method: "POST",
-                    headers: { 
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${sessionToken}`
-                    },
-                    body: JSON.stringify({
-                        merchantId: parsed.merchant_id,
-                        amount: parsed.amount
-                    })
-                });
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.error);
-
-                alert("✅ Pembayaran QR Berhasil Diproses!");
-                document.getElementById("qrPayloadInput").value = "";
-                await syncServerBalancesAndLogs();
-            } catch (err) {
-                alert(`Gagal memproses QR: ${err.message}`);
+            if(window.ethereum) {
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                if(accounts.length > 0) {
+                    document.getElementById("txtAddr").innerText = accounts[0];
+                    const bal = await provider.getBalance(accounts[0]);
+                    document.getElementById("txtCrypto").innerText = `${parseFloat(ethers.formatEther(bal)).toFixed(4)} ETH`;
+                }
             }
         }
 
-        function logoutSession() {
-            localStorage.clear();
-            location.reload();
+        async function triggerSwapOrder() {
+            const amt = document.getElementById("swapAmt").value;
+            if(!amt) return alert("Isi nominal!");
+            try {
+                const res = await fetch(`${BASE_API}/exchange/swap`, {
+                    method: "POST", headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+                    body: JSON.stringify({ direction: document.getElementById("swapDir").value, amount: amt })
+                });
+                const data = await res.json();
+                if(!res.ok) throw new Error(data.error);
+                alert("🚀 Perintah Swap Berhasil Dieksekusi!");
+                location.reload();
+            } catch(e) { alert(e.message); }
         }
     </script>
 </body>
