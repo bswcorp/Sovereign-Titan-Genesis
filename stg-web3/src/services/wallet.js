@@ -48,3 +48,52 @@ export async function fetchUserBalance(userAddress) {
         return "0";
     }
 }
+
+// Alamat Kontrak Timelock (Pastikan diisi dengan alamat hasil deploy Anda)
+const TIMELOCK_ADDRESS = "MASUKKAN_ALAMAT_TIMELOCK_ANDA_DISINI";
+
+export async function proposeVaultRelease(targetAddress, amount) {
+    if (!window.ethereum) throw new Error("MetaMask tidak terdeteksi!");
+    
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    
+    // ABI minimal untuk berinteraksi dengan fungsi pengajuan proposal di Timelock
+    const timelockAbi = [
+        "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay) public"
+    ];
+    
+    const timelockContract = new ethers.Contract(TIMELOCK_ADDRESS, timelockAbi, signer);
+    
+    // Mengonversi jumlah QUBI ke unit WEI/Kripto (18 desimal)
+    const parsedAmount = ethers.utils.parseUnits(amount.toString(), 18);
+    
+    // Membuat payload data transaksi mutasi transfer token Qubicoin
+    const qubiInterface = new ethers.utils.Interface([
+        "function transfer(address to, uint256 value)"
+    ]);
+    const txData = qubiInterface.encodeFunctionData("transfer", [targetAddress, parsedAmount]);
+    
+    // Parameter enkripsi unik untuk keamanan internal (Salt & Predecessor)
+    const salt = ethers.utils.hexZeroPad(ethers.utils.hexlify(Math.floor(Math.random() * 100000)), 32);
+    const predecessor = ethers.utils.hexZeroPad("0x0", 32);
+    const delay = 172800; // Wajib menunggu jeda waktu aman 2 hari (172800 detik)
+
+    try {
+        console.log("Mengirim pengajuan kunci multi-sig ke MetaMask...");
+        const tx = await timelockContract.schedule(
+            CONTRACT_ADDRESS, // Kontrak target yang akan dieksekusi (Qubicoin)
+            0,                // Nilai ETH (0 karena kita mengirim token)
+            txData,           // Data mutasi transfer
+            predecessor,
+            salt,
+            delay
+        );
+        
+        const receipt = await tx.wait();
+        return { success: true, txHash: receipt.transactionHash };
+    } catch (error) {
+        console.error("Gagal mengesahkan transaksi di MetaMask:", error);
+        return { success: false, error: error.message };
+    }
+}
