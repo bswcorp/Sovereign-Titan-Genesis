@@ -33,3 +33,18 @@ export async function fetchTokenData() {
         return null;
     }
 }
+
+export async function fetchUserBalance(userAddress) {
+    if (!window.ethereum) throw new Error("MetaMask not detected");
+    
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
+    
+    try {
+        const balance = await contract.balanceOf(userAddress);
+        return ethers.utils.formatUnits(balance, 18);
+    } catch (error) {
+        console.error("Failed fetching live user balance:", error);
+        return "0";
+    }
+}
