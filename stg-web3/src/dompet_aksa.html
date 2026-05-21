@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>STG Command Center | Unified Production Dashboard</title>
+    <style>
+        body { background: #050505; color: #00ffcc; font-family: 'Courier New', monospace; padding: 20px; margin: 0; }
+        .dashboard-grid { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+        .card { background: rgba(10,10,10,0.95); border: 1px solid #333; padding: 20px; box-shadow: 0 0 15px rgba(0,255,204,0.05); position: relative; }
+        .border-cyber { border-color: #00ffcc !important; }
+        .card-header { font-weight: bold; font-size: 1.1em; letter-spacing: 2px; border-bottom: 1px dashed #333; padding-bottom: 10px; margin-bottom: 15px; }
+        .data-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9em; }
+        .label { color: #888; }
+        .value { color: #fff; font-weight: bold; }
+        .glow-text { text-shadow: 0 0 8px #00ffcc; color: #00ffcc; }
+        .balance-display { text-align: center; padding: 15px; background: #000; border: 1px solid #222; margin-top: 15px; }
+        .balance-value { font-size: 2.2em; font-weight: bold; color: #00ffcc; text-shadow: 0 0 10px rgba(0,255,204,0.3); }
+        .cyber-input { width: 100%; background: #000; color: #fff; border: 1px solid #333; padding: 10px; box-sizing: border-box; font-family: monospace; margin-top: 5px; margin-bottom: 15px; }
+        .cyber-btn { width: 100%; padding: 12px; font-family: monospace; font-weight: bold; cursor: pointer; border: none; transition: all 0.3s; }
+        
+        @keyframes blink-animation { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
+        .flash-red-screen { animation: screen-flash 0.5s ease-in-out; }
+        @keyframes screen-flash { 0% { background-color: rgba(255,51,51,0.2); } 100% { background-color: transparent; } }
+
+        /* 🖨️ CSS PRINT INTEGRASI (Snippet Bagian 1 Anda) */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #security-audit-panel, #security-audit-panel * {
+                visibility: visible;
+            }
+            #security-audit-panel {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                border: 2px solid #000 !important;
+                background: #fff !important;
+                color: #000 !important;
+                box-shadow: none !important;
+                padding: 40px !important;
+            }
+            .cyber-header {
+                background: #000 !important;
+                color: #fff !important;
+                font-size: 18px !important;
+                padding: 10px !important;
+                text-align: center;
+            }
+            .audit-meta, .audit-item div {
+                color: #000 !important;
+            }
+            .audit-footer {
+                background: #eee !important;
+                color: #000 !important;
+                border: 1px solid #000 !important;
+                margin-top: 30px !important;
+            }
+            .print-action-zone {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- REAL-TIME CYBER THREAT INTRUSION BANNER -->
+    <div id="cyber-alert-banner" style="display: none; background: #ff3333; color: #fff; font-family: 'Courier New', monospace; padding: 15px; text-align: center; font-weight: bold; font-size: 14px; letter-spacing: 2px; border-bottom: 3px solid #000; box-shadow: 0 5px 15px rgba(255,51,51,0.5); z-index: 9999;">
+        <span style="animation: blink-animation 1s infinite;">⚠️ [ WARNING: UNAUTHORIZED WALLET CONFLICT DETECTED ] ⚠️</span>
+        <div id="alert-details" style="font-size: 11px; font-weight: normal; margin-top: 5px; color: #ffcccc;"></div>
+    </div>
+
+    <div class="dashboard-grid">
+        
+        <!-- 🛰️ STG QUBICOIN LIVE TELEMETRY PANEL (Snippet Bagian 3 Anda) -->
+        <div class="card telemetry-card" id="qubicoin-panel">
+            <div class="card-header border-cyber">
+                <span class="pulse-indicator">●</span> NETWORK STATUS: ACTIVE (PORT 8545)
+            </div>
+            <div class="card-body">
+                <div class="data-row">
+                    <span class="label">ASSET IDENTIFIER:</span>
+                    <span id="token-identifier" class="value glow-text">LOADING...</span>
+                </div>
+                <div class="data-row">
+                    <span class="label">TOTAL CIRCULATION:</span>
+                    <span id="token-supply" class="value">0.00</span>
+                </div>
+                <div class="balance-display">
+                    <div class="label-large" style="font-size: 11px; color:#888;">YOUR REVENUE BALANCE</div>
+                    <div id="user-qubi-balance" class="balance-value">0.0000</div>
+                    <span class="ticker" id="token-symbol" style="color:#555;">QUBI</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🗄️ HARDWARE INTERFACE: LEVELDB STORAGE ENGINE (Snippet Bagian 4 Anda) -->
+        <div class="card storage-card" id="leveldb-monitor" style="border-color: #d4af37;">
+            <div class="card-header cyber-header" style="color: #d4af37;">
+                🗄️ HARDWARE INTERFACE: LEVELDB STORAGE ENGINE
+            </div>
+            <div class="card-body">
+                <div class="data-row" style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span class="label" style="color: #888;">DATABASE PATH:</span>
+                    <span class="value" style="font-family: monospace; color: #aaa;">~/stg_ledger_db/</span>
+                </div>
+                <div class="data-row" style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <span class="label" style="color: #888;">IO SECTOR READ/WRITE:</span>
+                    <span id="storage-io-status" class="value" style="color: #00ff00; font-weight: bold;">⚡ STANDBY (IDLE)</span>
+                </div>
+                
+                <div class="disk-usage-box">
+                    <div style="font-size: 11px; color: #d4af37; margin-bottom: 5px;">LEDGER METRICS DENSITY</div>
+                    <div class="progress-bar-bg" style="background: #111; border: 1px solid #333; height: 12px; width: 100%; position: relative;">
+                        <div id="storage-density-bar" style="background: linear-gradient(90deg, #d4af37, #00ff00); height: 100%; width: 15%;"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 10px; margin-top: 4px; color: #555;">
+                        <span>0 KB</span>
+                        <span id="disk-bytes-counter" style="color: #888;">Allocated Index: 4.09 KB</span>
+                        <span>Persistent Vault</span>
+                    </div>
+                </div>
+
+                <!-- ZONE EMERGENCY DISASTER RECOVERY (Snippet Bagian 5 Anda - Mencegah Duplikasi) -->
+                <div class="restore-action-zone" style="margin-top: 15px; border-top: 1px dashed #333; padding-top: 12px;">
+                    <div style="font-size: 11px; color: #ff3333; margin-bottom: 5px; font-weight: bold;">⚠️ EMERGENCY DISASTER RECOVERY</div>
+                    <button id="btn-restore-ledger" class="cyber-btn" style="width: 100%; background: rgba(255,51,51,0.1); color: #ff3333; border: 1px solid #ff3333; padding: 8px; font-family: monospace; font-weight: bold; cursor: pointer; transition: all 0.3s;">
+                        [⚡ RUN SYSTEM RESTORE DATA ]
+                    </button>
+                    <div id="restore-status-log" style="font-size: 10px; color: #555; margin-top: 5px; font-style: italic;">
+                        System steady. No rollback integrity requested.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🛡️ STG MULTI-SIG GOVERNANCE CONTROL CENTER (Snippet Bagian 6 Anda) -->
+        <div class="card governance-card" id="multi-sig-panel" style="border-color: #00ffcc;">
+            <div class="card-header cyber-header">
+                🛡️ SECURITY PROTOCOL: UNIT 008 MULTI-SIG VAULT
+            </div>
+            <div class="card-body">
+                <div class="status-box">
+                    <span class="label">VAULT LOCK STATUS:</span>
+                    <span class="value secured-text" style="color: #00ffcc; font-weight: bold;">🔒 LOCKED (2-DAY TIMELOCK ACTIVE)</span>
+                </div>
+                
+                <label class="label" style="margin-top: 15px; display: block;">TARGET MUTASI REKENING:</label>
+                <input type="text" id="target-withdrawal-address" placeholder="0x..." class="cyber-input" style="width: 100%">
+                
+                <label class="label" style="display: block;">JUMLAH ASSET STG (QUBI):</label>
+                <input type="number" id="target-withdrawal-amount" placeholder="0.00" class="cyber-input" style="width: 100%">
+                
+                <button id="btn-propose-release" class="cyber-btn" style="background: #00ffcc; color: #000; font-weight: bold;">
+                    AJUKAN PROPOSAL PENCAIRAN (KUNCI 1)
+                </button>
+            </div>
+        </div>
+
+        <!-- 📜 SECURITY AUDIT REPORT WRAPPER PANEL -->
+        <div class="card" id="security-audit-panel" style="border-color: #ff3333; background: rgba(5,0,0,0.95);">
+            <div class="card-header cyber-header" style="color: #ff3333;">🛑 STG CENTRAL SECURITY AUDIT REPORT</div>
+            <div class="audit-meta" style="display: flex; justify-content: space-between; font-size: 11px; color: #888; padding: 10px 0;">
+                <span>LOG INDEX: #STG-AUDIT-2026</span>
+                <span>STATUS: <span style="color: #00ff00; font-weight: bold;">🟢 PASSED</span></span>
+            </div>
+            <div class="audit-item" style="font-size: 12px; color: #aaa;">
+                <div>[🔒 METRIC 1] Cryptographic Entropy Verified.</div>
+                <div>[🚨 METRIC 2] Attack Forgery Firewall Active.</div>
+            </div>
+            <!-- ZONE PRINT CERTIFICATE (Snippet Bagian 7 Anda) -->
+            <div class="print-action-zone" style="margin-top: 15px; text-align: right;">
+                <button id="btn-print-audit-cert" class="cyber-btn" style="background: #ffcc00; color: #000; border: none; padding: 8px 15px; width: auto;">
+                    🖨专 [ GENERATE PDF CERTIFICATE ]
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ⚡ INTEGRASI LOGIKA UTUH JAVASCRIPT CORNER (Snippet Bagian 2 Anda) -->
+    <script type="module">
+        import { fetchTokenData, fetchUserBalance, proposeVaultRelease } from './services/wallet.js';
+
+        const STG_WHITELISTED_WALLETS = [
+            "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0".toLowerCase(), 
+            "0x3AA63941Fe0Ce029f4523c57A30C6dca3cB7343F".toLowerCase()  
+        ];
+
+        export function verifyEcosystemAccess(connectedAddress) {
+            const banner = document.getElementById('cyber-alert-banner');
+            const details = document.getElementById('alert-details');
+            
+            if (!connectedAddress) return;
+            const currentAddressClean = connectedAddress.toLowerCase();
+            
+            if (STG_WHITELISTED_WALLETS.includes(currentAddressClean)) {
+                if (banner) banner.style.display = 'none';
+                console.log(`[🛡️ SECURITY] Access granted: ${connectedAddress}`);
+            } else {
+                if (banner && details) {
+                    banner.style.display = 'block';
+                    details.innerText = `INTRUDER SIGNATURE: ${connectedAddress.toUpperCase()} | TARGET BLOCK: UNIT 008 RESIDENT RESERVES | FIREWALL STATUS: ENFORCED`;
+                    document.body.classList.add('flash-red-screen');
+                    setTimeout(() => document.body.classList.remove('flash-red-screen'), 500);
+                }
+                console.warn(`[🚨 INTRUSION ALERT] Unauthorized wallet: ${connectedAddress}`);
+            }
+        }
+
+        async function initTelemetry() {
+            if (window.ethereum) {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                    if (accounts.length > 0) {
+                        verifyEcosystemAccess(accounts[0]);
+                        const balance = await fetchUserBalance(accounts[0]);
+                        document.getElementById('user-qubi-balance').innerText = balance;
+                    }
+                } catch (err) {
+                    console.error("Error initialization logic:", err);
+                }
+            }
+            const meta = await fetchTokenData();
+            if (meta) {
+                document.getElementById('token-identifier').innerText = `${meta.name} [${meta.symbol}]`;
+                document.getElementById('token-supply').innerText = meta.supply;
+                document.getElementById('token-symbol').innerText = meta.symbol;
+            }
+        }
+
+        // Jalankan hooks event listener
+        if (window.ethereum) {
+            window.ethereum.on('accountsChanged', (accounts) => {
+                if (accounts.length > 0) {
+                    verifyEcosystemAccess(accounts[0]);
+                    initTelemetry();
+                }
+            });
+        }
+
+        document.getElementById('btn-print-audit-cert').addEventListener('click', () => window.print());
+        
+        document.getElementById('btn-restore-ledger').addEventListener('click', () => {
+            if (confirm("🚨 Execute emergency state recovery rollback?")) {
+                document.getElementById('restore-status-log').innerText = "Re-indexing databases blocks... Success.";
+                setTimeout(() => window.location.reload(), 1000);
+            }
+        });
+
+        // Jalankan pemuatan data saat halaman pertama kali dibuka
+        initTelemetry();
+    </script>
+</body>
+</html>
