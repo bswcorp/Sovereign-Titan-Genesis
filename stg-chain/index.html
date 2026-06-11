@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QSTATE | Sovereign Digital Infrastructure</title>
+<link href="https://googleapis.com" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#02050d;color:white;font-family:'Rajdhani',sans-serif;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 20% 20%, rgba(0,255,255,.15), transparent 30%), radial-gradient(circle at 80% 10%, rgba(140,82,255,.12), transparent 30%), radial-gradient(circle at 50% 80%, rgba(255,215,0,.06), transparent 40%), #02050d;z-index:-3;}
+.stars{position:fixed;inset:0;background:url('https://transparenttextures.com');opacity:.25;z-index:-2;animation:starMove 120s linear infinite;}
+@keyframes starMove{from{transform:translateY(0);} to{transform:translateY(-1200px);}}
+.grid{position:fixed;inset:0;background:linear-gradient(rgba(0,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,255,.05) 1px, transparent 1px);background-size:40px 40px;transform:rotateX(75deg) translateY(300px);opacity:.18;z-index:-1;}
+header{position:fixed;top:0;left:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:18px 8%;backdrop-filter:blur(15px);background:rgba(0,0,0,.25);border-bottom:1px solid rgba(255,255,255,.08);z-index:999;}
+.logo{font-family:'Orbitron',sans-serif;font-size:1.6rem;font-weight:900;color:#00f0ff;letter-spacing:2px;text-shadow:0 0 20px #00f0ff;}
+nav a{color:#ddd;text-decoration:none;margin-left:20px;}
+nav a:hover{color:#00f0ff;}
+.hero{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:120px 8% 60px;text-align:center;position:relative;}
+.hero-content{max-width:1000px;}
+.hero h1{font-family:'Orbitron',sans-serif;font-size:4.8rem;line-height:1.1;background:linear-gradient(90deg,#ffd700,#ffd700,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:25px;text-shadow:0 0 30px rgba(255,215,0,0.2);}
+.hero p{font-size:1.2rem;line-height:1.8;color:#c9d6ff;margin-bottom:35px;}
+.btn-group{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;}
+.btn{padding:14px 30px;border-radius:50px;text-decoration:none;font-weight:bold;cursor:pointer;border:none;transition:.3s;}
+.btn-primary{background:linear-gradient(90deg,#ffd700,#b59a00);color:black;box-shadow:0 0 20px rgba(255,215,0,0.4);}
+.btn-secondary{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:white;}
+.btn:hover{transform:translateY(-3px);}
+.dashboard{width:92%;max-width:1300px;margin:auto;padding:40px;border-radius:25px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(15px);margin-bottom:60px;}
+.dashboard h2{text-align:center;font-family:'Orbitron',sans-serif;color:#ffd700;letter-spacing:1px;}
+.divider{height:1px;margin:25px 0 35px;background:linear-gradient(to right,transparent,#ffd700,transparent);}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+.card{padding:25px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);}
+.label{color:#aaa;margin-bottom:10px;}
+.amount{font-size:2rem;font-weight:bold;color:#00ff99;}
+.wallet-box{margin-top:20px;}
+.wallet-address{word-break:break-all;color:#00f0ff;margin-top:10px;font-family:monospace;}
+.storage-box{margin-top:25px;padding:25px;border-radius:20px;background:rgba(0,20,40,.55);border:1px solid rgba(0,255,255,.12);}
+.bar{height:14px;background:#111;border-radius:20px;overflow:hidden;margin-top:15px;}
+.bar-fill{height:100%;width:35%;background:linear-gradient(90deg,#00f0ff,#00ff99);transition:0.5s;}
+.log-box{margin-top:25px;padding:20px;background:#000;border-radius:20px;font-size:.9rem;color:#888;height:180px;overflow-y:auto;font-family:monospace;border:1px solid #111;}
+.ticker{margin-top:35px;padding:14px;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);overflow:hidden;}
+.ticker-text{white-space:nowrap;animation:moveTicker 25s linear infinite;display:inline-block;padding-left:100%;color:#00f0ff;}
+@keyframes moveTicker{0%{transform:translateX(0);} 100%{transform:translateX(-100%);}}
+footer{margin-top:80px;padding:60px 20px;text-align:center;background:linear-gradient(180deg,transparent,rgba(0,240,255,.03));border-top:1px solid rgba(0,240,255,.12);position:relative;}
+footer h3{font-family:'Orbitron',sans-serif;color:#ffd700;margin-bottom:15px;letter-spacing:2px;}
+footer p{color:#9ab0c9;font-size:0.9rem;line-height:1.6;}
+@media(max-width:768px){.hero h1{font-size:3rem;} nav{display:none;}}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="grid"></div>
+<header>
+<div class="logo">QSDG GENERATION</div>
+<nav>
+<a href="#">Home</a><a href="#">Identity</a><a href="#">Treasury</a><a href="#">Audit</a>
+</nav>
+</header>
+<section class="hero">
+<div class="hero-content">
+<h1>QUORUM SOVEREIGN<br>DIGITAL GENERATION</h1>
+<p>Dual-Layer Asset Matrix • Deployed under Chainstack Cloud Infrastructure & Pure Decentralization.</p>
+<div class="btn-group">
+<button class="btn btn-primary" onclick="connectWallet()">CONNECT SOVEREIGN WALLET</button>
+<button class="btn btn-secondary">MEMBER PORTAL</button>
+</div>
+</div>
+</section>
+<section class="dashboard">
+<h2>QSTATE SOVEREIGN CORE CONTROL PANEL</h2>
+<div class="divider"></div>
+<div class="stats">
+<div class="card"><div class="label">Historical AKSA Treasury Value</div><div class="amount" id="aksaCounter">Rp 1.498.000.000.000</div></div>
+<div class="card"><div class="label">Korea-Dubai Strategic Liquidity</div><div class="amount" style="color:#ffd700;" id="koreaPool">US$ 20.000.000.000</div></div>
+</div>
+<div class="wallet-box card">
+<h3>🪙 Dual-Layer Active Wallet Monitor</h3>
+<p id="walletStatus" style="color:#ffcc00;">Wallet Status: Disconnected</p>
+<p id="walletAddress" class="wallet-address">-</p>
+</div>
+<div class="wallet-box card">
+<h3>📦 Live On-Chain Asset Registry (Chainstack Satellites)</h3>
+<p id="aksaAssetData" style="color:#00f0ff;">AKSA Ledger State: Waiting for Handshake...</p>
+<p id="qstateAssetData" style="color:#00ff99;">QSTATE Circulation State: Waiting for Handshake...</p>
+</div>
+<div class="storage-box">
+<h3>💾 Webhook API & LevelDB Persistence Monitor</h3>
+<p id="webhook-io-status" style="color:#00ff00;">⚡ LISTENER STREAM ACTIVE (PORT 8082)</p>
+<div class="bar"><div class="bar-fill" id="storage-density-bar"></div></div>
+<p id="disk-bytes-counter" style="margin-top:10px;color:#aaa;">Airtable Sync Pipeline: Secured</p>
+</div>
+<div class="log-box" id="logContainer">
+<div>[LOG] Sentinel AI Matrix Active on Chainstack Cloud Network</div>
+<div>[LOG] Sovereign Identity Spec Loaded (PIN + PID + PIH)</div>
+<div>[LOG] Webhook API Connection Armed at Port 8082</div>
+<div>[LOG] US$ 20 Billion Korea-Dubai Epoch Pipeline Engaged</div>
+<div>[SYSTEM] QSDG REVOLUTION ONLINE (GIANT BORN 🌎)</div>
+</div>
+<div class="ticker">
+<div id="ticker" class="ticker-text">Loading Sovereign Cloud Metrics...</div>
+</div>
+</section>
+<footer>
+<h3>🏛️ QUORUM SOVEREIGN DIGITAL GENERATION</h3>
+<p>© 2026 Sovereign Trust Generations. All Rights Reserved.<br>"Kita Ada agar Mereka Baik-Baik Saja" • Protected under NIST Post-Quantum Cryptography Architecture.</p>
+</footer>
+<script src="https://cloudflare.com"></script>
+<script>
+const AKSA_CONTRACT = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+const QSTATE_CONTRACT = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+const GENERIC_ABI = [
+    "function name() view returns (string)",
+    "function symbol() view returns (string)",
+    "function totalSupply() view returns (uint256)",
+    "function balanceOf(address account) view returns (uint256)"
+];
+let provider; let signer; let countAksa = 1498000000000;
+function formatCurrency(num, type) { return new Intl.NumberFormat(type === "IDR" ? "id-ID" : "en-US", { style: "currency", currency: type, minimumFractionDigits: 0 }).format(num); }
+function runVisualSimulation() {
+    setInterval(() => {
+        countAksa += Math.floor(Math.random() * 300000) + 50000;
+        document.getElementById("aksaCounter").innerText = formatCurrency(countAksa, "IDR");
+        const densityBar = document.getElementById('storage-density-bar');
+        if (densityBar) densityBar.style.width = (Math.floor(Math.random() * 30) + 50) + "%";
+    }, 3500);
+}
+async function connectWallet() {
+    const statusText = document.getElementById("walletStatus");
+    const addressText = document.getElementById("walletAddress");
+    if (typeof window.ethereum !== "undefined") {
+        try {
+            statusText.innerText = "Requesting Cloud Node Handshake...";
+            provider = new ethers.BrowserProvider(window.ethereum);
+            await provider.send("eth_requestAccounts", []);
+            signer = await provider.getSigner();
+            const userAddress = await signer.getAddress();
+            statusText.innerText = "🟢 CONNECTED TO MAINNET CHAINSTACK BACKBONE"; statusText.style.color = "#00ff99";
+            addressText.innerText = userAddress;
+            loadDualLayerOnChainData(userAddress);
+        } catch (error) { statusText.innerText = "❌ Connection Refused"; statusText.style.color = "#ff3333"; }
+    } else { statusText.innerText = "❌ Web3 Core Extension Missing"; statusText.style.color = "#ff3333"; }
+}
+async function loadDualLayerOnChainData(userAddress) {
+    try {
+        const aksaContract = new ethers.Contract(AKSA_CONTRACT, GENERIC_ABI, provider);
+        const qstateContract = new ethers.Contract(QSTATE_CONTRACT, GENERIC_ABI, provider);
+        const aksaName = await aksaContract.name();
+        const aksaBalance = await aksaContract.balanceOf(userAddress);
+        const qstateName = await qstateContract.name();
+
