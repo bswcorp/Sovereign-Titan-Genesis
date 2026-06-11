@@ -1,0 +1,60 @@
+[
+  {
+    "rab_code": "STG-LAUNCH-001",
+    "cost_name": "Global Branding & Elite Exchange Listing Fees",
+    "allocated_usd": 12500000,
+    "signer_authorization": "0xD9a1E28224d6d047Eef8712dC97d11A9032b948e",
+    "compliance_proof": "bfdb1cb9baf061a9d4dc52d95b364505e461a2c4eb99e4817cbb51af73f20e6d",
+    "status": "LAUNCH_BUDGET_DISPATCHED_MEGAH",
+    "timestamp": 1781074804
+  },
+  {
+    "rab_code": "STG-DELL-002",
+    "cost_name": "Hexaflop Dell Workstations Industrial Purchase",
+    "allocated_usd": 5000000,
+    "signer_authorization": "0xD9a1E28224d6d047Eef8712dC97d11A9032b948e",
+    "compliance_proof": "655d0a2635a72b97b4188c396b697daba06b9c1c0bb373260b2f2dea4de4f70f",
+    "status": "LAUNCH_BUDGET_DISPATCHED_MEGAH",
+    "timestamp": 1781074804
+  },
+  {
+    "rab_code": "STG-KOREA-EPOCH-1",
+    "phase_name": "Dubai Corporate Infrastructure Setup",
+    "allocated_usdt_reserve": 2000000000,
+    "network_backbone": "Chainstack BSC Cloud Nodes",
+    "signer_authorization": "0xD9a1E28224d6d047Eef8712dC97d11A9032b948e",
+    "compliance_proof": "a5e97c1467f1f68ed7c0c3dce02691e38554e01f7edb27db77b2e9f16d759a80",
+    "status": "PHASED_LIQUIDITY_SECURED_DUBAI",
+    "timestamp": 1781175518
+  },
+  {
+    "rab_code": "STG-KOREA-EPOCH-1",
+    "phase_name": "Dubai Corporate Infrastructure Setup",
+    "allocated_usdt_reserve": 2000000000,
+    "network_backbone": "Chainstack BSC Cloud Nodes",
+    "signer_authorization": "0xD9a1E28224d6d047Eef8712dC97d11A9032b948e",
+    "compliance_proof": "4b20a317394453b8a80658203d9382f338d57a3101170a26cfcce4e6f8537994",
+    "status": "PHASED_LIQUIDITY_SECURED_DUBAI",
+    "timestamp": 1781176323
+  },
+  {
+    "rab_code": "STG-LAUNCH-001",
+    "cost_name": "Global Branding & Elite Exchange Listing Fees",
+    "allocated_usd": 12500000,
+    "network_backbone": "Chainstack BSC Cloud Nodes",
+    "signer_authorization": "0xD9a1E28224d6d047Eef8712dC97d11A9032b948e",
+    "compliance_proof": "00c2722b2800ca128662d483eb6aa52bae463beb1748515a66dd8eb56023bc44",
+    "status": "PHASED_LIQUIDITY_SECURED_DUBAI",
+    "timestamp": 1781178833
+  },
+  {
+    "rab_code": "STG-DELL-002",
+    "cost_name": "Hexaflop Dell Workstations Industrial Purchase",
+    "allocated_usd": 5000000,
+    "network_backbone": "Chainstack BSC Cloud Nodes",
+    "signer_authorization": "0xD9a1E28224d6d047Eef8712dC97d11A9032b948e",
+    "compliance_proof": "75dd242529ea660155176a69ce9601323e5221594da1c558148f6d0b46d39dd2",
+    "status": "PHASED_LIQUIDITY_SECURED_DUBAI",
+    "timestamp": 1781178834
+  }
+]
